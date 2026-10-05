@@ -46,9 +46,9 @@
     },
     "status": "ok"
   },
-  "duration_seconds": 6.25,
+  "duration_seconds": 85.44,
   "generated_by": "scripts/experiment2/validate_yolo.py",
-  "generated_utc": "2026-10-03T09:16:30Z",
+  "generated_utc": "2026-10-05T22:17:45Z",
   "hard_failures": [],
   "inputs": {
     "arrow_root": "experiments/dataset/raw_hf_rdd2022",

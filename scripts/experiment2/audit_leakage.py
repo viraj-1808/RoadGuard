@@ -16,8 +16,8 @@ E    near-duplicate audit                      two detectors, reported separatel
                                                    by exact pixel equality (a
                                                    cheap pre-screen only)
                                                (2) ``correlation_criterion`` --
-                                                   the PROJECT STANDARD from
-                                                   analysis/verify_near_duplicates.py
+the PROJECT STANDARD from
+                                                    scripts/analysis/verify_near_duplicates.py
                                                    (64x64 grayscale, Pearson
                                                    corr >= 0.90 AND MAD <= 0.10).
                                                The hard failure is driven by (2).
@@ -94,14 +94,14 @@ THUMB_SIZE = 32
 DHASH_SIZE = 9
 
 # --- project-standard near-duplicate criterion -----------------------------
-# These values mirror ``analysis/verify_near_duplicates.py`` EXACTLY, which is the
+# These values mirror ``scripts/analysis/verify_near_duplicates.py`` EXACTLY, which is the
 # script that established Dataset A's correlation graph (59 verified groups over
 # 121 images). A near-duplicate criterion is only comparable across datasets if
 # it is the same criterion, so the Experiment 2 audit must use the same
 # downsampling (64x64 ``convert("L")`` + LANCZOS, divided by 255) and the same two
 # statistics (Pearson correlation of the downsampled grayscale, and the mean
 # absolute difference of the normalised pixels).
-PROJECT_STANDARD_SOURCE = "analysis/verify_near_duplicates.py"
+PROJECT_STANDARD_SOURCE = "scripts/analysis/verify_near_duplicates.py"
 PIXEL_SIZE = (64, 64)      # grayscale downsample size, per the project standard
 PIXEL_CORR_MIN = 0.90      # Pearson correlation of downsampled grayscale
 PIXEL_MAD_MAX = 0.10       # mean absolute difference of normalised pixels
@@ -139,7 +139,7 @@ NEAR_DUP_LIMITATION = (
 
 CORRELATION_CRITERION_NOTE = (
     "The correlation_criterion detector reproduces the criterion the rest of the "
-    "project already relies on: analysis/verify_near_duplicates.py established the "
+    "project already relies on: scripts/analysis/verify_near_duplicates.py established the "
     "Dataset A correlation graph (59 verified groups over 121 images) by "
     "downsampling each image to 64x64 grayscale with a LANCZOS resample, normalising "
     "to [0, 1], and confirming a pair only when the Pearson correlation of the "
@@ -398,12 +398,12 @@ def identical_pixels(path_a: str, path_b: str) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# project-standard correlation criterion (mirrors analysis/verify_near_duplicates.py)
+# project-standard correlation criterion (mirrors scripts/analysis/verify_near_duplicates.py)
 # ---------------------------------------------------------------------------
 def pixel_signature(path: str) -> np.ndarray | None:
     """Return the 64x64 downsampled normalised grayscale signature of *path*.
 
-    Byte-for-byte the same recipe as ``analysis/verify_near_duplicates.py``:
+    Byte-for-byte the same recipe as ``scripts/analysis/verify_near_duplicates.py``:
     ``convert("L")`` -> ``resize((64, 64), LANCZOS)`` -> ``/ 255.0``. Returns
     ``None`` when the file cannot be decoded.
     """
@@ -669,7 +669,7 @@ def near_duplicate_audit(
     ``correlation_criterion`` (project standard, drives the hard failure): 64x64
     downsampled grayscale, confirmed when Pearson correlation >= *corr_min* AND
     mean absolute difference <= *mad_max* -- the criterion
-    ``analysis/verify_near_duplicates.py`` used to build Dataset A's correlation
+    ``scripts/analysis/verify_near_duplicates.py`` used to build Dataset A's correlation
     graph. Candidate pairs are gathered with the same banded dHash blocking and the
     same permissive Hamming threshold Dataset A used, so the recall envelope
     matches the standard rather than being a different search.
@@ -987,7 +987,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         "Two detectors are run and reported **separately** because their "
         "criteria are not comparable. `dhash_screen` is the cheap 64-bit "
         "perceptual screen retained for information; `correlation_criterion` "
-        "reproduces the criterion `analysis/verify_near_duplicates.py` used "
+        "reproduces the criterion `scripts/analysis/verify_near_duplicates.py` used "
         "to build Dataset A's correlation graph (59 verified groups / 121 "
         "images) and is therefore the detector that drives the E hard "
         "failures and the check F crossing count."
@@ -1600,7 +1600,7 @@ def main(argv: list[str] | None = None) -> int:
                     "Two detectors, reported separately. dhash_screen is the "
                     "cheap 64-bit dHash Hamming screen confirmed by exact "
                     "pixel equality; correlation_criterion is the project "
-                    "standard from analysis/verify_near_duplicates.py "
+                    "standard from scripts/analysis/verify_near_duplicates.py "
                     "(64x64 grayscale, Pearson corr >= 0.90 AND MAD <= 0.10) "
                     "and is the detector that drives the hard failures."
                 ),
@@ -1678,3 +1678,4 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+

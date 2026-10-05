@@ -162,18 +162,18 @@ normalized_rdd2022_india/
 
 | Component | Path | Purpose |
 |-----------|------|---------|
-| Transformation tool | `analysis/transform_rdd2022_annotations.py` | Applies the mapping, writes normalized VOC XML, copies images, emits manifest + report |
-| Independent validator | `analysis/validate_transformation.py` | Re-parses raw and normalized files from disk and checks all invariants without reusing transformation state |
+| Transformation tool | `scripts/analysis/transform_rdd2022_annotations.py` | Applies the mapping, writes normalized VOC XML, copies images, emits manifest + report |
+| Independent validator | `scripts/analysis/validate_transformation.py` | Re-parses raw and normalized files from disk and checks all invariants without reusing transformation state |
 | Tests | `tests/ml/data/inspection/test_transform_rdd2022.py` | 37 fixture-based tests; the real dataset is never used as a fixture |
 
 ### Commands
 
 ```powershell
 # Run the transformation
-python analysis/transform_rdd2022_annotations.py
+python scripts/analysis/transform_rdd2022_annotations.py
 
 # Run the independent invariant validation
-python analysis/validate_transformation.py
+python scripts/analysis/validate_transformation.py
 
 # Run the tests
 python -m pytest tests/ml/data/inspection/test_transform_rdd2022.py -v

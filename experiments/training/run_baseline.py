@@ -51,7 +51,7 @@ def main():
         print()
         
         # Check if model exists
-        model_path = "yolo11s.pt"
+        model_path = "weights/yolo11s.pt"
         if not os.path.exists(model_path):
             print(f"[INFO] Model {model_path} not found. Will download from Ultralytics model zoo.")
         

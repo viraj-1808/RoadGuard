@@ -1,12 +1,12 @@
 task: detect
 mode: train
-model: runs\detect\experiments\training\yol11s_experiment2\weights\last.pt
-data: experiments\dataset\experiment2\data.yaml
+model: weights/yolo11s.pt
+data: experiments/dataset/experiment2/data.yaml
 epochs: 30
 time: null
 patience: 50
 batch: 16
-imgsz: 736
+imgsz: 720
 save: true
 save_period: 1
 cache: false
@@ -25,7 +25,7 @@ single_cls: false
 rect: false
 cos_lr: false
 close_mosaic: 10
-resume: runs\detect\experiments\training\yol11s_experiment2\weights\last.pt
+resume: false
 amp: true
 fraction: 1.0
 profile: false
@@ -78,7 +78,7 @@ momentum: 0.937
 weight_decay: 0.0005
 warmup_epochs: 3.0
 warmup_momentum: 0.8
-warmup_bias_lr: 0.0
+warmup_bias_lr: 0.1
 distill_model: null
 dis: 6.0
 box: 7.5

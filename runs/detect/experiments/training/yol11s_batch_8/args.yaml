@@ -1,6 +1,6 @@
 task: detect
 mode: train
-model: yolo11s.pt
+model: weights/yolo11s.pt
 data: experiments\dataset\yolo_rdd2022_india\data.yaml
 epochs: 1
 time: null

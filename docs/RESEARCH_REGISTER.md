@@ -241,7 +241,7 @@ Status:
   - **OPEN**: Whether the full official India release provides sequence metadata (unanswerable while S3 returns 403)
   - **OPEN**: Whether the 121 clustered images share common video origin or are separate visits to the same locations
   - **OPEN**: Whether the flat index is a release ordering or a capture ordering
-- **Evidence**: `docs/DATASET_AUDIT.md` §18.20; `experiments/dataset/normalized_rdd2022_india/group_analysis/SYNTHESIS.md`, `filename_report.{json,md}`, `image_correlation.{json,md}`, `near_duplicate_verification.{json,md}`; `analysis/analyze_filename_structure.py`, `analysis/analyze_image_correlation.py`, `analysis/verify_near_duplicates.py`
+- **Evidence**: `docs/DATASET_AUDIT.md` §18.20; `experiments/dataset/normalized_rdd2022_india/group_analysis/SYNTHESIS.md`, `filename_report.{json,md}`, `image_correlation.{json,md}`, `near_duplicate_verification.{json,md}`; `scripts/analysis/analyze_filename_structure.py`, `scripts/analysis/analyze_image_correlation.py`, `scripts/analysis/verify_near_duplicates.py`
 - **Engineering implication**: D-006's principle stands but its implementation assumption (available source group IDs) is falsified for this artifact. A refinement (D-006-R1) is PROPOSED, not applied. Any future split must treat the 59 verified clusters as atomic units, must not use index proximity as a grouping proxy, and must record residual leakage risk as unquantifiable.
 - **Confidence**: HIGH for the absence of metadata, exact-duplicate absence, and null neighbor correlation (directly measured). MEDIUM-HIGH for the near-duplicate cluster structure (pixel-verified with calibrated thresholds, but visual identity does not establish capture origin).
 - **Affected decision**: D-006 (unchanged); D-006-R1 (proposed refinement)

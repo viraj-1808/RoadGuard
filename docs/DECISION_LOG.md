@@ -467,6 +467,6 @@ R-011.
 - **Context**: RDD2022 uses random per-image splits. Near-duplicate frames from same video can land in different splits. Project standard: correlation ≥ 0.9 AND MAD ≤ 0.1 on 64×64 grayscale.
 - **Evidence**: Initial audit found 106 train/val crossing pairs. Iterative removal reduced to 4 pairs. The 25 "frozen_test" pairs are within frozen test itself. Final resolution: excluded entire correlation clusters (39 images) from val selection pool.
 - **Decision**: Correlation criterion (corr ≥ 0.9, MAD ≤ 0.1) is the hard failure threshold. dHash screen (Hamming ≤ 5) is secondary signal only. When cross-split near-duplicates form connected components, entire components are excluded from val selection.
-- **Why**: Matches the project's established correlation methodology (analysis/verify_near_duplicates.py). Exact deduplication is insufficient for perceptual leakage.
+- **Why**: Matches the project's established correlation methodology (scripts/analysis/verify_near_duplicates.py). Exact deduplication is insufficient for perceptual leakage.
 - **Consequences**: 0 cross train/val near-duplicate pairs remain. Frozen test is clean. 39 images excluded from val pool (remain in train).
 - **Status**: LOCKED (resolved)

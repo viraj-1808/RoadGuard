@@ -79,8 +79,8 @@ The project uses **axis-aligned bounding boxes** with the following conventions:
 - **Frame relationships**: One annotation file per image (or per video frame, if video dataset).
 - **Negative examples**: Hard-negative samples (non-pothole road regions) may be included if present in source datasets.
 - **Class normalization**: LOCKED and IMPLEMENTED for RDD2022 India (Strategy B, CRDDC 4-class task, transformation v1.0.0). 1,530 annotations transformed; 4,360 retained, 164 excluded; all 16 invariants pass. See docs/CLASS_MAPPING.md §2 and §10.
-- **Transformation tool**: `analysis/transform_rdd2022_annotations.py`
-- **Validation tool**: `analysis/validate_transformation.py`
+- **Transformation tool**: `scripts/analysis/transform_rdd2022_annotations.py`
+- **Validation tool**: `scripts/analysis/validate_transformation.py`
 - **Transformation tests**: `tests/ml/data/inspection/test_transform_rdd2022.py` (37 tests)
 
 ---
@@ -160,9 +160,9 @@ A refinement to D-006 covering this case is **PROPOSED** as D-006-R1 in DECISION
 Reproduction:
 
 ```powershell
-python analysis/analyze_filename_structure.py    # filename + metadata evidence
-python analysis/analyze_image_correlation.py     # exact dupes + neighbor correlation
-python analysis/verify_near_duplicates.py        # complete linkage + pixel verification
+python scripts/analysis/analyze_filename_structure.py    # filename + metadata evidence
+python scripts/analysis/analyze_image_correlation.py     # exact dupes + neighbor correlation
+python scripts/analysis/verify_near_duplicates.py        # complete linkage + pixel verification
 ```
 
 None of these scripts write to the raw or normalized dataset.
@@ -302,10 +302,10 @@ for the full specification and results.
 
 ```powershell
 # Run the transformation
-python analysis/transform_rdd2022_annotations.py
+python scripts/analysis/transform_rdd2022_annotations.py
 
 # Run the independent invariant validation
-python analysis/validate_transformation.py
+python scripts/analysis/validate_transformation.py
 
 # Run the fixture-based tests
 python -m pytest tests/ml/data/inspection/test_transform_rdd2022.py -v
