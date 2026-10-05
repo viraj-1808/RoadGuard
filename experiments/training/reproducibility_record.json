@@ -1,0 +1,19 @@
+{
+  "git_commit": "312d4f4dcbc41254c2f644d355a3627b60e20990",
+  "python_version": "Python 3.12.10",
+  "pytorch_version": "PyTorch: 2.14.0+cu126",
+  "cuda_version": "CUDA: 12.6",
+  "nvidia_driver_version": "592.82",
+  "gpu_model": "GPU: NVIDIA GeForce RTX 4050 Laptop GPU",
+  "ultralytics_version": "Ultralytics: 8.4.138",
+  "dataset_path": "C:/Users/viraj/Code_files/Github/RoadGuard AI/experiments/dataset/yolo_rdd2022_india",
+  "data_yaml_checksum": "67880aae1e0dd25ec8ebb2edbb397bc4a48229fcb83fe78eae22ff213b59947d",
+  "split_manifest_checksum": "7cd8c5557275d4c971a9cdba6aff470d6d75994628569ea5aa8089d5156dbb60",
+  "conversion_manifest_checksum": "3876ecba242eea4f1c0c78e133a4cc606c30d07cadad13d3717e6853180be6e8",
+  "model_checkpoint": "yolo11s.pt",
+  "image_size": 720,
+  "batch_size": 16,
+  "seed": 42,
+  "epochs": 1,
+  "output_directory": "C:/Users/viraj/Code_files/Github/RoadGuard AI/runs/detect/experiments/training/yol11s_batch_16"
+}

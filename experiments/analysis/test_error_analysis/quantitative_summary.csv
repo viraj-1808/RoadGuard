@@ -1,0 +1,25 @@
+metric,value
+Total GT Objects,679
+Total Predictions,17198
+True Positives (TP),596
+False Positives (FP),16602
+False Negatives (FN),83
+Precision,0.0347
+Recall,0.8778
+F1-Score,0.0667
+longitudinal_crack GT Count,66
+longitudinal_crack Precision,0.0199
+longitudinal_crack Recall,0.8333
+longitudinal_crack F1-Score,0.0388
+transverse_crack GT Count,5
+transverse_crack Precision,0.0038
+transverse_crack Recall,0.4000
+transverse_crack F1-Score,0.0074
+alligator_crack GT Count,96
+alligator_crack Precision,0.0319
+alligator_crack Recall,0.9062
+alligator_crack F1-Score,0.0617
+pothole GT Count,512
+pothole Precision,0.0405
+pothole Recall,0.8828
+pothole F1-Score,0.0774

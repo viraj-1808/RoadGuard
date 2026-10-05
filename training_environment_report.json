@@ -1,0 +1,143 @@
+{
+  "audit_timestamp": "2026-09-27T18:14:46Z",
+  "system": {
+    "os": "Windows 11",
+    "python_version": "3.12.10",
+    "python_build": "tags/v3.12.10:0cc8128, Apr 8 2025, 12:21:36",
+    "architecture": "AMD64"
+  },
+  "gpu": {
+    "detected_by_nvidia_smi": true,
+    "name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "vram_total_mib": 6141,
+    "vram_total_gb": 6.0,
+    "vram_free_mib": 5822,
+    "vram_free_gb": 5.7,
+    "vram_used_mib": 99,
+    "driver_version": "592.82",
+    "cuda_driver_version": "13.1",
+    "temperature_c": 55,
+    "utilization_percent": 32,
+    "power_draw_w": 6.58
+  },
+  "pytorch": {
+    "version": "2.14.0+cpu",
+    "cuda_available": false,
+    "cuda_version": null,
+    "cudnn_enabled": true,
+    "cudnn_version": null,
+    "gpu_count": 0,
+    "device": "cpu",
+    "torchvision_version": "0.29.0",
+    "is_cpu_only": true
+  },
+  "ultralytics": {
+    "version": "8.4.138",
+    "ultralytics_platform_version": "0.1.21",
+    "ultralytics_thop_version": "2.1.6"
+  },
+  "model": {
+    "name": "yolo11s",
+    "architecture": "YOLOv11 (Small)",
+    "parameters": 9458752,
+    "gfloops": 21.8,
+    "layers": 181,
+    "model_size_mb_fp32": 37.8,
+    "download_status": "successful",
+    "inference_status": "tested_on_cpu",
+    "inference_cpu_ms": 372.5
+  },
+  "dependencies": {
+    "numpy": "2.2.6",
+    "opencv_python": "4.14.0",
+    "opencv_python_headless": "5.0.0.93",
+    "opencv_contrib_python": "4.9.0.80",
+    "pillow": "12.3.0",
+    "matplotlib": "3.11.1",
+    "scipy": "1.13.1",
+    "tqdm": "4.70.0",
+    "psutil": "7.2.2",
+    "pyyaml": "6.0.3",
+    "pandas": "not_installed",
+    "pydantic": "2.7.4",
+    "supervision": "0.30.1",
+    "onnxruntime": "1.17.3",
+    "av": "18.1.0",
+    "scikit_image": "0.26.0"
+  },
+  "disk_space": {
+    "drive": "C:",
+    "total_gb": 510.92,
+    "used_gb": 304.87,
+    "free_gb": 206.06
+  },
+  "memory_feasibility": {
+    "model_weights_fp32_mb": 37.8,
+    "gradients_mb": 37.8,
+    "optimizer_states_adamw_mb": 75.7,
+    "activations_bs16_640x640_mb": 500,
+    "total_estimated_vram_fp32_mb": 651.3,
+    "total_estimated_vram_fp16_mb": 325.7,
+    "total_estimated_vram_bf16_mb": 325.7,
+    "total_estimated_vram_gradient_accumulation_2_mb": 434.2,
+    "vram_available_mb": 5822,
+    "vram_sufficient": true,
+    "vram_headroom_mb": 5139
+  },
+  "supported_architectures": {
+    "yolov5": {
+      "yolov5n": { "parameters": 1900000, "gfloops": 4.5, "available": true },
+      "yolov5s": { "parameters": 7200000, "gfloops": 16.5, "available": true },
+      "yolov5m": { "parameters": 21200000, "gfloops": 46.7, "available": true },
+      "yolov5l": { "parameters": 46500000, "gfloops": 109.2, "available": true },
+      "yolov5x": { "parameters": 89700000, "gfloops": 218.8, "available": true }
+    },
+    "yolov8": {
+      "yolov8n": { "parameters": 3200000, "gfloops": 8.7, "available": true },
+      "yolov8s": { "parameters": 11200000, "gfloops": 28.6, "available": true },
+      "yolov8m": { "parameters": 33900000, "gfloops": 88.8, "available": true },
+      "yolov8l": { "parameters": 43700000, "gfloops": 165.9, "available": true },
+      "yolov8x": { "parameters": 68400000, "gfloops": 258.3, "available": true }
+    },
+    "yolov11": {
+      "yolov11n": { "parameters": 2600000, "gfloops": 6.2, "available": true },
+      "yolov11s": { "parameters": 9458752, "gfloops": 21.8, "available": true, "tested": true },
+      "yolov11m": { "parameters": 20100000, "gfloops": 50.7, "available": true },
+      "yolov11l": { "parameters": 25300000, "gfloops": 86.1, "available": true },
+      "yolov11x": { "parameters": 56900000, "gfloops": 193.4, "available": true }
+    },
+    "yolov12": {
+      "yolov12n": { "parameters": 2600000, "gfloops": 6.3, "available": true },
+      "yolov12s": { "parameters": 12400000, "gfloops": 23.8, "available": true },
+      "yolov12m": { "parameters": 27200000, "gfloops": 62.6, "available": true },
+      "yolov12l": { "parameters": 33400000, "gfloops": 115.0, "available": true },
+      "yolov12x": { "parameters": 73100000, "gfloops": 256.2, "available": true }
+    }
+  },
+  "feasibility_assessment": {
+    "gpu_hardware_present": true,
+    "gpu_detected_by_pytorch": false,
+    "cuda_available": false,
+    "pytorch_is_cpu_only": true,
+    "ultralytics_installed": true,
+    "yolo11s_model_available": true,
+    "yolo11s_inference_works": true,
+    "vram_sufficient_for_yolo11s": true,
+    "disk_space_sufficient": true,
+    "training_feasible": false,
+    "blocking_issues": [
+      {
+        "issue": "PyTorch CPU-only installation",
+        "severity": "CRITICAL",
+        "description": "PyTorch 2.14.0+cpu is installed without CUDA support. The system has an NVIDIA RTX 4050 GPU with CUDA 13.1 driver support, but PyTorch cannot utilize the GPU.",
+        "recommendation": "Install a CUDA-enabled PyTorch build using: pip install torch==2.14.0+cu121 torchvision==0.29.0+cu121 --index-url https://download.pytorch.org/whl/cu121"
+      },
+      {
+        "issue": "CUDA version mismatch potential",
+        "severity": "POTENTIAL",
+        "description": "System driver reports CUDA 13.1, but no CUDA-enabled PyTorch version is installed to verify compatibility.",
+        "recommendation": "After installing CUDA-enabled PyTorch, verify compatibility with torch.cuda.is_available()"
+      }
+    ]
+  }
+}

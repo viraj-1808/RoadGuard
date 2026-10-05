@@ -1,0 +1,194 @@
+{
+  "analysis_version": "1.0.0",
+  "agent": "F (YOLO Conversion Audit)",
+  "timestamp": "2026-09-27T13:00:00Z",
+  "purpose": "Evidence collection for YOLO format conversion requirements",
+  "status": "COMPLETED",
+  "methodology": "Analysis of existing normalized dataset structure, annotation formats, and training environment requirements",
+  "source_data": {
+    "dataset_path": "experiments/dataset/normalized_rdd2022_india/",
+    "images": {
+      "count": 1530,
+      "resolution": [720, 720],
+      "format": "PNG",
+      "directory": "train/images/"
+    },
+    "annotations": {
+      "count": 1530,
+      "format": "JSON (RDD2022 custom)",
+      "directory": "train/annotations/",
+      "objects_total": 4360,
+      "classes": {
+        "longitudinal_crack": {"objects": 498, "images": 380},
+        "transverse_crack": {"objects": 30, "images": 29},
+        "alligator_crack": {"objects": 645, "images": 549},
+        "pothole": {"objects": 3187, "images": 1530}
+      },
+      "quality_metrics": {
+        "empty_annotations": 0,
+        "truncated_objects": 507,
+        "truncated_images": 425,
+        "difficult_objects": 0,
+        "difficult_images": 0
+      }
+    }
+  },
+  "conversion_requirements": {
+    "target_format": "YOLO (Ultralytics compatible)",
+    "label_format": {
+      "extension": ".txt",
+      "per_image": true,
+      "line_format": "<class_id> <x_center> <y_center> <width> <height>",
+      "coordinate_normalization": "divide by 720 (image width/height)",
+      "decimal_precision": 6
+    },
+    "class_mapping_provisional": {
+      "0": "longitudinal_crack",
+      "1": "transverse_crack",
+      "2": "alligator_crack",
+      "3": "pothole"
+    },
+    "output_structure": {
+      "images": {
+        "train": "dataset/images/train/",
+        "val": "dataset/images/val/",
+        "test": "dataset/images/test/"
+      },
+      "labels": {
+        "train": "dataset/labels/train/",
+        "val": "dataset/labels/val/",
+        "test": "dataset/labels/test/"
+      },
+      "data_yaml": "dataset/data.yaml"
+    },
+    "handling_policies": {
+      "truncated_objects": "retain",
+      "difficult_objects": "retain (none present)",
+      "empty_annotations": "create empty .txt file",
+      "class_imbalance": "preserve as-is (training concern, not conversion)"
+    }
+  },
+  "conversion_algorithm": {
+    "coordinate_transformation": {
+      "source_format": "RDD2022 JSON with bbox: {x, y, width, height} in pixels",
+      "target_format": "YOLO normalized center-x, center-y, width, height",
+      "formulas": {
+        "x_center": "(bbox_x + bbox_width/2) / 720",
+        "y_center": "(bbox_y + bbox_height/2) / 720",
+        "width": "bbox_width / 720",
+        "height": "bbox_height / 720"
+      },
+      "validation": "all outputs in [0.0, 1.0] range"
+    },
+    "processing_order": [
+      "1. Scan annotation directory for all JSON files",
+      "2. For each annotation, load and parse objects",
+      "3. Apply class mapping to get class_id",
+      "4. Apply coordinate normalization for each object",
+      "5. Write YOLO format .txt file (same stem as image)",
+      "6. Handle edge cases: empty annotations, truncated objects",
+      "7. Generate data.yaml with class names and paths"
+    ],
+    "quality_checkpoints": [
+      "Total object count preserved per class",
+      "Coordinate bounds validation [0,1]",
+      "File count matches image count (1530)",
+      "No data loss in conversion",
+      "Class distribution integrity"
+    ]
+  },
+  "dependencies": {
+    "split_construction": "Must complete H1 atomicity analysis first",
+    "split_integration": "Conversion output must feed into split directories",
+    "training_config": "data.yaml must match training script expectations",
+    "environment": "Ultralytics YOLO package available (confirmed by Agent G)"
+  },
+  "verification_procedures": {
+    "pre_conversion": [
+      "Validate JSON parseability for all 1530 files",
+      "Confirm 1:1 image-annotation pairing",
+      "Verify no empty annotations (confirmed: 0)",
+      "Confirm coordinate bounds within [0, 720]"
+    ],
+    "during_conversion": [
+      "Progress logging every 100 files",
+      "Coordinate range checking",
+      "Class mapping validation",
+      "Error collection for review"
+    ],
+    "post_conversion": [
+      "Sample manual verification (min 10 files)",
+      "Automated count verification per class",
+      "Coordinate bounds audit [0,1]",
+      "data.yaml format validation",
+      "Cross-reference with original object counts"
+    ]
+  },
+  "provisional_decisions": {
+    "class_mapping": {
+      "status": "PROVISIONAL - PENDING HUMAN REVIEW",
+      "mapping": {"0": "longitudinal_crack", "1": "transverse_crack", "2": "alligator_crack", "3": "pothole"},
+      "rationale": "Alphabetical order by class name, pothole last as majority class"
+    },
+    "truncated_handling": {
+      "status": "PROVISIONAL - PENDING HUMAN REVIEW",
+      "policy": "retain",
+      "rationale": "H7 default from evidence, truncation metadata not in YOLO format"
+    },
+    "normalization_basis": {
+      "status": "PROVISIONAL - PENDING HUMAN REVIEW",
+      "resolution": [720, 720],
+      "rationale": "Evidence from correlation_graph.json and normalized dataset structure"
+    },
+    "precision": {
+      "status": "STANDARD",
+      "decimal_places": 6,
+      "rationale": "YOLO standard precision"
+    }
+  },
+  "risk_assessment": {
+    "technical": {
+      "conversion_complexity": "LOW",
+      "format_compliance": "HIGH confidence",
+      "data_loss_risk": "VERY LOW (read-only, validation checkpoints)"
+    },
+    "data": {
+      "class_imbalance": "HIGH (training concern, not conversion)",
+      "annotation_consistency": "HIGH (validated in dataset audit)",
+      "resolution_assumption": "MEDIUM (strong evidence but needs confirmation)"
+    },
+    "operational": {
+      "execution_time": "ESTIMATED < 30 seconds for full dataset",
+      "disk_space": "NEGLIGIBLE (< 10 MB for labels)",
+      "rollback": "TRIVIAL (labels directory can be deleted)"
+    }
+  },
+  "implementation_readiness": {
+    "source_data_available": true,
+    "target_format_defined": true,
+    "conversion_logic_documented": true,
+    "validation_plan_defined": true,
+    "blockers": [
+      "Human review of class mapping",
+      "Human review of truncation policy",
+      "Confirmation of 720x720 normalization"
+    ],
+    "estimated_implementation_time": "15-30 minutes for script + validation"
+  },
+  "next_actions": [
+    "Resolve provisional decisions via human review",
+    "Implement conversion script with checkpoints",
+    "Execute conversion on full dataset",
+    "Run validation suite",
+    "Generate data.yaml",
+    "Integrate with split construction pipeline"
+  ],
+  "limitations": [
+    "Does not address split construction (separate agent)",
+    "Does not solve class imbalance (training phase concern)",
+    "Assumes uniform 720x720 resolution (validated but not proven for all)",
+    "Truncated object metadata lost in YOLO format (no truncated field)",
+    "No image preprocessing or augmentation (conversion only)"
+  ],
+  "status": "COMPLETE - Evidence only, no conversion executed"
+}

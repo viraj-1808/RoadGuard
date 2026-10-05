@@ -1,0 +1,458 @@
+{
+  "experiment_id": "EXP-INF-001",
+  "timestamp": "2026-10-03T17:03:00.312313Z",
+  "model": {
+    "path": "runs\\detect\\experiments\\training\\yol11s_dataset_v2_split_v2\\weights\\best.pt",
+    "sha256": "721277b9d066715bc82d3d4fa34fcbcfb6147cb4265b216f41fc68c8beb59823",
+    "name": "YOLO11s",
+    "class_names": {
+      "0": "longitudinal_crack",
+      "1": "transverse_crack",
+      "2": "alligator_crack",
+      "3": "pothole"
+    },
+    "training_run_id": "yol11s_dataset_v2_split_v2"
+  },
+  "inference_config": {
+    "confidence_threshold": 0.25,
+    "iou_threshold": 0.7,
+    "imgsz": 720,
+    "device": "0"
+  },
+  "source_directory": "validation\\manual\\input",
+  "images": [
+    {
+      "file": "road001.webp",
+      "path": "validation\\manual\\input\\road001.webp",
+      "width": 1140,
+      "height": 760,
+      "inference_time_ms": 54.5146000222303,
+      "detections": [
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.6540261507034302,
+          "bbox_xyxy": [
+            95.39811706542969,
+            439.5462341308594,
+            344.9998474121094,
+            523.6841430664062
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.4701067805290222,
+          "bbox_xyxy": [
+            650.2210693359375,
+            400.76885986328125,
+            1140.0,
+            753.54345703125
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.3588443994522095,
+          "bbox_xyxy": [
+            346.9253234863281,
+            395.15924072265625,
+            1140.0,
+            758.6810913085938
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road002.jpg",
+      "path": "validation\\manual\\input\\road002.jpg",
+      "width": 700,
+      "height": 525,
+      "inference_time_ms": 34.93610001169145,
+      "detections": [
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.3970755338668823,
+          "bbox_xyxy": [
+            260.759765625,
+            150.74246215820312,
+            413.557373046875,
+            237.59033203125
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road003.jpg",
+      "path": "validation\\manual\\input\\road003.jpg",
+      "width": 978,
+      "height": 1390,
+      "inference_time_ms": 37.65469999052584,
+      "detections": [
+        {
+          "class_id": 2,
+          "class_name": "alligator_crack",
+          "confidence": 0.6029847264289856,
+          "bbox_xyxy": [
+            0.0,
+            208.0132598876953,
+            978.0,
+            965.8851928710938
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "alligator_crack",
+          "confidence": 0.42536789178848267,
+          "bbox_xyxy": [
+            0.0,
+            227.5196990966797,
+            978.0,
+            649.1630859375
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road004.jpg",
+      "path": "validation\\manual\\input\\road004.jpg",
+      "width": 640,
+      "height": 480,
+      "inference_time_ms": 36.08839999651536,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road005.jpg",
+      "path": "validation\\manual\\input\\road005.jpg",
+      "width": 452,
+      "height": 678,
+      "inference_time_ms": 49.43390004336834,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road006.jpg",
+      "path": "validation\\manual\\input\\road006.jpg",
+      "width": 447,
+      "height": 447,
+      "inference_time_ms": 23.445200000423938,
+      "detections": [
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.5724758505821228,
+          "bbox_xyxy": [
+            147.8229522705078,
+            70.58779907226562,
+            191.64425659179688,
+            127.24642944335938
+          ]
+        },
+        {
+          "class_id": 0,
+          "class_name": "longitudinal_crack",
+          "confidence": 0.45844778418540955,
+          "bbox_xyxy": [
+            0.0,
+            169.48326110839844,
+            129.0541534423828,
+            345.2719421386719
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.39042791724205017,
+          "bbox_xyxy": [
+            90.7720718383789,
+            79.66543579101562,
+            148.73167419433594,
+            133.0100860595703
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road007.jpg",
+      "path": "validation\\manual\\input\\road007.jpg",
+      "width": 739,
+      "height": 415,
+      "inference_time_ms": 33.18329999456182,
+      "detections": [
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.5388867855072021,
+          "bbox_xyxy": [
+            205.1070556640625,
+            190.41806030273438,
+            739.0,
+            415.0
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.3278866410255432,
+          "bbox_xyxy": [
+            104.4383773803711,
+            161.4778289794922,
+            697.5638427734375,
+            415.0
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road008.jpg",
+      "path": "validation\\manual\\input\\road008.jpg",
+      "width": 479,
+      "height": 641,
+      "inference_time_ms": 28.19520002231002,
+      "detections": [
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.39706912636756897,
+          "bbox_xyxy": [
+            0.385713666677475,
+            65.92220306396484,
+            217.85281372070312,
+            138.977783203125
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road009.jpg",
+      "path": "validation\\manual\\input\\road009.jpg",
+      "width": 518,
+      "height": 592,
+      "inference_time_ms": 33.57620001770556,
+      "detections": [
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.619371235370636,
+          "bbox_xyxy": [
+            205.28518676757812,
+            161.53932189941406,
+            264.9638366699219,
+            215.19070434570312
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.5713891983032227,
+          "bbox_xyxy": [
+            135.17410278320312,
+            239.8260955810547,
+            290.776611328125,
+            303.6014404296875
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.394142210483551,
+          "bbox_xyxy": [
+            124.5232925415039,
+            284.5389099121094,
+            514.9190063476562,
+            574.012451171875
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road010.jpg",
+      "path": "validation\\manual\\input\\road010.jpg",
+      "width": 679,
+      "height": 452,
+      "inference_time_ms": 24.71139997942373,
+      "detections": [
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.7333250641822815,
+          "bbox_xyxy": [
+            169.818359375,
+            228.73846435546875,
+            512.373291015625,
+            439.50830078125
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.5022141933441162,
+          "bbox_xyxy": [
+            428.7744445800781,
+            137.09133911132812,
+            532.9837646484375,
+            162.85733032226562
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.4253057837486267,
+          "bbox_xyxy": [
+            0.0,
+            209.76263427734375,
+            127.48546600341797,
+            440.6175842285156
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.40031954646110535,
+          "bbox_xyxy": [
+            164.46371459960938,
+            237.57391357421875,
+            421.98760986328125,
+            441.2099914550781
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.3541198968887329,
+          "bbox_xyxy": [
+            2.1810014247894287,
+            209.9824676513672,
+            134.19644165039062,
+            273.8802795410156
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road011.jpg",
+      "path": "validation\\manual\\input\\road011.jpg",
+      "width": 678,
+      "height": 452,
+      "inference_time_ms": 16.65879995562136,
+      "detections": [
+        {
+          "class_id": 0,
+          "class_name": "longitudinal_crack",
+          "confidence": 0.7769435048103333,
+          "bbox_xyxy": [
+            248.39744567871094,
+            227.55482482910156,
+            312.4872131347656,
+            355.9632263183594
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road012.jpg",
+      "path": "validation\\manual\\input\\road012.jpg",
+      "width": 612,
+      "height": 406,
+      "inference_time_ms": 27.3163000238128,
+      "detections": [
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.31466442346572876,
+          "bbox_xyxy": [
+            0.0,
+            0.0,
+            216.05039978027344,
+            79.12346649169922
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road013.jpg",
+      "path": "validation\\manual\\input\\road013.jpg",
+      "width": 1200,
+      "height": 900,
+      "inference_time_ms": 25.623399997130036,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road014.webp",
+      "path": "validation\\manual\\input\\road014.webp",
+      "width": 389,
+      "height": 280,
+      "inference_time_ms": 31.681499967817217,
+      "detections": [
+        {
+          "class_id": 2,
+          "class_name": "alligator_crack",
+          "confidence": 0.7726755738258362,
+          "bbox_xyxy": [
+            78.04866027832031,
+            74.01073455810547,
+            305.7710876464844,
+            252.08648681640625
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.5535354018211365,
+          "bbox_xyxy": [
+            206.47727966308594,
+            136.04527282714844,
+            291.06719970703125,
+            187.865478515625
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "alligator_crack",
+          "confidence": 0.25502318143844604,
+          "bbox_xyxy": [
+            62.2255859375,
+            88.63723754882812,
+            362.5242614746094,
+            257.1767272949219
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road015.jpg",
+      "path": "validation\\manual\\input\\road015.jpg",
+      "width": 1200,
+      "height": 800,
+      "inference_time_ms": 39.14579999400303,
+      "detections": [
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.6443289518356323,
+          "bbox_xyxy": [
+            911.771484375,
+            302.0791320800781,
+            1200.0,
+            582.5985107421875
+          ]
+        }
+      ],
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "experiment_specification": {
+    "model": {
+      "architecture": "YOLO11s",
+      "role": "baseline",
+      "initialization": "pretrained",
+      "pretrained_source": "COCO/ImageNet pretrained weights",
+      "framework": "Ultralytics YOLO (or equivalent)"
+    },
+    "training_strategy": {
+      "primary": "pretrained_fine_tuning",
+      "status": "LOCKED",
+      "description": "Start from pretrained weights, fine-tune on pothole dataset"
+    },
+    "hyperparameters": {
+      "mode": "defaults_only",
+      "no_sweep": true,
+      "no_parallel_training": true,
+      "parameters": {
+        "image_size": "OPEN - to be determined from dataset inspection",
+        "batch_size": "OPEN - constrained by GPU memory",
+        "epochs": "OPEN - early stopping based on validation",
+        "optimizer": "DEFAULT from YOLO11s framework",
+        "learning_rate": "DEFAULT from YOLO11s framework",
+        "augmentation": "DEFAULT from YOLO11s framework",
+        "seed": "FIXED per experiment, recorded for reproducibility"
+      }
+    },
+    "dataset": {
+      "primary_candidate": "RDD2022 India subset",
+      "status": "UNDER_AUDIT",
+      "class_mapping": "Strategy B (CRDDC 4-class task)",
+      "mapping_details": {
+        "D00": {"target_class": 0, "target_name": "longitudinal_crack", "action": "KEEP"},
+        "D01": {"target_class": 0, "target_name": "longitudinal_crack", "action": "MERGE_TO_D00"},
+        "D10": {"target_class": 1, "target_name": "transverse_crack", "action": "KEEP"},
+        "D11": {"target_class": 1, "target_name": "transverse_crack", "action": "MERGE_TO_D10"},
+        "D20": {"target_class": 2, "target_name": "alligator_crack", "action": "KEEP"},
+        "D40": {"target_class": 3, "target_name": "pothole", "action": "KEEP"},
+        "D43": {"action": "EXCLUDE", "reason": "Road marking damage (white line blur)"},
+        "D44": {"action": "EXCLUDE", "reason": "Road marking damage (crosswalk blur)"},
+        "D50": {"action": "EXCLUDE", "reason": "Annotation artifact (duplicate D40)"}
+      },
+      "coordinate_format": "[x_min, y_min, x_max, y_max] pixel coordinates, top-left origin",
+      "leakage_prevention": {
+        "principle": "group_based_splitting",
+        "status": "LOCKED",
+        "implementation": "OPEN pending dataset audit",
+        "rdd2022_india_state": "State C - no reliable grouping metadata; 59 near-duplicate clusters as atomic units"
+      }
+    },
+    "evaluation": {
+      "required_metrics": [
+        "Precision",
+        "Recall",
+        "F1",
+        "IoU",
+        "AP",
+        "mAP50",
+        "mAP75",
+        "mAP50-95"
+      ],
+      "evaluation_levels": [
+        "In-domain (validation set)",
+        "Unseen Indian-domain set",
+        "Cross-domain set",
+        "Video sequences",
+        "Live-camera (when applicable)"
+      ],
+      "small_object_analysis": "Based on actual bounding box area distribution",
+      "false_positive_taxonomy": "Framework defined, pending dataset inspection",
+      "false_negative_taxonomy": "Framework defined, pending dataset inspection"
+    },
+    "checkpoint_selection": {
+      "criteria": "Multi-criteria per evaluation protocol",
+      "not_based_on_single_metric": true,
+      "factors": [
+        "Validation metrics at epoch",
+        "Training time and resource usage",
+        "Inference latency (post-training benchmark)"
+      ]
+    },
+    "artifact_management": {
+      "checkpoint_storage": "External (not in Git)",
+      "metadata_storage": "experiments/training/ manifest files",
+      "artifact_hash": "Cryptographic hash for provenance verification",
+      "metadata_required": [
+        "experiment_id",
+        "dataset_version",
+        "split_version",
+        "model",
+        "checkpoint_hash",
+        "checkpoint_external_path",
+        "image_size",
+        "batch_size",
+        "optimizer",
+        "learning_rate",
+        "epochs_actual",
+        "augmentation_config",
+        "seed",
+        "hardware_gpu",
+        "hardware_cpu",
+        "software_versions",
+        "git_commit",
+        "metrics_link",
+        "artifact_link"
+      ]
+    }
+  },
+  "reproducibility_requirements": {
+    "seed_handling": {
+      "required": true,
+      "fixed_per_experiment": true,
+      "recorded_in_metadata": true
+    },
+    "software_versions": {
+      "framework": "REQUIRED",
+      "cuda": "REQUIRED",
+      "python": "REQUIRED",
+      "key_libraries": ["PyTorch", "OpenCV", "NumPy", "Ultralytics"]
+    },
+    "hardware_recording": {
+      "gpu_model": "REQUIRED",
+      "gpu_memory": "REQUIRED",
+      "cpu_model": "REQUIRED",
+      "system_ram": "REQUIRED"
+    },
+    "git_commit": {
+      "required": true,
+      "description": "Repository commit hash used for training"
+    },
+    "data_provenance": {
+      "dataset_version": "REQUIRED",
+      "split_version": "REQUIRED",
+      "manifest_hash": "REQUIRED",
+      "transformation_version": "v1.0.0 (for RDD2022 India)"
+    }
+  },
+  "experiment_workflow": {
+    "steps": [
+      {
+        "step": 1,
+        "name": "Dataset Preparation",
+        "description": "Validate dataset per DATA_PIPELINE.md acceptance criteria",
+        "prerequisites": ["Source provenance verified", "Annotation validation passes", "Leakage groups identified", "Group-based split constructed", "Class normalization applied"]
+      },
+      {
+        "step": 2,
+        "name": "Training Configuration",
+        "description": "Configure YOLO11s with default hyperparameters",
+        "parameters": ["image_size", "batch_size", "epochs", "optimizer", "learning_rate", "augmentation", "seed"]
+      },
+      {
+        "step": 3,
+        "name": "Training Execution",
+        "description": "Run training with fixed seed, save periodic checkpoints",
+        "output": "Training logs, intermediate checkpoints"
+      },
+      {
+        "step": 4,
+        "name": "Checkpoint Selection",
+        "description": "Select best checkpoint per evaluation protocol",
+        "criteria": "Multi-criteria selection rule"
+      },
+      {
+        "step": 5,
+        "name": "Metadata Recording",
+        "description": "Record all reproducibility metadata, compute artifact hash",
+        "output": "Experiment manifest JSON/YAML in experiments/training/"
+      },
+      {
+        "step": 6,
+        "name": "Evaluation",
+        "description": "Evaluate on validation/test sets per MODEL_EVALUATION.md",
+        "output": "Evaluation report with all required metrics"
+      },
+      {
+        "step": 7,
+        "name": "Runtime Benchmarking",
+        "description": "Benchmark inference latency, throughput, memory usage",
+        "output": "Benchmark report in experiments/benchmarks/"
+      },
+      {
+        "step": 8,
+        "name": "Documentation",
+        "description": "Document results, link artifacts, update experiment registry"
+      }
+    ]
+  },
+  "risk_mitigation": {
+    "selection_bias": {
+      "issue": "Current RDD2022 India artifact has 100% D40-positive images (0% pothole-negative)",
+      "mitigation": "Document as known limitation; report as unquantifiable bias"
+    },
+    "leakage_risk": {
+      "issue": "No reliable grouping metadata in RDD2022 India artifact (State C)",
+      "mitigation": "Use 59 near-duplicate clusters as atomic units; record residual risk as unquantifiable"
+    },
+    "hardware_variability": {
+      "issue": "Different hardware may produce non-deterministic results",
+      "mitigation": "Full hardware/software version recording; fixed seed"
+    },
+    "implementation_correctness": {
+      "issue": "Bugs in training/data pipeline",
+      "mitigation": "Unit tests for transformation pipeline (37 tests passing); validation tools"
+    }
+  },
+  "dependencies": {
+    "required": [
+      "Ultralytics YOLO framework (YOLO11s support)",
+      "Python >= 3.8",
+      "PyTorch with CUDA support",
+      "OpenCV",
+      "PyYAML",
+      "hashlib (standard library)"
+    ],
+    "optional": [
+      "TensorBoard or Weights & Biases for experiment tracking",
+      "ONNX/TensorRT for deployment benchmarking"
+    ]
+  },
+  "status": {
+    "training_implementation": "NOT_STARTED",
+    "experiments_run": "NOT_STARTED",
+    "dataset_composition": "OPEN_UNDER_AUDIT",
+    "first_experiment": "PLANNED"
+  },
+  "references": {
+    "model_training_doc": "docs/MODEL_TRAINING.md",
+    "model_evaluation_doc": "docs/MODEL_EVALUATION.md",
+    "data_pipeline_doc": "docs/DATA_PIPELINE.md",
+    "dataset_audit_doc": "docs/DATASET_AUDIT.md",
+    "class_mapping_doc": "docs/CLASS_MAPPING.md",
+    "decision_log": "docs/DECISION_LOG.md",
+    "research_register": "docs/RESEARCH_REGISTER.md",
+    "project_definition": "docs/PROJECT.md",
+    "experiment_registry": "experiments/training/README.md"
+  }
+}

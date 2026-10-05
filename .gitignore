@@ -33,6 +33,7 @@ weights/
 # --- Experiment Output ---
 # Do not commit experiment outputs, logs, or temporary files
 experiments/output/
+analysis/output/
 experiments/logs/
 experiments/runs/
 *.log

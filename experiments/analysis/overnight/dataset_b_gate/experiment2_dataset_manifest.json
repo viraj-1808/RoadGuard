@@ -1,0 +1,37 @@
+{
+  "experiment": "Experiment 2",
+  "gate": "Pre-Training Data Gate",
+  "status": "BLOCKED",
+  "reason": "Dataset B acquisition failed",
+  "details": {
+    "dataset_b_source": "RDD2022 (CRDDC'2022) via S3 bucket bigdatacup or FigShare",
+    "acquisition_attempt": [
+      {
+        "method": "S3 country-specific ZIPs",
+        "urls": [
+          "https://bigdatacup.s3.ap-northeast-1.amazonaws.com/2022/CRDDC2022/RDD2022/Country_Specific_Data_CRDDC2022/RDD2022_Japan.zip",
+          "https://bigdatacup.s3.ap-northeast-1.amazonaws.com/2022/CRDDC2022/RDD2022/Country_Specific_Data_CRDDC2022/RDD2022_Czech.zip",
+          "https://bigdatacup.s3.ap-northeast-1.amazonaws.com/2022/CRDDC2022/RDD2022/Country_Specific_Data_CRDDC2022/RDD2022_Norway.zip",
+          "https://bigdatacup.s3.ap-northeast-1.amazonaws.com/2022/CRDDC2022/RDD2022/Country_Specific_Data_CRDDC2022/RDD2022_United_States.zip",
+          "https://bigdatacup.s3.ap-northeast-1.amazonaws.com/2022/CRDDC2022/RDD2022/Country_Specific_Data_CRDDC2022/RDD2022_China_MotorBike.zip",
+          "https://bigdatacup.s3.ap-northeast-1.amazonaws.com/2022/CRDDC2022/RDD2022/Country_Specific_Data_CRDDC2022/RDD2022_China_Drone.zip"
+        ],
+        "result": "All 6 URLs returned 403 Forbidden",
+        "status": "FAILED"
+      },
+      {
+        "method": "FigShare full dataset",
+        "url": "https://doi.org/10.6084/m9.figshare.21431547",
+        "attempted_download": "RoadDamageDataset.zip (~12.36 GB)",
+        "result": "Download speed ~22 MB/min (~97 hours total); partial download corrupted at ~453 MB",
+        "status": "FAILED"
+      }
+    ],
+    "final_state": "No Dataset B files acquired"
+  },
+  "experiment2_dataset": {
+    "status": "NOT CREATED",
+    "reason": "Dataset B not acquired"
+  },
+  "timestamp": "2026-09-30T08:44:34Z"
+}

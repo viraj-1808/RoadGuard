@@ -1,0 +1,69 @@
+{
+  "evaluation": {
+    "task": "held-out test evaluation",
+    "timestamp": "2026-09-29T18:03:28.587134",
+    "model_path": "runs/detect/experiments/training/yol11s_dataset_v2_split_v2/weights/best.pt",
+    "model_sha256": "721277b9d066715bc82d3d4fa34fcbcfb6147cb4265b216f41fc68c8beb59823",
+    "data_yaml": "experiments/dataset/yolo_rdd2022_india/data.yaml",
+    "split": "test",
+    "ultralytics_version": "8.4.138"
+  },
+  "dataset": {
+    "yaml_path": "experiments/dataset/yolo_rdd2022_india/data.yaml",
+    "manifest_path": "experiments/dataset/normalized_rdd2022_india/split_manifest_fixed.json",
+    "manifest_sha256": "7cd8c5557275d4c971a9cdba6aff470d6d75994628569ea5aa8089d5156dbb60",
+    "test_images": 230,
+    "test_objects": 679,
+    "class_names": [
+      "longitudinal_crack",
+      "transverse_crack",
+      "alligator_crack",
+      "pothole"
+    ]
+  },
+  "environment": {
+    "date": "2026-09-29T18:03:28.604314",
+    "framework": "Ultralytics YOLO",
+    "framework_version": "8.4.138"
+  },
+  "artifacts": {
+    "predictions_json": {
+      "path": "predictions.json",
+      "sha256": "4c53c2092d9b460e23347ff7ec0270c3ec5898bf87dd56d4d95e71912c601519",
+      "unique_images": 230,
+      "total_predictions": 17198
+    },
+    "confusion_matrix_png": {
+      "path": "confusion_matrix.png",
+      "sha256": "f26ab7ab2c8870e828b3230ad638a2e72392cf33d8adf190d9f0b16323c0afaf"
+    },
+    "confusion_matrix_normalized_png": {
+      "path": "confusion_matrix_normalized.png",
+      "sha256": "8856893b9b214b52952ccd9ee44b3deb11dee20285a87b10dcd0d904236a77af"
+    },
+    "box_p_curve_png": {
+      "path": "BoxP_curve.png",
+      "sha256": "877f0333c72869d6b28ffa27d36566886e62cc4194e1ed50b24005fd00c54671"
+    },
+    "box_r_curve_png": {
+      "path": "BoxR_curve.png",
+      "sha256": "816f860a6a02eef6603bc2b5aa60f71204c4698a4e6f041075e81dc3833eb40a"
+    },
+    "box_f1_curve_png": {
+      "path": "BoxF1_curve.png",
+      "sha256": "6a750bf70b243547c4d707074219ef77e251be7271a438bc8363c054c3ed1d81"
+    },
+    "box_pr_curve_png": {
+      "path": "BoxPR_curve.png",
+      "sha256": "30b5f3a89df6a0914a93e6cf8bbcd37caf5143889117edb69a72f0904a502781"
+    }
+  },
+  "requirements_met": {
+    "best_pt_sha256_match": true,
+    "data_yaml_split_structure": true,
+    "test_images_count": 230,
+    "test_objects_count": 679,
+    "no_training_performed": true,
+    "model_unchanged": true
+  }
+}

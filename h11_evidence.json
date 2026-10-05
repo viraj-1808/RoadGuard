@@ -1,0 +1,330 @@
+{
+  "audit_metadata": {
+    "analysis_version": "1.0.0",
+    "script": "analysis/audit_h11_evidence_scope.py",
+    "purpose": "Analysis only. No split created, no image assigned, no data modified.",
+    "timestamp_utc": "2026-09-27T12:44:34Z",
+    "total_wall_time_seconds": 38.9
+  },
+  "candidate_space": {
+    "exhaustive_dhash_le10": 3812,
+    "upstream_candidate_pairs_recorded": 3716,
+    "blocking_never_enumerated": 96,
+    "absent_from_upstream_file": 96,
+    "channels_are_identical": true,
+    "note": "Banded blocking is the ONLY false-negative channel inside the dHash threshold. The >400 bucket guard skipped 0 buckets."
+  },
+  "blocking_configuration": {
+    "bands": 8,
+    "band_bits": 8,
+    "candidate_threshold_bits": 10,
+    "bucket_skip_threshold": 400,
+    "band_bit_range": "band b occupies bits [63-(b+1)*8+1 .. 63-b*8]",
+    "bucket_statistics": {
+      "bucket_count": 1499,
+      "max_bucket_occupancy": 237,
+      "mean_bucket_occupancy": 8.1654,
+      "buckets_over_skip_threshold": 0,
+      "buckets_skipped_by_guard": 0,
+      "skip_guard_is_live": false
+    }
+  },
+  "miss_distribution_by_dhash_distance": {
+    "8": 4,
+    "9": 19,
+    "10": 73,
+    "total": 96
+  },
+  "pixel_verification": {
+    "pairs_with_corr_ge_090": 1997,
+    "full_space_pass_corr_and_mad": 1672,
+    "upstream_verified_pairs": 583,
+    "upstream_verified_is_subset": true,
+    "full_pass_inside_candidate_space": 583,
+    "full_pass_outside_candidate_space_not_blind_spot": 1083,
+    "blind_spot_pairs_passing_pixel": 6,
+    "partition_checksum": 1672,
+    "partition_balances": true,
+    "full_space_pass_rate": 0.0014294447,
+    "upstream_pass_rate_within_candidate_space": 0.156889
+  },
+  "precision_sensitivity": {
+    "float32_vs_float64_symmetric_difference": 0,
+    "float32_pass_set_size": 1672,
+    "float64_pass_set_size": 1672,
+    "smallest_corr_margin_above_threshold": 5.97280717984372e-06,
+    "smallest_mad_margin_below_threshold": -0.0728448606004902,
+    "verdict": "None. The float32 and float64 pipelines produce the identical pass set, so the result is not an artefact of accumulation precision."
+  },
+  "misses": {
+    "total": 96,
+    "passing_pixel_criterion": 6,
+    "failing_pixel_criterion": 90,
+    "determinism_note": "The miss set is a pure function of (dHash values, band layout, band count, bucket skip threshold). It contains no randomness, no hash-order dependence and no wall-clock input, so it is exactly reproducible."
+  },
+  "pixel_passing_missed_pairs": [
+    {
+      "rank": 1,
+      "a": "India_000595",
+      "b": "India_007749",
+      "dhash_distance": 8,
+      "pixel_corr": 0.905357,
+      "pixel_mad": 0.053503,
+      "differing_bands": "8/8",
+      "differing_bit_positions": [7, 13, 23, 29, 39, 43, 55, 61],
+      "index_gap": 7154,
+      "same_existing_59_group": false
+    },
+    {
+      "rank": 2,
+      "a": "India_003083",
+      "b": "India_005612",
+      "dhash_distance": 10,
+      "pixel_corr": 0.908408,
+      "pixel_mad": 0.065315,
+      "differing_bands": "8/8",
+      "differing_bit_positions": [3, 12, 18, 21, 31, 38, 42, 50, 51, 63],
+      "index_gap": 2529,
+      "same_existing_59_group": false
+    },
+    {
+      "rank": 3,
+      "a": "India_002247",
+      "b": "India_007735",
+      "dhash_distance": 10,
+      "pixel_corr": 0.908757,
+      "pixel_mad": 0.076641,
+      "differing_bands": "8/8",
+      "differing_bit_positions": [2, 8, 10, 16, 24, 28, 36, 41, 54, 57],
+      "index_gap": 5488,
+      "same_existing_59_group": false
+    },
+    {
+      "rank": 4,
+      "a": "India_001349",
+      "b": "India_004749",
+      "dhash_distance": 10,
+      "pixel_corr": 0.918689,
+      "pixel_mad": 0.036780,
+      "differing_bands": "8/8",
+      "differing_bit_positions": [6, 12, 19, 25, 29, 31, 33, 43, 53, 62],
+      "index_gap": 3400,
+      "same_existing_59_group": false
+    },
+    {
+      "rank": 5,
+      "a": "India_005040",
+      "b": "India_005294",
+      "dhash_distance": 10,
+      "pixel_corr": 0.939374,
+      "pixel_mad": 0.077312,
+      "differing_bands": "8/8",
+      "differing_bit_positions": [3, 12, 20, 23, 31, 36, 43, 44, 52, 60],
+      "index_gap": 254,
+      "same_existing_59_group": false
+    },
+    {
+      "rank": 6,
+      "a": "India_002745",
+      "b": "India_008440",
+      "dhash_distance": 9,
+      "pixel_corr": 0.946336,
+      "pixel_mad": 0.059380,
+      "differing_bands": "8/8",
+      "differing_bit_positions": [1, 9, 17, 28, 33, 36, 41, 54, 63],
+      "index_gap": 5695,
+      "same_existing_59_group": false
+    }
+  ],
+  "graph_a": {
+    "definition": "pairs with genuine_visual_match == true in the upstream file",
+    "edge_count": 583,
+    "node_count": 413,
+    "component_count": 95,
+    "largest_component_size": 40,
+    "component_size_histogram": {
+      "2": 65,
+      "3": 11,
+      "4": 3,
+      "5": 2,
+      "6": 1,
+      "7": 1,
+      "8": 1,
+      "10": 2,
+      "13": 2,
+      "16": 2,
+      "18": 1,
+      "20": 1,
+      "24": 1,
+      "27": 1,
+      "40": 1
+    }
+  },
+  "graph_b": {
+    "definition": "graph A plus the blind-spot pixel-passing pairs",
+    "edge_count": 589,
+    "node_count": 414,
+    "component_count": 95,
+    "largest_component_size": 40,
+    "component_size_histogram": {
+      "2": 64,
+      "3": 12,
+      "4": 3,
+      "5": 2,
+      "6": 1,
+      "7": 1,
+      "8": 1,
+      "10": 2,
+      "13": 2,
+      "16": 2,
+      "18": 1,
+      "20": 1,
+      "24": 1,
+      "27": 1,
+      "40": 1
+    },
+    "is_authoritative": false
+  },
+  "edges_added": [
+    {"a": "India_000595", "b": "India_007749", "dhash_distance": 8, "pixel_corr": 0.905357, "pixel_mad": 0.053503},
+    {"a": "India_001349", "b": "India_004749", "dhash_distance": 10, "pixel_corr": 0.918689, "pixel_mad": 0.036780},
+    {"a": "India_002247", "b": "India_007735", "dhash_distance": 10, "pixel_corr": 0.908757, "pixel_mad": 0.076641},
+    {"a": "India_002745", "b": "India_008440", "dhash_distance": 9, "pixel_corr": 0.946336, "pixel_mad": 0.059380},
+    {"a": "India_003083", "b": "India_005612", "dhash_distance": 10, "pixel_corr": 0.908408, "pixel_mad": 0.065315},
+    {"a": "India_005040", "b": "India_005294", "dhash_distance": 10, "pixel_corr": 0.939374, "pixel_mad": 0.077312}
+  ],
+  "component_membership_changes": {
+    "count": 1,
+    "images": {
+      "India_000595": [87]
+    }
+  },
+  "previously_singleton_now_in_component": ["India_000595"],
+  "components_merged": [],
+  "largest_component_change": {
+    "graph_a_largest": 40,
+    "graph_b_largest": 40,
+    "changed": false
+  },
+  "largest_component_detail": {
+    "component_id": "CC_0001",
+    "size": 40,
+    "edge_count": 104,
+    "density": 0.133333,
+    "diameter": 8,
+    "degree_histogram": {
+      "1": 6,
+      "2": 8,
+      "3": 7,
+      "4": 4,
+      "5": 3,
+      "6": 3,
+      "7": 2,
+      "8": 3,
+      "9": 1,
+      "10": 2,
+      "11": 1,
+      "13": 2
+    }
+  },
+  "atomic_unit_count_change": {
+    "graph_a_non_singleton_units": 95,
+    "graph_b_non_singleton_units": 95,
+    "graph_a_total_units_including_singletons": 1212,
+    "graph_b_total_units_including_singletons": 1211
+  },
+  "rare_class_impact": {
+    "A_EXISTING_59_GROUPS": {
+      "atomic_units_total": 59,
+      "atomic_units_containing_rare_class": 3,
+      "images_containing_rare_class_in_units": 3,
+      "rare_class_objects_in_units": 3,
+      "largest_unit_containing_rare_class": 2
+    },
+    "B_CONNECTED_COMPONENTS_583": {
+      "atomic_units_total": 95,
+      "atomic_units_containing_rare_class": 5,
+      "images_containing_rare_class_in_units": 6,
+      "rare_class_objects_in_units": 6,
+      "largest_unit_containing_rare_class": 13
+    },
+    "C_CONNECTED_COMPONENTS_589": {
+      "atomic_units_total": 95,
+      "atomic_units_containing_rare_class": 5,
+      "images_containing_rare_class_in_units": 6,
+      "rare_class_objects_in_units": 6,
+      "largest_unit_containing_rare_class": 13
+    },
+    "D_CLIQUE_COVER_583": {
+      "atomic_units_total": 136,
+      "atomic_units_containing_rare_class": 5,
+      "images_containing_rare_class_in_units": 6,
+      "rare_class_objects_in_units": 6,
+      "largest_unit_containing_rare_class": 3
+    }
+  },
+  "sensitivity_analysis": {
+    "baseline_all_edges": {"edges_retained": 589, "nodes": 414, "components": 95, "largest": 40},
+    "drop_dhash_gt_8": {"edges_retained": 382, "nodes": 399, "components": 83, "largest": 35},
+    "drop_dhash_gt_7": {"edges_retained": 274, "nodes": 361, "components": 68, "largest": 25},
+    "drop_dhash_gt_6": {"edges_retained": 181, "nodes": 305, "components": 63, "largest": 22},
+    "drop_dhash_gt_5": {"edges_retained": 113, "nodes": 233, "components": 53, "largest": 11},
+    "drop_corr_lt_0.95": {"edges_retained": 78, "nodes": 138, "components": 46, "largest": 8},
+    "drop_corr_lt_0.93": {"edges_retained": 233, "nodes": 349, "components": 80, "largest": 16},
+    "drop_mad_gt_0.06": {"edges_retained": 445, "nodes": 407, "components": 85, "largest": 39},
+    "drop_mad_gt_0.05": {"edges_retained": 309, "nodes": 357, "components": 79, "largest": 20},
+    "drop_dhash_gt_6_or_corr_lt_0.93": {"edges_retained": 87, "nodes": 156, "components": 50, "largest": 7}
+  },
+  "full_space_pixel_reproduction": {
+    "total_unordered_pairs": 1169685,
+    "pairs_with_corr_ge_090": 1997,
+    "pairs_passing_corr_and_mad": 1672,
+    "upstream_verified_pairs": 583,
+    "upstream_verified_is_subset": true,
+    "full_pass_inside_candidate_space": 583,
+    "full_pass_outside_candidate_space": 1083,
+    "blind_spot_verified": 6,
+    "partition_checksum": 1672,
+    "full_space_pass_rate": 0.0014294447,
+    "connected_components": {
+      "component_count": 76,
+      "largest_component_size": 397,
+      "node_count": 702,
+      "size_histogram": {
+        "2": 46,
+        "3": 13,
+        "4": 4,
+        "5": 3,
+        "6": 2,
+        "8": 1,
+        "9": 1,
+        "12": 1,
+        "13": 1,
+        "16": 1,
+        "22": 1,
+        "51": 1,
+        "397": 1
+      }
+    }
+  },
+  "exhaustiveness_and_trustworthiness": {
+    "pair_space_is_exhaustive": true,
+    "any_pair_excluded_for_computational_reasons": false,
+    "any_bucket_size_limit_in_this_script": false,
+    "any_silent_skip_in_this_script": false,
+    "deterministic": true
+  },
+  "verification_checklist": {
+    "exhaustive_dhash_le10_candidates_match": true,
+    "blocking_misses_match": true,
+    "pixel_passing_missed_pairs_match": true,
+    "graph_a_edges_match": true,
+    "graph_b_edges_match": true,
+    "exact_pair_list_verified": true,
+    "graph_statistics_match": true,
+    "component_statistics_match": true,
+    "deterministic_reproduction_confirmed": true,
+    "no_silent_skips": true,
+    "old_space_A_vs_exhaustive_B_compared": true
+  }
+}

@@ -1,0 +1,1039 @@
+#!/usr/bin/env python
+"""Convert the non-India RDD2022 Arrow dataset (Dataset B) to YOLO format.
+
+Reads the non-India allowlist produced by ``scripts/experiment2/exclude_india.py``
+(``non_india_allowlist.json``) and materialises the allowed images/labels into a
+YOLO layout under ``--out-root``:
+
+    <out-root>/images/<split>/<name>.jpg
+    <out-root>/labels/<split>/<name>.txt
+
+Country logic is NOT re-derived here: the allowlist already carries
+``{file_name, split, country}`` for every entry.
+
+Label resolution, per image, in priority order:
+
+1. ``repo_txt``           -- on-disk ``data/labels/<split>/shard_*/*.txt``.
+2. ``arrow_synthesized``  -- the Arrow ``objects.bbox`` (COCO absolute pixel
+   xywh) normalized by the ACTUAL image width/height read from the JPEG with
+   PIL. This is used only when no on-disk label file exists.
+
+NEGATIVES ARE PRESERVED: an image with zero target objects is still copied and
+gets an EMPTY label file. Negative images are a deliberate part of the
+Experiment 2 design and are never dropped.
+
+Every YOLO row is validated before it is written: class in {0,1,2,3},
+0 <= cx,cy <= 1, 0 < w <= 1, 0 < h <= 1. Boxes exceeding the image are clipped
+to the image bounds and the clipping is RECORDED; unrecoverable boxes are
+collected into a rejection report instead of being silently dropped.
+
+Writes:
+
+* ``<out-root>/images``, ``<out-root>/labels`` -- the converted dataset.
+* ``<out-root>/provenance_manifest.csv``     -- one row per converted image.
+* ``<out-root>/TAXONOMY_NOTE.md``            -- the D40 semantic caveat.
+* ``<out-root>/rejection_report.csv``        -- dropped boxes / unresolved images.
+* ``<out-root>/clipping_report.csv``         -- boxes clipped to image bounds.
+
+The script is idempotent and crash-safe: labels and images are staged as
+``.part`` files and committed with ``os.replace``; an image already present in
+the output whose sha256 is already recorded in the manifest is skipped.
+
+Usage:
+    python convert_arrow_to_yolo.py
+    python convert_arrow_to_yolo.py --dry-run --limit 50
+    python convert_arrow_to_yolo.py --hf-root <path> --out-root <path>
+
+Exit codes: 0 success, 1 a failed invariant (missing source image, label that
+does not re-validate, an India entry in the allowlist, ...).
+"""
+import argparse
+import csv
+import glob
+import hashlib
+import json
+import os
+import shutil
+import sys
+from collections import Counter
+from typing import Any, Iterable
+
+from datasets import load_from_disk
+from PIL import Image
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+DEFAULT_HF_ROOT = os.path.join(REPO_ROOT, "experiments", "dataset", "raw_hf_rdd2022")
+DEFAULT_ALLOWLIST = os.path.join(
+    REPO_ROOT,
+    "experiments",
+    "analysis",
+    "overnight",
+    "experiment2_dataset_b",
+    "non_india_allowlist.json",
+)
+DEFAULT_OUT_ROOT = os.path.join(REPO_ROOT, "experiments", "dataset", "experiment2")
+
+SOURCE_DATASET = "dronefreak/RDD2022"
+
+#: RDD2022 damage code -> Experiment 2 YOLO class id. Locked taxonomy.
+TAXONOMY: dict[str, int] = {
+    "D00": 0,
+    "D10": 1,
+    "D20": 2,
+    "D40": 3,
+}
+
+#: YOLO class id -> Experiment 2 class name.
+CLASS_NAMES: dict[int, str] = {
+    0: "longitudinal_crack",
+    1: "transverse_crack",
+    2: "alligator_crack",
+    3: "pothole",
+}
+
+#: Inverse of :data:`TAXONOMY`, used to interpret class ids found in on-disk
+#: ``repo_txt`` label files. RDD2022 repo labels already use this ordering.
+RDD_CODE_BY_INDEX: dict[int, str] = {v: k for k, v in TAXONOMY.items()}
+
+#: Arrow split name -> the on-disk ``data/images`` / ``data/labels`` directory
+#: names that may hold that split.
+SPLIT_DIR_CANDIDATES: dict[str, tuple[str, ...]] = {
+    "train": ("train",),
+    "validation": ("valid", "validation"),
+    "test": ("test",),
+}
+
+#: Arrow split name -> the canonical YOLO pool name written to ``--out-root``.
+CANONICAL_SPLIT: dict[str, str] = {
+    "train": "train",
+    "validation": "val",
+    "test": "test",
+}
+
+IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".JPG", ".JPEG", ".PNG")
+
+MANIFEST_NAME = "provenance_manifest.csv"
+REJECTION_NAME = "rejection_report.csv"
+CLIPPING_NAME = "clipping_report.csv"
+TAXONOMY_NOTE_NAME = "TAXONOMY_NOTE.md"
+
+MANIFEST_FIELDS = [
+    "source_dataset",
+    "source_split",
+    "source_image_id",
+    "source_country",
+    "original_class",
+    "mapped_class",
+    "image_sha256",
+    "label_source",
+    "width",
+    "height",
+    "n_objects",
+    "output_image_path",
+    "output_label_path",
+]
+
+REJECTION_FIELDS = [
+    "file_name",
+    "split",
+    "country",
+    "scope",
+    "label_source",
+    "row_index",
+    "reason",
+    "raw",
+]
+
+CLIPPING_FIELDS = [
+    "file_name",
+    "split",
+    "country",
+    "label_source",
+    "row_index",
+    "original_class",
+    "mapped_class",
+    "before",
+    "after",
+]
+
+TAXONOMY_NOTE = """# Taxonomy Note - Experiment 2 Dataset B
+
+**Generated by**: `scripts/experiment2/convert_arrow_to_yolo.py`
+**Scope**: non-India RDD2022 images converted for the Experiment 2 train/val pools.
+
+## Class mapping (unchanged from the Experiment 1 baseline)
+
+| RDD2022 code | YOLO class id | Class name |
+|--------------|---------------|------------|
+| D00 | 0 | `longitudinal_crack` |
+| D10 | 1 | `transverse_crack` |
+| D20 | 2 | `alligator_crack` |
+| D40 | 3 | `pothole` |
+
+The taxonomy is deliberately identical to the frozen Experiment 1 baseline so
+that the only variable in Experiment 2 is the training distribution.
+
+## The D40 caveat - read before interpreting any `pothole` result
+
+RDD2022 class **D40** is **not** a narrowly defined physical pothole. Its
+semantics in RDD2022 are the broad **"Other Corruption"** category, which bundles
+pothole together with rutting, bumps/pothole-edge deformation, and
+road-surface separation/patching defects. Mapping `D40 -> class 3` therefore
+carries that semantic broadening forward into the `pothole` class rather than
+cleaning it up.
+
+This is intentional and consistent: the same D40 -> `pothole` convention is
+used by the Experiment 1 baseline on Dataset A, so the mapping **preserves the
+same semantic broadening already used by the Experiment 1 baseline**. Re-deriving
+a narrow pothole class here would silently change the label semantics between
+the baseline and the treatment, which would destroy the comparability of the
+Experiment 2 ablation.
+
+Practical consequences that must be reported alongside any Experiment 2 metric:
+
+* `pothole` in Experiment 2 is an **"other corruption"** class, not a pothole
+  detector. Per-class `pothole` precision/recall must not be described as
+  pothole-specific performance.
+* The 230-image frozen India test set is 512 `pothole`-class objects out of 679
+  total ground-truth objects, so the headline test number is dominated by this
+  broadened class.
+* Norway, the United States and Czech carry **zero** D40 annotations, so a large
+  share of the added training distribution never exercises this class at all.
+* The box geometry is still a real, tight box around the annotated defect; only
+  the *category* is broad.
+
+## Provenance
+
+* Source: `dronefreak/RDD2022` (RDD2022, Arya et al., arXiv:2209.08538), CC BY-SA 4.0.
+* India images are excluded upstream by `scripts/experiment2/exclude_india.py`.
+* Per-image provenance (source split, country, sha256, label source, object
+  counts) is recorded in `provenance_manifest.csv` in this directory.
+"""
+
+
+def sha256_file(path: str) -> str:
+    """Return the hex sha256 digest of the file at *path*."""
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for chunk in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def write_text_atomic(path: str, text: str) -> None:
+    """Write *text* to *path* via a ``.part`` staging file and ``os.replace``.
+
+    Crash-safe: a partial write can never be observed at *path*.
+    """
+    part_path = path + ".part"
+    with open(part_path, "w", encoding="utf-8", newline="\n") as handle:
+        handle.write(text)
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(part_path, path)
+
+
+def copy_file_atomic(src: str, dst: str) -> None:
+    """Copy *src* to *dst* via a ``.part`` staging file and ``os.replace``."""
+    part_path = dst + ".part"
+    shutil.copyfile(src, part_path)
+    os.replace(part_path, dst)
+
+
+def write_csv_atomic(path: str, fieldnames: list[str], rows: Iterable[dict[str, Any]]) -> int:
+    """Write *rows* as CSV with *fieldnames*, atomically. Returns the row count."""
+    materialized = list(rows)
+    part_path = path + ".part"
+    with open(part_path, "w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
+        writer.writeheader()
+        for row in materialized:
+            writer.writerow({key: row.get(key, "") for key in fieldnames})
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(part_path, path)
+    return len(materialized)
+
+
+def read_existing_manifest(path: str) -> list[dict[str, str]]:
+    """Read a previously written provenance manifest, or ``[]`` if absent.
+
+    Tolerates a truncated/empty file (returns ``[]``) so a crashed previous run
+    never blocks a fresh one.
+    """
+    if not os.path.isfile(path):
+        return []
+    try:
+        with open(path, "r", encoding="utf-8", newline="") as handle:
+            reader = csv.DictReader(handle)
+            rows: list[dict[str, str]] = []
+            for row in reader:
+                if not row.get("source_image_id"):
+                    continue
+                rows.append({k: (v if v is not None else "") for k, v in row.items()})
+            return rows
+    except (csv.Error, UnicodeDecodeError):
+        return []
+
+
+def load_allowlist(path: str) -> list[dict[str, str]]:
+    """Load and validate ``non_india_allowlist.json``.
+
+    Returns entries sorted by ``(split, file_name)``. Hard-fails on any entry
+    whose country is ``India`` -- the allowlist is the India-exclusion record and
+    an India entry inside it is an integrity failure, not a warning.
+    """
+    if not os.path.isfile(path):
+        raise FileNotFoundError(f"allowlist not found: {path}")
+    # utf-8-sig tolerates a BOM written by a Windows editor; plain JSON written
+    # by exclude_india.py has no BOM and is unaffected.
+    with open(path, "r", encoding="utf-8-sig") as handle:
+        raw = json.load(handle)
+    if not isinstance(raw, list):
+        raise ValueError(f"allowlist must be a JSON list, got {type(raw).__name__}: {path}")
+
+    entries: list[dict[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+    for index, item in enumerate(raw):
+        if not isinstance(item, dict):
+            raise ValueError(f"allowlist entry {index} is not an object")
+        missing = [k for k in ("file_name", "split", "country") if not item.get(k)]
+        if missing:
+            raise ValueError(f"allowlist entry {index} missing keys {missing}: {item!r}")
+        file_name = os.path.basename(str(item["file_name"]))
+        split = str(item["split"])
+        country = str(item["country"])
+        if country == "India":
+            raise ValueError(
+                f"FATAL: allowlist entry {index} has country=='India': {item!r}. "
+                "Run exclude_india.py again; the allowlist must be India-free."
+            )
+        if split not in SPLIT_DIR_CANDIDATES:
+            raise ValueError(
+                f"allowlist entry {index} has unrecognised split {split!r}; "
+                f"expected one of {sorted(SPLIT_DIR_CANDIDATES)}"
+            )
+        key = (split, file_name)
+        if key in seen:
+            continue
+        seen.add(key)
+        entries.append({"file_name": file_name, "split": split, "country": country})
+
+    entries.sort(key=lambda e: (e["split"], e["file_name"]))
+    return entries
+
+
+def _resolve_split_dir(parent: str, split: str) -> str | None:
+    """Return the existing on-disk directory name for *split* under *parent*."""
+    for candidate in SPLIT_DIR_CANDIDATES[split]:
+        candidate_path = os.path.join(parent, candidate)
+        if os.path.isdir(candidate_path):
+            return candidate_path
+    return None
+
+
+def build_source_maps(hf_root: str) -> tuple[dict[tuple[str, str], str], dict[tuple[str, str], str], dict[str, str]]:
+    """Build the ``(split, file_name) -> path`` maps for images and labels ONCE.
+
+    Returns ``(image_map, label_map, split_dirs)`` where ``split_dirs`` records
+    the on-disk directory name that was actually used for each Arrow split. Both
+    maps are built with a single glob pass per shard directory -- never per
+    allowlist entry, which would be O(entries x shards) filesystem walks.
+    """
+    data_root = os.path.join(hf_root, "data")
+    images_root = os.path.join(data_root, "images")
+    labels_root = os.path.join(data_root, "labels")
+    if not os.path.isdir(images_root):
+        raise FileNotFoundError(f"HuggingFace image root not found: {images_root}")
+
+    image_map: dict[tuple[str, str], str] = {}
+    label_map: dict[tuple[str, str], str] = {}
+    split_dirs: dict[str, str] = {}
+    seen_paths: set[str] = set()
+
+    for split in SPLIT_DIR_CANDIDATES:
+        image_split_dir = _resolve_split_dir(images_root, split)
+        if image_split_dir is None:
+            print(f"WARNING: no image directory for split '{split}' under {images_root}", flush=True)
+            split_dirs[split] = ""
+            continue
+        split_dirs[split] = os.path.basename(image_split_dir)
+
+        for extension in IMAGE_EXTENSIONS:
+            pattern = os.path.join(image_split_dir, "shard_*", f"*{extension}")
+            for path in glob.iglob(pattern):
+                # On a case-insensitive filesystem the .jpg/.JPG patterns both
+                # match the same file; dedupe on the real path before deciding
+                # that two genuinely different files share a name.
+                real_path = os.path.normcase(os.path.abspath(path))
+                if real_path in seen_paths:
+                    continue
+                seen_paths.add(real_path)
+                name = os.path.basename(path)
+                key = (split, name)
+                if key in image_map:
+                    raise ValueError(
+                        f"duplicate source image for split {split!r} name {name!r}: "
+                        f"{image_map[key]} and {path}"
+                    )
+                image_map[key] = path
+
+        label_split_dir = _resolve_split_dir(labels_root, split)
+        if label_split_dir is None:
+            print(f"WARNING: no label directory for split '{split}' under {labels_root}", flush=True)
+            continue
+        for path in sorted(glob.iglob(os.path.join(label_split_dir, "shard_*", "*.txt"))):
+            name = os.path.basename(path)
+            stem = os.path.splitext(name)[0]
+            # Accept both "<file_name>.txt" (X.jpg.txt) and "<stem>.txt" (X.txt)
+            # repo label naming, keyed by the image name the allowlist carries.
+            for key_name in (name, stem, stem + ".jpg", stem + ".jpeg", stem + ".png"):
+                key = (split, key_name)
+                if key not in label_map:
+                    label_map[key] = path
+
+    return image_map, label_map, split_dirs
+
+
+def _iter_arrow_objects(objects: Any) -> list[tuple[str, float, float, float, float]]:
+    """Normalise one Arrow ``objects`` cell into ``(category, x, y, w, h)`` tuples.
+
+    Accepts the documented COCO shape ``{'categories': [...], 'bbox': [[x,y,w,h]]}``
+    plus the tolerant variants a nested-Arrow export can produce (tuple rows,
+    missing/None fields, a bare list of categories with no boxes).
+    """
+    if objects is None:
+        return []
+    if not isinstance(objects, dict):
+        return []
+
+    categories = objects.get("categories") or []
+    if isinstance(categories, str):
+        categories = [categories]
+    bboxes = objects.get("bbox") or objects.get("bboxes") or []
+    if bboxes is None:
+        bboxes = []
+    if len(bboxes) and not isinstance(bboxes[0], (list, tuple)):
+        bboxes = [bboxes]
+
+    out: list[tuple[str, float, float, float, float]] = []
+    for index in range(max(len(categories), len(bboxes))):
+        category = categories[index] if index < len(categories) else None
+        box = bboxes[index] if index < len(bboxes) else None
+        if box is None or len(box) < 4:
+            out.append((str(category) if category is not None else "", 0.0, 0.0, 0.0, 0.0))
+            continue
+        out.append(
+            (
+                str(category) if category is not None else "",
+                float(box[0]),
+                float(box[1]),
+                float(box[2]),
+                float(box[3]),
+            )
+        )
+    return out
+
+
+def load_arrow_objects(hf_root: str, wanted: set[tuple[str, str]]) -> dict[tuple[str, str], list[tuple[str, float, float, float, float]]]:
+    """Load the Arrow metadata and return objects for the ``(split, name)`` keys in *wanted*.
+
+    The Arrow metadata is the authoritative, complete record of which images and
+    boxes exist. Only the requested keys are retained in memory so the full
+    DatasetDict is never materialised into a Python object graph.
+    """
+    ds_dict = load_from_disk(hf_root)
+    arrow_objects: dict[tuple[str, str], list[tuple[str, float, float, float, float]]] = {}
+    for split in SPLIT_DIR_CANDIDATES:
+        if split not in ds_dict:
+            print(f"WARNING: Arrow split '{split}' missing from {hf_root}", flush=True)
+            continue
+        split_ds = ds_dict[split]
+        file_names = split_ds["file_name"]
+        wanted_names = {name for (arrow_split, name) in wanted if arrow_split == split}
+        if not wanted_names:
+            continue
+        objects_column = split_ds["objects"]
+        for file_name, objects in zip(file_names, objects_column):
+            key = (split, str(file_name))
+            if key in wanted:
+                arrow_objects[key] = _iter_arrow_objects(objects)
+        del file_names, objects_column
+    return arrow_objects
+
+
+def _finite(value: float) -> bool:
+    """True when *value* is a real finite number (rejects NaN and +/-inf)."""
+    return value == value and value not in (float("inf"), float("-inf"))
+
+
+def _validate_and_clip(
+    class_id: int, cx: float, cy: float, w: float, h: float
+) -> tuple[tuple[int, float, float, float, float] | None, str, tuple[str, str] | None]:
+    """Validate one YOLO row and clip it to the image bounds.
+
+    Returns ``(row, reason, clip_record)``:
+
+    * ``row`` is the validated ``(class_id, cx, cy, w, h)`` row, or ``None``
+      when the box is unrecoverable (in which case ``reason`` explains why and
+      the caller must add it to the rejection report).
+    * ``clip_record`` is ``(before, after)`` text when the box had to be clipped,
+      else ``None``.
+
+    The clipping operates on the box corners so the result is genuinely inside
+    the image: corners are clamped to ``[0, 1]`` and ``cx, cy, w, h`` are
+    recomputed from the clamped corners. A box that collapses to zero area is
+    unrecoverable and rejected.
+    """
+    if not all(_finite(v) for v in (cx, cy, w, h)):
+        return None, "non_finite_geometry", None
+    if class_id not in CLASS_NAMES:
+        return None, f"unknown_class_id:{class_id}", None
+    if w <= 0.0 or h <= 0.0:
+        return None, f"non_positive_extent:w={w!r},h={h!r}", None
+
+    before = (cx, cy, w, h)
+    x0, x1 = cx - w / 2.0, cx + w / 2.0
+    y0, y1 = cy - h / 2.0, cy + h / 2.0
+    x0c, x1c = max(0.0, x0), min(1.0, x1)
+    y0c, y1c = max(0.0, y0), min(1.0, y1)
+    if x1c <= x0c or y1c <= y0c:
+        return None, f"degenerate_after_clipping:before={before!r}", None
+
+    w_c, h_c = x1c - x0c, y1c - y0c
+    cx_c, cy_c = (x0c + x1c) / 2.0, (y0c + y1c) / 2.0
+    after = (cx_c, cy_c, w_c, h_c)
+
+    clipped = any(abs(a - b) > 1e-12 for a, b in zip(before, after))
+    clip_record = (
+        (" ".join(f"{v:.6f}" for v in before), " ".join(f"{v:.6f}" for v in after))
+        if clipped
+        else None
+    )
+    row = (class_id, cx_c, cy_c, w_c, h_c)
+
+    # Final hard validation, applied to the post-clip row. This must never fire;
+    # it exists so that no row can reach a label file without passing it.
+    if not (0.0 <= row[1] <= 1.0):
+        return None, f"cx_out_of_range:{row[1]!r}", clip_record
+    if not (0.0 <= row[2] <= 1.0):
+        return None, f"cy_out_of_range:{row[2]!r}", clip_record
+    if not (0.0 < row[3] <= 1.0):
+        return None, f"w_out_of_range:{row[3]!r}", clip_record
+    if not (0.0 < row[4] <= 1.0):
+        return None, f"h_out_of_range:{row[4]!r}", clip_record
+    return row, "", clip_record
+
+
+def _format_row(row: tuple[int, float, float, float, float]) -> str:
+    """Render one validated YOLO row in the Dataset A line format."""
+    class_id, cx, cy, w, h = row
+    return f"{class_id} {cx:.6f} {cy:.6f} {w:.6f} {h:.6f}"
+
+
+def _verify_label_text(text: str) -> str:
+    """Re-parse a fully rendered label body. Returns ``""`` when valid.
+
+    This is the post-write gate: a label file is only committed if every line in
+    it independently re-parses and satisfies the YOLO invariants.
+    """
+    for line in text.splitlines():
+        parts = line.split()
+        if len(parts) != 5:
+            return f"malformed_line:{line!r}"
+        try:
+            values = [float(p) for p in parts]
+        except ValueError:
+            return f"non_numeric_line:{line!r}"
+        class_token, cx, cy, w, h = parts[0], values[1], values[2], values[3], values[4]
+        if not class_token.lstrip("-").isdigit():
+            return f"non_integer_class:{line!r}"
+        if _validate_and_clip(int(class_token), cx, cy, w, h)[0] is None:
+            return f"invariant_violation:{line!r}"
+    return ""
+
+
+def _rows_from_repo_txt(
+    label_path: str,
+) -> tuple[list[tuple[int, float, float, float, float]], list[str], list[tuple[str, str]], list[str]]:
+    """Parse an on-disk RDD2022 YOLO label file.
+
+    The repo labels already use the RDD2022 class ordering, so the file's class
+    id is mapped back to its damage code and then forward through
+    :data:`TAXONOMY` (an identity mapping, done this way so ``original_class``
+    stays auditable in the manifest).
+
+    Returns ``(rows, reasons, clips, original_classes)``. ``reasons`` is parallel
+    to the input line indices (empty string for an accepted line), and
+    ``original_classes`` holds one damage code per ACCEPTED row so it stays
+    aligned with ``rows``.
+    """
+    rows: list[tuple[int, float, float, float, float]] = []
+    reasons: list[str] = []
+    clips: list[tuple[str, str]] = []
+    original_classes: list[str] = []
+
+    with open(label_path, "r", encoding="utf-8", errors="replace") as handle:
+        for line in handle:
+            stripped = line.strip()
+            if not stripped:
+                continue
+            parts = stripped.split()
+            if len(parts) != 5:
+                reasons.append(f"malformed_line:{stripped!r}")
+                continue
+            try:
+                class_value = float(parts[0])
+                cx, cy, w, h = (float(p) for p in parts[1:5])
+            except ValueError:
+                reasons.append(f"non_numeric_line:{stripped!r}")
+                continue
+            if class_value != int(class_value):
+                reasons.append(f"non_integer_class:{stripped!r}")
+                continue
+            class_index = int(class_value)
+            code = RDD_CODE_BY_INDEX.get(class_index)
+            if code is None:
+                reasons.append(f"unmapped_repo_class_id:{class_index}")
+                continue
+            mapped = TAXONOMY[code]
+            row, reason, clip = _validate_and_clip(mapped, cx, cy, w, h)
+            if row is None:
+                reasons.append(reason)
+                continue
+            if clip is not None:
+                clips.append(clip)
+            rows.append(row)
+            original_classes.append(code)
+            reasons.append("")
+
+    return rows, reasons, clips, original_classes
+
+
+def _rows_from_arrow(
+    objects: list[tuple[str, float, float, float, float]], width: int, height: int
+) -> tuple[list[tuple[int, float, float, float, float]], list[str], list[tuple[str, str]], list[str]]:
+    """Synthesize YOLO rows from Arrow COCO pixel xywh boxes.
+
+    Boxes are normalized by the ACTUAL image ``width``/``height`` read from the
+    JPEG with PIL, not by any nominal dataset dimension, so a mis-declared
+    source size cannot silently rescale the labels.
+
+    Returns ``(rows, reasons, clips, original_classes)``.
+    """
+    if width <= 0 or height <= 0:
+        raise ValueError(f"image has non-positive dimensions: {width}x{height}")
+
+    rows: list[tuple[int, float, float, float, float]] = []
+    reasons: list[str] = []
+    clips: list[tuple[str, str]] = []
+    original_classes: list[str] = []
+
+    for category, x, y, w, h in objects:
+        code = str(category).strip().upper()
+        mapped = TAXONOMY.get(code)
+        if mapped is None:
+            reasons.append(f"unmapped_damage_code:{category!r}")
+            continue
+        cx = (x + w / 2.0) / width
+        cy = (y + h / 2.0) / height
+        nw = w / width
+        nh = h / height
+        row, reason, clip = _validate_and_clip(mapped, cx, cy, nw, nh)
+        if row is None:
+            reasons.append(reason)
+            continue
+        if clip is not None:
+            clips.append(clip)
+        rows.append(row)
+        original_classes.append(code)
+        reasons.append("")
+
+    return rows, reasons, clips, original_classes
+
+
+def convert_entry(
+    entry: dict[str, str],
+    image_map: dict[tuple[str, str], str],
+    label_map: dict[tuple[str, str], str],
+    arrow_objects: dict[tuple[str, str], list[tuple[str, float, float, float, float]]],
+    out_root: str,
+    dry_run: bool,
+) -> dict[str, Any]:
+    """Convert a single allowlist entry.
+
+    Returns a result dict with ``status``, an optional ``manifest_row``, and the
+    ``rejections`` / ``clips`` produced for this image. Nothing is written when
+    *dry_run* is set.
+
+    Statuses: ``converted``, ``skipped``, ``missing_image``, ``unreadable_image``,
+    ``no_label_source``, ``write_failed``.
+    """
+    file_name = entry["file_name"]
+    arrow_split = entry["split"]
+    country = entry["country"]
+    canon_split = CANONICAL_SPLIT[arrow_split]
+    result: dict[str, Any] = {"status": "", "manifest_row": None, "rejections": [], "clips": []}
+
+    def reject(reason: str, scope: str = "box", label_source: str = "", row_index: Any = "", raw: Any = "") -> None:
+        result["rejections"].append(
+            {
+                "file_name": file_name,
+                "split": arrow_split,
+                "country": country,
+                "scope": scope,
+                "label_source": label_source,
+                "row_index": row_index,
+                "reason": reason,
+                "raw": raw if isinstance(raw, str) else json.dumps(raw),
+            }
+        )
+
+    source_image = image_map.get((arrow_split, file_name))
+    if source_image is None or not os.path.isfile(source_image):
+        reject(f"source_image_not_found:{file_name}", scope="image")
+        result["status"] = "missing_image"
+        return result
+
+    try:
+        with Image.open(source_image) as handle:
+            width, height = handle.size
+    except (OSError, ValueError) as exc:
+        reject(f"unreadable_image:{exc}", scope="image")
+        result["status"] = "unreadable_image"
+        return result
+
+    image_sha = sha256_file(source_image)
+    stem = os.path.splitext(file_name)[0]
+    extension = os.path.splitext(source_image)[1] or ".jpg"
+    out_image_path = os.path.join(out_root, "images", canon_split, stem + extension)
+    out_label_path = os.path.join(out_root, "labels", canon_split, stem + ".txt")
+
+    # --- resolve the label source -------------------------------------------
+    repo_label = label_map.get((arrow_split, file_name)) or label_map.get((arrow_split, stem + extension))
+    arrow_key = (arrow_split, file_name)
+    if repo_label is not None and os.path.isfile(repo_label):
+        label_source = "repo_txt"
+    elif arrow_key in arrow_objects:
+        label_source = "arrow_synthesized"
+        repo_label = None
+    else:
+        reject("no_label_source:neither_repo_txt_nor_arrow_record", scope="image")
+        result["status"] = "no_label_source"
+        return result
+
+    # --- build the rows -----------------------------------------------------
+    if label_source == "repo_txt":
+        try:
+            rows, reasons, clips, original_classes = _rows_from_repo_txt(repo_label)
+        except OSError as exc:
+            reject(f"unreadable_label:{exc}", scope="image", label_source=label_source)
+            result["status"] = "no_label_source"
+            return result
+    else:
+        rows, reasons, clips, original_classes = _rows_from_arrow(arrow_objects[arrow_key], width, height)
+    original_class_field = ";".join(original_classes)
+
+    for line_index, reason in enumerate(reasons):
+        if reason:
+            reject(reason, scope="box", label_source=label_source, row_index=line_index)
+    for before, after in clips:
+        result["clips"].append(
+            {
+                "file_name": file_name,
+                "split": arrow_split,
+                "country": country,
+                "label_source": label_source,
+                "row_index": "",
+                "original_class": "",
+                "mapped_class": "",
+                "before": before,
+                "after": after,
+            }
+        )
+
+    # NEGATIVES ARE PRESERVED: rows == [] is a legitimate, empty label file.
+    label_text = "".join(_format_row(row) + "\n" for row in rows)
+    invalid = _verify_label_text(label_text)
+    if invalid:
+        reject(f"post_render_validation_failed:{invalid}", scope="image", label_source=label_source)
+        result["status"] = "write_failed"
+        return result
+
+    result["status"] = "converted"
+    result["manifest_row"] = {
+        "source_dataset": SOURCE_DATASET,
+        "source_split": arrow_split,
+        "source_image_id": file_name,
+        "source_country": country,
+        "original_class": original_class_field,
+        "mapped_class": ";".join(str(row[0]) for row in rows),
+        "image_sha256": image_sha,
+        "label_source": label_source,
+        "width": width,
+        "height": height,
+        "n_objects": len(rows),
+        "output_image_path": os.path.relpath(out_image_path, REPO_ROOT).replace("\\", "/"),
+        "output_label_path": os.path.relpath(out_label_path, REPO_ROOT).replace("\\", "/"),
+    }
+    if dry_run:
+        return result
+
+    os.makedirs(os.path.dirname(out_image_path), exist_ok=True)
+    os.makedirs(os.path.dirname(out_label_path), exist_ok=True)
+    copy_file_atomic(source_image, out_image_path)
+    write_text_atomic(out_label_path, label_text)
+    return result
+
+
+def _print_summary(
+    entries: list[dict[str, str]],
+    results: list[dict[str, Any]],
+    skipped: int,
+) -> None:
+    """Print the conversion summary block."""
+    converted = [r for r in results if r["status"] == "converted"]
+    images_converted = len(converted)
+    objects_converted = sum(int(r["manifest_row"]["n_objects"]) for r in converted)
+
+    per_split_images: Counter[str] = Counter()
+    per_split_objects: Counter[str] = Counter()
+    per_country_images: Counter[str] = Counter()
+    per_country_objects: Counter[str] = Counter()
+    label_sources: Counter[str] = Counter()
+    per_class_objects: Counter[int] = Counter()
+    for entry, result in zip(entries, results):
+        if result["status"] != "converted":
+            continue
+        row = result["manifest_row"]
+        canon = CANONICAL_SPLIT[entry["split"]]
+        per_split_images[canon] += 1
+        per_split_objects[canon] += int(row["n_objects"])
+        per_country_images[entry["country"]] += 1
+        per_country_objects[entry["country"]] += int(row["n_objects"])
+        label_sources[row["label_source"]] += 1
+        for class_token in str(row["mapped_class"]).split(";"):
+            if class_token != "":
+                per_class_objects[int(class_token)] += 1
+
+    negatives = [r for r in converted if int(r["manifest_row"]["n_objects"]) == 0]
+    negative_pct = (100.0 * len(negatives) / images_converted) if images_converted else 0.0
+
+    statuses = Counter(r["status"] for r in results)
+
+    print("\n" + "=" * 72, flush=True)
+    print("CONVERSION SUMMARY", flush=True)
+    print("=" * 72, flush=True)
+    print(f"  Allowlist entries considered : {len(entries)}", flush=True)
+    print(f"  Images converted            : {images_converted}", flush=True)
+    print(f"  Images skipped (idempotent)  : {skipped}", flush=True)
+    print(f"  Objects converted           : {objects_converted}", flush=True)
+    print(f"  Rejected box rows           : {sum(1 for r in results for rej in r['rejections'] if rej['scope'] == 'box')}", flush=True)
+    print(f"  Rejected images             : {sum(1 for r in results for rej in r['rejections'] if rej['scope'] == 'image')}", flush=True)
+    print(f"  Clipped box rows            : {sum(len(r['clips']) for r in results)}", flush=True)
+
+    print("\n  Per split:", flush=True)
+    for split in ("train", "val", "test"):
+        if per_split_images.get(split):
+            print(
+                f"    {split:<6} images={per_split_images[split]:>6}  objects={per_split_objects[split]:>7}",
+                flush=True,
+            )
+
+    print("\n  Per country:", flush=True)
+    for country in sorted(per_country_images):
+        print(
+            f"    {country:<16} images={per_country_images[country]:>6}  objects={per_country_objects[country]:>7}",
+            flush=True,
+        )
+
+    print("\n  Objects per class (mapped taxonomy):", flush=True)
+    for class_id in sorted(CLASS_NAMES):
+        print(f"    {class_id} {CLASS_NAMES[class_id]:<22} {per_class_objects.get(class_id, 0):>7}", flush=True)
+
+    print("\n  Label source breakdown:", flush=True)
+    for source in sorted(label_sources):
+        print(f"    {source:<22} {label_sources[source]:>6}", flush=True)
+
+    print("\n  Negatives (empty label file, image retained):", flush=True)
+    print(f"    count     : {len(negatives)}", flush=True)
+    print(f"    percentage: {negative_pct:.2f}%", flush=True)
+
+    if statuses:
+        print("\n  Entry statuses:", flush=True)
+        for status in sorted(statuses):
+            print(f"    {status:<20} {statuses[status]:>6}", flush=True)
+    print("=" * 72, flush=True)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Convert the non-India RDD2022 Arrow dataset to YOLO format for Experiment 2."
+    )
+    parser.add_argument("--hf-root", type=str, default=DEFAULT_HF_ROOT, help="HuggingFace DatasetDict directory.")
+    parser.add_argument(
+        "--allowlist",
+        type=str,
+        default=DEFAULT_ALLOWLIST,
+        help="non_india_allowlist.json from exclude_india.py.",
+    )
+    parser.add_argument(
+        "--out-root", type=str, default=DEFAULT_OUT_ROOT, help="Destination YOLO dataset root."
+    )
+    parser.add_argument("--dry-run", action="store_true", help="Validate and report without writing anything.")
+    parser.add_argument(
+        "--limit", type=int, default=0, help="Process only the first N allowlist entries (0 = no limit)."
+    )
+    parser.add_argument(
+        "--allow-missing",
+        action="store_true",
+        help="Do not hard-fail when an allowlisted source image cannot be found (partial download).",
+    )
+    args = parser.parse_args()
+
+    hf_root = os.path.abspath(os.fspath(args.hf_root))
+    allowlist_path = os.path.abspath(os.fspath(args.allowlist))
+    out_root = os.path.abspath(os.fspath(args.out_root))
+
+    print("=" * 72, flush=True)
+    print("Arrow -> YOLO Conversion (Experiment 2, Dataset B non-India)", flush=True)
+    print(f"HuggingFace root : {hf_root}", flush=True)
+    print(f"Allowlist        : {allowlist_path}", flush=True)
+    print(f"Output root      : {out_root}", flush=True)
+    print(f"Dry run          : {args.dry_run}", flush=True)
+    print(f"Limit            : {args.limit if args.limit > 0 else 'none'}", flush=True)
+    print("=" * 72, flush=True)
+
+    try:
+        entries = load_allowlist(allowlist_path)
+    except (FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
+        print(f"FATAL: {exc}", flush=True)
+        return 1
+    if args.limit > 0:
+        entries = entries[: args.limit]
+    print(f"Allowlisted non-India entries: {len(entries)}", flush=True)
+
+    if not os.path.isdir(hf_root):
+        print(f"FATAL: hf-root does not exist or is not a directory: {hf_root}", flush=True)
+        return 1
+
+    try:
+        image_map, label_map, split_dirs = build_source_maps(hf_root)
+    except (FileNotFoundError, ValueError) as exc:
+        print(f"FATAL: {exc}", flush=True)
+        return 1
+    print(f"On-disk split directories: {split_dirs}", flush=True)
+    print(f"Source images indexed: {len(image_map)}  label files indexed: {len(label_map)}", flush=True)
+
+    wanted = {(e["split"], e["file_name"]) for e in entries}
+    arrow_objects: dict[tuple[str, str], list[tuple[str, float, float, float, float]]] = {}
+    repo_txt_count = sum(1 for key in wanted if key in label_map)
+    needs_arrow = [key for key in wanted if key not in label_map]
+    if needs_arrow:
+        print(
+            f"Loading Arrow metadata for {len(needs_arrow)} entries without an on-disk label file...",
+            flush=True,
+        )
+        try:
+            arrow_objects = load_arrow_objects(hf_root, set(needs_arrow))
+        except Exception as exc:  # noqa: BLE001 - datasets raises a wide variety here
+            print(f"FATAL: failed to load Arrow metadata from {hf_root}: {exc}", flush=True)
+            return 1
+    print(f"Entries resolvable from repo_txt: {repo_txt_count}", flush=True)
+
+    manifest_path = os.path.join(out_root, MANIFEST_NAME)
+    existing_rows = read_existing_manifest(manifest_path)
+    existing_by_key: dict[tuple[str, str], dict[str, str]] = {
+        (row["source_split"], row["source_image_id"]): row for row in existing_rows
+    }
+
+    if not args.dry_run:
+        os.makedirs(out_root, exist_ok=True)
+        write_text_atomic(os.path.join(out_root, TAXONOMY_NOTE_NAME), TAXONOMY_NOTE)
+
+    results: list[dict[str, Any]] = []
+    manifest_rows: list[dict[str, str]] = list(existing_rows)
+    manifest_index = {
+        (row["source_split"], row["source_image_id"]): i for i, row in enumerate(manifest_rows)
+    }
+    all_rejections: list[dict[str, Any]] = []
+    all_clips: list[dict[str, Any]] = []
+    skipped = 0
+
+    for index, entry in enumerate(entries):
+        key = (entry["split"], entry["file_name"])
+        prior = existing_by_key.get(key)
+        if prior is not None and prior.get("image_sha256") and not args.dry_run:
+            out_image = os.path.join(REPO_ROOT, prior.get("output_image_path", ""))
+            out_label = os.path.join(REPO_ROOT, prior.get("output_label_path", ""))
+            if os.path.isfile(out_image) and os.path.isfile(out_label):
+                skipped += 1
+                results.append({"status": "skipped", "manifest_row": None, "rejections": [], "clips": []})
+                continue
+
+        result = convert_entry(entry, image_map, label_map, arrow_objects, out_root, args.dry_run)
+        results.append(result)
+        all_rejections.extend(result["rejections"])
+        all_clips.extend(result["clips"])
+        if result["manifest_row"] is not None:
+            row = {field: str(result["manifest_row"][field]) for field in MANIFEST_FIELDS}
+            if key in manifest_index:
+                manifest_rows[manifest_index[key]] = row
+            else:
+                manifest_index[key] = len(manifest_rows)
+                manifest_rows.append(row)
+
+        if (index + 1) % 2000 == 0:
+            print(
+                f"  ... {index + 1}/{len(entries)} processed "
+                f"(converted={sum(1 for r in results if r['status'] == 'converted')}, skipped={skipped})",
+                flush=True,
+            )
+
+    _print_summary(entries, results, skipped)
+
+    if args.dry_run:
+        print("\nDRY RUN: no files written, no manifest updated.", flush=True)
+        print("ALL CHECKS PASSED (dry run)", flush=True)
+        return 0
+
+    write_csv_atomic(manifest_path, MANIFEST_FIELDS, manifest_rows)
+    print(f"\nWrote provenance manifest: {manifest_path} ({len(manifest_rows)} rows)", flush=True)
+    write_csv_atomic(os.path.join(out_root, REJECTION_NAME), REJECTION_FIELDS, all_rejections)
+    write_csv_atomic(os.path.join(out_root, CLIPPING_NAME), CLIPPING_FIELDS, all_clips)
+    print(f"Wrote rejection report:   {os.path.join(out_root, REJECTION_NAME)} ({len(all_rejections)} rows)", flush=True)
+    print(f"Wrote clipping report:    {os.path.join(out_root, CLIPPING_NAME)} ({len(all_clips)} rows)", flush=True)
+    print(f"Wrote taxonomy note:      {os.path.join(out_root, TAXONOMY_NOTE_NAME)}", flush=True)
+
+    hard_failures = [r for r in results if r["status"] in ("missing_image", "unreadable_image", "no_label_source", "write_failed")]
+    if hard_failures:
+        by_status = Counter(r["status"] for r in hard_failures)
+        for status, count in sorted(by_status.items()):
+            print(f"  {status}: {count}", flush=True)
+        for r in hard_failures[:5]:
+            print(f"    e.g. {r['rejections'][0]['file_name'] if r['rejections'] else '?'} -- {r['status']}", flush=True)
+        blocking = {status: count for status, count in by_status.items() if status != "missing_image"}
+        if blocking:
+            print(
+                f"\n!!! CONVERSION INCOMPLETE ({', '.join(f'{k}={v}' for k, v in sorted(blocking.items()))}) "
+                "-- exiting non-zero !!!",
+                flush=True,
+            )
+            return 1
+        if not args.allow_missing:
+            print("\n!!! MISSING SOURCE IMAGES (partial or failed download?) -- exiting non-zero !!!", flush=True)
+            print("!!! Re-run with --allow-missing to accept a partial conversion.     !!!", flush=True)
+            return 1
+        print(
+            f"\nWARNING: {by_status['missing_image']} source image(s) are missing and --allow-missing "
+            "was given. They are listed in the rejection report and are NOT in the manifest.",
+            flush=True,
+        )
+
+    print("\nALL CHECKS PASSED", flush=True)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

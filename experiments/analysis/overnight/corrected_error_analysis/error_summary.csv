@@ -1,0 +1,10 @@
+Metric,Value
+Total Ground Truth Objects,679
+Total Raw Predictions (all conf),17198
+Total Predictions after conf filter,682
+Total True Positives,294
+Total False Positives,387
+Total False Negatives,370
+Precision,0.4317
+Recall,0.4428
+F1-Score,0.4372

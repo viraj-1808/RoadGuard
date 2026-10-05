@@ -1,0 +1,12 @@
+Batch 8: status=completed, peak=3492.0MB, allocated=246.93MB, reserved=434.0MB, oom=False, stable=stable
+Batch 16: status=completed, peak=5486.0MB, allocated=249.19MB, reserved=842.0MB, oom=False, stable=stable
+Batch 32: status=running (interrupted), peak=10200.0MB, allocated=249.19MB, reserved=842.0MB, oom=False, stable=unstable
+
+Recommended maximum safe batch size: 16
+
+Details:
+- Batch 8 completed with peak memory usage of 3.5GB, well within the 6GB limit
+- Batch 16 completed with peak memory usage of 5.5GB, approaching but still within the 6GB limit
+- Batch 32 would require ~10GB+ memory, exceeding the 6GB limit, making it unstable
+- The RTX 4050 (6140MiB ~5.97GB) can safely support up to batch size 16
+- Batch size 32 is not recommended for this GPU configuration

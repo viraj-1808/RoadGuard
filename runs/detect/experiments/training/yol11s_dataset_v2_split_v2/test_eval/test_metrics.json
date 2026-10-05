@@ -1,0 +1,66 @@
+{
+  "task": "test",
+  "date": "2026-09-29T18:03:28.568131",
+  "model": "YOLO11s",
+  "dataset": "experiments/dataset/yolo_rdd2022_india/data.yaml",
+  "split": "test",
+  "metrics": {
+    "box": {
+      "map": 0.0903,
+      "map50": 0.252,
+      "map75": 0.12,
+      "maps": [
+        0.0871,
+        0.00923,
+        0.13491,
+        0.12995
+      ],
+      "mp": 0.299,
+      "mr": 0.312
+    }
+  },
+  "per_class": {
+    "longitudinal_crack": {
+      "precision": 0.34,
+      "recall": 0.288,
+      "map50": 0.233,
+      "map": 0.0871,
+      "instances": 66,
+      "images": 55
+    },
+    "transverse_crack": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "map50": 0.0113,
+      "map": 0.00923,
+      "instances": 5,
+      "images": 5
+    },
+    "alligator_crack": {
+      "precision": 0.426,
+      "recall": 0.49,
+      "map50": 0.374,
+      "map": 0.13491,
+      "instances": 96,
+      "images": 82
+    },
+    "pothole": {
+      "precision": 0.429,
+      "recall": 0.469,
+      "map50": 0.388,
+      "map": 0.12995,
+      "instances": 512,
+      "images": 230
+    }
+  },
+  "speed": {
+    "preprocess_ms": 4.6,
+    "inference_ms": 11.8,
+    "loss_ms": 0.0,
+    "postprocess_ms": 2.4
+  },
+  "totals": {
+    "images": 230,
+    "instances": 679
+  }
+}

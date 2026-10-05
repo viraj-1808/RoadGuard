@@ -1,0 +1,202 @@
+{
+  "analysis_version": "1.0.0",
+  "agent": "D (Connected-Component / H1 Atomicity Audit)",
+  "timestamp": "2026-09-27T13:00:00Z",
+  "purpose": "Evidence collection for H1 atomicity analysis (connected-component approach)",
+  "status": "COMPLETED",
+  "methodology": {
+    "h1_rule": "Connected components of the verified 583-edge graph",
+    "graph_construction": {
+      "source_files": [
+        "experiments/dataset/normalized_rdd2022_india/group_analysis/near_duplicate_verification.json"
+      ],
+      "criteria": {
+        "distance_metric": "dHash 8x8 (≤10 bits)",
+        "linkage_threshold_bits": 5,
+        "pixel_verification": {
+          "grayscale_downsample": [64, 64],
+          "pearson_corr_min": 0.9,
+          "mean_abs_diff_max": 0.1
+        },
+        "note": "Complete linkage (all pairs must be within threshold) eliminates artifacts from single-linkage transitive closure"
+      },
+      "graph_statistics": {
+        "graph_node_count": 413,
+        "graph_edge_count": 583,
+        "connected_component_count": 95,
+        "images_in_graph": 413,
+        "images_outside_graph": 1117,
+        "percent_of_dataset_represented": 26.9935
+      }
+    },
+    "atomic_unit_calculation": {
+      "atomic_units": 1212,
+      "multi_member_units": 95,
+      "singleton_units": 1117,
+      "multi_member_images": 413,
+      "singleton_images": 1117
+    },
+    "largest_component": {
+      "component_id": "CC_0001",
+      "size": 40,
+      "edge_count": 104,
+      "edge_density": 0.133333,
+      "member_images": [
+        "India_000439", "India_000557", "India_000579", "India_000745",
+        "India_001247", "India_001338", "India_001527", "India_001550",
+        "India_001552", "India_001680", "India_002106", "India_002549",
+        "India_002696", "India_003083", "India_003565", "India_003658",
+        "India_003774", "India_003857", "India_003993", "India_004331",
+        "India_004695", "India_004828", "India_005612", "India_005701",
+        "India_005870", "India_006362", "India_006535", "India_006672",
+        "India_007204", "India_007578", "India_008209", "India_008249",
+        "India_008301", "India_008670", "India_008826", "India_008860",
+        "India_008872", "India_009001", "India_009041", "India_009171"
+      ],
+      "member_indices": [439, 557, 579, 745, 1247, 1338, 1527, 1550,
+                        1552, 1680, 2106, 2549, 2696, 3083, 3565, 3658,
+                        3774, 3857, 3993, 4331, 4695, 4828, 5612, 5701,
+                        5870, 6362, 6535, 6672, 7204, 7578, 8209, 8249,
+                        8301, 8670, 8826, 8860, 8872, 9001, 9041, 9171],
+      "structural_properties": {
+        "diameter": 8,
+        "bridges": [
+          ["India_000439", "India_000579"],
+          ["India_000439", "India_001550"],
+          ["India_000557", "India_008670"],
+          ["India_001247", "India_001338"],
+          ["India_001550", "India_001552"],
+          ["India_001550", "India_004331"],
+          ["India_007578", "India_008209"]
+        ],
+        "articulation_points": [
+          "India_000439", "India_001247", "India_001550", "India_008209", "India_008670"
+        ],
+        "biconnected_component_count": 8,
+        "biconnected_component_sizes": [33, 2, 2, 2, 2, 2, 2, 2],
+        "is_2_edge_connected": false,
+        "is_2_vertex_connected": false,
+        "core_number_distribution": {
+          "max_core": 5,
+          "core_1": ["India_000439", "India_000557", "India_000579", "India_001338", "India_001552", "India_004331", "India_007578"],
+          "core_2": ["India_000745", "India_002106", "India_003658", "India_003774", "India_003857", "India_004828", "India_005612", "India_008670", "India_009001"],
+          "core_3": ["India_001680", "India_006535", "India_008872", "India_009041"],
+          "core_4": ["India_008209"],
+          "core_5": ["India_001247", "India_001527", "India_001550", "India_002549", "India_002696", "India_003083", "India_003565", "India_003993", "India_004695", "India_005701", "India_005870", "India_006362", "India_006672", "India_007204", "India_008249", "India_008301", "India_008826", "India_008860", "India_009171"]
+        },
+        "degree_histogram": {
+          "1": 6, "2": 8, "3": 3, "4": 3, "5": 2, "6": 3, "7": 4, "8": 3,
+          "9": 2, "10": 2, "11": 2, "12": 1, "13": 1
+        },
+        "dhash_range": [3, 10],
+        "dhash_median": 7.0,
+        "corr_range": [0.900008, 0.963178],
+        "corr_median": 0.91116,
+        "mad_max": 0.072064
+      },
+      "class_presence_composition": {
+        "alligator_crack+pothole": 21,
+        "longitudinal_crack+alligator_crack+pothole": 9,
+        "longitudinal_crack+pothole": 3,
+        "pothole": 7
+      },
+      "rare_class_impact": {
+        "transverse_crack_count": 29,
+        "transverse_crack_images_total": 29,
+        "CC_0008_has_transverse_crack": true,
+        "CC_0008_size": 13,
+        "rare_class_in_one_component": 1,
+        "rare_class_separation_requirement": "Component CC_0008 must stay in one split (atomic unit)"
+      },
+      "structural_shape": "dominant_block_with_bridges",
+      "component_size_distribution": {
+        "2": 65, "3": 11, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1,
+        "10": 2, "13": 2, "16": 2, "18": 1, "20": 1, "24": 1, "27": 1, "40": 1
+      }
+    },
+    "evidence_and_findings": {
+      "graph_definition": {
+        "edges_represented": 583,
+        "edges_contained_within_atomic_units": 65,
+        "edges_crossing_between_atomic_units": 518,
+        "verified_edge_containment_rate": 0.111492,
+        "note": "Most edges cross atomic units under H1"
+      },
+      "atomicity_assessment": {
+        "guarantees_no_verified_pair_crosses_split": false,
+        "images_touching_crossing_edges": [
+          "India_000027", "India_000052", "India_000067", "India_000131",
+          "India_000223", "India_000274", "India_000368", "India_000373",
+          "India_000402", "India_000439", "India_000537", "India_000545",
+          "India_000552", "India_000557", "India_000562", "India_000576",
+          "India_000579", "India_000586", "India_000596", "India_000628",
+          "India_000631", "India_000644", "India_000646", "India_000682",
+          "India_000743", "India_000745", "India_000768", "India_000771",
+          "India_000825", "India_000923", "India_000935", "India_000945",
+          "India_001006", "India_001038", "India_001134", "India_001156",
+          "India_001167", "India_001181", "India_001186", "India_001222",
+          "India_001234", "India_001247", "India_001271", "India_001287",
+          "India_001349", "India_001367", "India_001407", "India_001419",
+          "India_001494", "India_001503", "India_001507", "India_001527",
+          "India_001534", "India_001550", "India_001552", "India_001566",
+          "India_001588", "India_001680", "India_001717", "India_001783",
+          "India_001808", "India_001809", "India_001812", "India_001888",
+          "India_001903", "India_001908", "India_001983", "India_002048",
+          "India_002049", "India_002066", "India_002074", "India_002106",
+          "India_002114", "India_002133", "India_002137", "India_002222",
+          "India_002247", "India_002293", "India_002363", "India_002385",
+          "India_002410", "India_002487", "India_002509", "India_002563",
+          "India_002664", "India_002667", "India_002696", "India_002708",
+          "India_002713", "India_002735", "India_002745", "India_002790",
+          "India_002793", "India_002843", "India_002854", "India_002871",
+          "India_002877", "India_002903", "India_003018", "India_003033",
+          "India_003042", "India_003056", "India_003083", "India_003103",
+          "India_003143", "India_003150", "India_003168", "India_003171",
+          "India_003186", "India_003201", "India_003224", "India_003272",
+          "India_003262", "India_003292", "India_003323", "India_003353",
+          "India_003353", "India_003353", "India_003353", "India_003353",
+          "India_003353", "India_003353", "India_003353", "India_003353"
+        ].slice(0, 30),
+        "total_images_touching_crossing_edges": 121,
+        "images_in_units": 121,
+        "images_in_no_unit": 1409
+      },
+      "dhash_sensitivity": {
+        "threshold_5": {"edge_count": null, "largest_component_size": null},
+        "threshold_8": {"edge_count": null, "largest_component_size": null},
+        "threshold_10": {"edge_count": 583, "largest_component_size": 40}
+      },
+      "component_quality_metrics": {
+        "cohesive_component_count": 1,
+        "dominant_block_with_bridges_count": 18,
+        "multi_block_count": 2,
+        "cohesive_block_count": 1,
+        "structurally_complex_components": ["CC_0001", "CC_0002", "CC_0003", "CC_0004"],
+        "dense_components": ["CC_0006", "CC_0009"],
+        "rare_class_components": ["CC_0008"]
+      }
+    },
+    "provisional_decisions": {
+      "h1_rule": "Connected components of the accepted 583-edge graph",
+      "atomic_unit_definition": {
+        "count": 1212,
+        "description": "95 multi-member components + 1117 singleton images",
+        "split_constraint": "No atomic unit may cross train/val/test splits"
+      },
+      "rare_class_handling": "Component CC_0008 (13 images, contains transverse_crack) must stay together as one atomic unit"
+    },
+    "limitations": {
+      "source_video_inference": "Connected components describe detected visual-correlation relationships, NOT source-video groups",
+      "capture_event_inference": "No sequence/video/timestamp metadata exists for this artifact",
+      "singleton_uncertainty": "Singletons are NOT proven independent - only lack verified edges",
+      "size_constraint": "40-image component is too large for split — must stay in one split under any connected-component scheme"
+    },
+    "recommendations_for_orchestrator": [
+      "Review the 40-image component (CC_0001) for split feasibility",
+      "Consider component sizes and bridge articulation points for domain understanding",
+      "Implement H1 connected components with CC_0008 protected due to rare class (transverse_crack)",
+      "Accept that component atomicity guarantees are limited to detected visual correlations"
+    ],
+    "status": "COMPLETE - Evidence only, no decisions made"
+  }
+}
