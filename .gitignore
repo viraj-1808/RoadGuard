@@ -36,6 +36,7 @@ experiments/output/
 analysis/output/
 experiments/logs/
 experiments/runs/
+runs/
 *.log
 *.out
 *.err

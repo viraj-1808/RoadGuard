@@ -57,7 +57,7 @@ This document records important discoveries, failures, and lessons learned durin
   - Strategy C: D40 + crack binary detector
 - **Resolution**: Class-mapping strategy NOT DECIDED; documented as open decision in DATASET_AUDIT.md §18.15.5
 - **Why**: Class-mapping choice affects model architecture, evaluation protocol, and annotation conversion; D50 provenance must be resolved before inclusion.
-- **Verification**: Analysis script `analysis/rdd2022_provenance_analysis.py` generates JSON and Markdown reports; all statistics verified against source data.
+- **Verification**: Analysis script `scripts/analysis/rdd2022_provenance_analysis.py` generates JSON and Markdown reports; all statistics verified against source data.
 - **Lesson**: Dataset names and README claims cannot be trusted; actual file contents must be inspected. Class semantics must be verified against authoritative sources, not assumed from artifact names.
 - **Architectural consequence**: Class-mapping decision required before annotation conversion; D40 semantic caution must be considered in evaluation; D50 requires investigation before inclusion.
 - **Related decision**: Pending class-mapping decision (A/B/C); D-005 (dataset priority); D-006 (group-based leakage prevention)
@@ -88,7 +88,7 @@ This document records important discoveries, failures, and lessons learned durin
   - Proceed with documented derivative and its known limitations
 - **Resolution**: Documented official acquisition failure; proceed with derivative as working subset with documented selection bias and class expansion
 - **Why**: Cannot invent workaround for inaccessible official data; must document evidence and proceed with known constraints
-- **Verification**: S3 403 error body captured; FigShare API confirmed; local artifact statistics verified via `analysis/rdd2022_provenance_analysis.py`
+- **Verification**: S3 403 error body captured; FigShare API confirmed; local artifact statistics verified via `scripts/analysis/rdd2022_provenance_analysis.py`
 - **Lesson**: Official dataset access is not guaranteed; always document access failures and work with available evidence. Selection bias in derived artifacts must be quantified before model training.
 - **Architectural consequence**: Selection bias must be accounted for in model evaluation; D40-negative examples (crack-only images) are absent from training data; class-mapping decision must consider missing official data
 - **Related decision**: D-005 (dataset priority), D-006 (group-based leakage prevention), D-015 (class mapping — LOCKED Strategy B)

@@ -42,7 +42,7 @@
 - **D01 → D00**: VERIFIED — construction joint variant; deterministic merge
 - **D11 → D10**: VERIFIED — construction joint variant; deterministic merge
 - **D43/D44/D50**: EXCLUDED — road markings or annotation artifact
-- **Source**: `analysis/rdd2022_provenance_analysis.py`, `analysis/output/rdd2022_provenance_report.md`, local XML inspection (8 D50 files)
+- **Source**: `scripts/analysis/rdd2022_provenance_analysis.py`, `analysis/output/rdd2022_provenance_report.md`, local XML inspection (8 D50 files)
 
 ### Official RDD2022 India Acquisition Status (2026-09-21)
 

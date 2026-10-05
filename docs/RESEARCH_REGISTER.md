@@ -128,7 +128,7 @@ Status:
   - **FACT**: D50 is not in official CRDDC label maps — provenance unknown
   - **FACT**: Co-occurrence (mutually exclusive): D40-only 44.2%, D40+D00 23.7%, D40+D20 24.9%, D40+other 7.1%, non-D40-only 0%
   - **OPEN**: Class-mapping strategy (A/B/C) not decided; D50/D43/D44 provenance; geographic/seasonal coverage
-- **Evidence**: `analysis/rdd2022_provenance_analysis.py`, `analysis/output/rdd2022_provenance_analysis.json`, `analysis/output/rdd2022_provenance_report.md`, `docs/DATASET_AUDIT.md` §18.15
+- **Evidence**: `scripts/analysis/rdd2022_provenance_analysis.py`, `analysis/output/rdd2022_provenance_analysis.json`, `analysis/output/rdd2022_provenance_report.md`, `docs/DATASET_AUDIT.md` §18.15
 - **Engineering implication**: Class-mapping decision (A/B/C) required before annotation conversion; D50 requires investigation; D40 semantic caution must be considered in evaluation; selection bias risk HIGH; artifact covers only 15.8% of India train set
 - **Confidence**: HIGH (verified from data); MEDIUM (class-mapping undecided)
 - **Affected decision**: D-005 (dataset priority), D-006 (group-based leakage prevention), D-0XX (class mapping — pending)
@@ -182,7 +182,7 @@ Status:
   - **FACT**: RDD2018 used 8 classes {D00, D01, D10, D11, D20, D40, D43, D44}
   - **INFERENCE**: D43/D44 are inherited from RDD2018 taxonomy, retained in label map but excluded from CRDDC task
   - **INFERENCE**: D50 is an annotation artifact (duplicate D40 or mislabeling error) with no official source
-- **Evidence**: `docs/DATASET_AUDIT.md` §18.15.2a, §18.19; `analysis/rdd2022_provenance_analysis.py`; `crackLabelMap.txt`; RDD2018 paper Table 1; local XML inspection (India_000128, India_000268, India_006197, India_006373, India_006581, India_006847, India_007909, India_008942)
+- **Evidence**: `docs/DATASET_AUDIT.md` §18.15.2a, §18.19; `scripts/analysis/rdd2022_provenance_analysis.py`; `crackLabelMap.txt`; RDD2018 paper Table 1; local XML inspection (India_000128, India_000268, India_006197, India_006373, India_006581, India_006847, India_007909, India_008942)
 - **Engineering implication**: D43/D44/D50 require explicit mapping decisions before annotation conversion; D50 must be EXCLUDED from all strategies; D43/D44 are road marking damage, not structural damage; D-015 (class mapping) is LOCKED as Strategy B
 - **Confidence**: HIGH (D43/D44 verified from two authoritative sources); HIGH (D50 resolved as annotation artifact from 8 XML files)
 - **Affected decision**: D-015 (class mapping — LOCKED as Strategy B)

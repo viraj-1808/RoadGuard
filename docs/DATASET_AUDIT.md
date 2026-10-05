@@ -1255,12 +1255,12 @@ The official RDD2022 test set contains images without ground-truth annotations. 
 
 ### 18.11 Analysis Tooling
 
-The `analysis/` module provides automated inspection and analysis:
+The `scripts/analysis/` module provides automated inspection and analysis:
 
-- `analysis/rdd2022_india_analysis.py` - Analysis script for RDD2022 India sample (class counts, co-occurrence, bbox stats)
-- `analysis/rdd2022_provenance_analysis.py` - Provenance and class semantics analysis (class semantics, co-occurrence, candidate strategies)
-- `analysis/rdd2022_visualization.py` - Visualization module with matplotlib charts
-- `analysis/rdd2022_india_analysis_cli.py` - CLI entry point for analysis pipeline
+- `scripts/analysis/rdd2022_india_analysis.py` - Analysis script for RDD2022 India sample (class counts, co-occurrence, bbox stats)
+- `scripts/analysis/rdd2022_provenance_analysis.py` - Provenance and class semantics analysis (class semantics, co-occurrence, candidate strategies)
+- `scripts/analysis/rdd2022_visualization.py` - Visualization module with matplotlib charts
+- `scripts/analysis/rdd2022_india_analysis_cli.py` - CLI entry point for analysis pipeline
 - `analysis/output/` - Contains JSON analysis results, markdown reports, and PNG visualizations
 
 Analysis output files:
