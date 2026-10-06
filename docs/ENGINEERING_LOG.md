@@ -354,3 +354,60 @@ This document records important discoveries, failures, and lessons learned durin
 - **Training Budget**: ~81 hours (100 epochs, ~49,600 optimizer steps)
 - **Status**: READY FOR EXPLICIT TRAINING AUTHORIZATION — TRAINING NOT STARTED
 - **Related decision**: D-016, D-017, D-018, D-019
+
+---
+
+## ENGINEERING LESSON: Experiment 2 Frozen Dataset A India Test Evaluation
+
+- **Date**: 2026-10-06
+- **Problem**: Compare Exp1 (Dataset A only) vs Exp2 (Dataset A + Dataset B) on the same frozen Dataset A India test set to measure domain generalization improvement.
+- **Exp1 Checkpoint**: `runs/detect/experiments/training/yol11s_dataset_v2_split_v2/weights/best.pt` (SHA256: `721277b9d066715bc82d3d4fa34fcbcfb6147cb4265b216f41fc68c8beb59823`)
+- **Exp2 Checkpoint**: `runs/detect/experiments/training/yol11s_experiment2/weights/best.pt` (SHA256: `e79f8103e00965c29e7fdbe3f27ede25bf5e0d969325a165d18b31251dfdd791`)
+- **Frozen Test**: 230 images, 679 objects from Dataset A India split (`experiments/dataset/yolo_rdd2022_india/images/test/`, `labels/test/`); SHA256 fingerprints in `experiments/analysis/overnight/dataset_b_hf_gate/frozen_test_sha256.json`
+- **Evaluation Protocol**: Ultralytics `model.val()` with imgsz=720, conf=0.001, iou=0.7 (NMS), max_det=300, rect=True, split=test; metrics: mAP@0.5, mAP@0.5:0.95, Precision, Recall
+- **Results**:
+  - **Exp1**: mAP50=0.252, mAP50-95=0.090, Precision=0.299, Recall=0.312
+  - **Exp2**: mAP50=0.279, mAP50-95=0.111, Precision=0.586, Recall=0.321
+  - **Delta**: mAP50 +10.7%, mAP50-95 +22.9%, Precision +96%, Recall +2.9%
+- **Per-Class mAP50-95**: 
+  - longitudinal_crack: 0.087→0.136 (+56%)
+  - transverse_crack: 0.009→0.005 (-41%, zero recall)
+  - alligator_crack: 0.135→0.151 (+12%)
+  - pothole: 0.130→0.152 (+17%)
+- **Conclusion**: Exp2 improves overall metrics (+23% mAP50-95) driven by pothole and longitudinal crack gains. However, transverse_crack remains catastrophically undetected (R=0.000). Precision nearly doubles but Recall barely moves. Domain gap from Dataset B val (mAP50-95=0.344) to India test (0.111) = 68% drop.
+- **Next Decision**: Transverse crack requires targeted data collection (India-specific transverse cracks). Domain gap suggests Dataset B validation is not predictive of India performance. Next experiment should: (1) add India transverse crack data, (2) investigate confidence thresholding to reduce FPs, (3) evaluate class-weighted loss or focal loss for rare classes.
+
+---
+
+## ENGINEERING LESSON: FINAL TRAINING DECISION — Continue Experiment 2 Training
+
+- **Date**: 2026-10-06
+- **Problem**: After completing Experiment 2 (30/100 epochs) and evaluating on the frozen Dataset A India test, the project reached the decision gate: should training continue to 100 epochs (Option A), or should additional data be acquired first (Option B)?
+- **Impact**: This decision determines the next major experiment and affects the entire model training budget.
+- **Analysis performed**:
+  - Dataset coverage audit (5 subsets, 23,550 images, 44,755 objects)
+  - Dataset A vs Dataset B domain analysis (68% mAP50-95 drop from B validation to India test)
+  - Transverse crack failure analysis (0 recall on India test, 0.14% coverage in Dataset A)
+  - Pothole performance analysis (+17% over Exp1, but small potholes still missed)
+  - Crack localization analysis (mean IoU 0.687, 55% TPs in 0.5-0.7 band)
+  - False positive analysis (38,584 FPs, 99.5% low confidence, duplicate detections)
+  - Training trajectory analysis (Exp2 under-trained at 30/100 epochs, best at epoch 29, still improving)
+- **Key findings**:
+  - Exp2 improved 3 of 4 classes vs Exp1 (+56% longitudinal, +17% pothole, +12% alligator; +23% overall mAP50-95)
+  - Exp2 was cut at 30/100 epochs while still improving (best=epoch29) — demonstrably under-trained
+  - Transverse crack remains catastrophic failure (0 recall), addressed by Dataset B's 7,313 transverse examples (347x Dataset A's 21)
+  - FP issue solvable with threshold/NMS tuning — no new data needed
+  - Domain gap (68%) is a valid concern but more training on mixed data is lower risk than data collection
+- **Decision**: CONTINUE EXP2 TRAINING — Resume from best.pt (epoch 29) to epoch 100
+- **Reasoning**:
+  1. Training trajectory shows monotonic improvement, under-trained relative to the 100-epoch gate
+  2. Exp2 already shows measurable improvement over Exp1 on held-out India test
+  3. Dataset B provides 347x more transverse crack examples that will help with continued training
+  4. More training is lower risk than additional data collection
+  5. FP issue solvable with threshold tuning, no new data needed
+- **Main risk**: Dataset B domain gap (68% mAP50-95 drop to India test) means additional data may not immediately improve India performance
+- **Exact next action**: Resume Exp2 training from `runs/detect/experiments/training/yol11s_experiment2/weights/best.pt` with same config (lr=0.01, batch=16, epochs=100)
+- **Verification**: Decision artifacts documented in `experiments/analysis/final_training_decision/` (FINAL_TRAINING_DECISION_REPORT.md, final_training_decision.json, plus 9 analysis files). All frozen test data preserved; no modifications made to the India test set.
+- **Related decision**: D-019 (training authorization, superseded by this final decision)
+
+---

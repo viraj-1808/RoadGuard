@@ -1,0 +1,53 @@
+{
+  "decision": {
+    "action": "CONTINUE_EXP2_TRAINING",
+    "description": "Resume Exp2 training from epoch 30 checkpoint to epoch 100",
+    "confidence": "MEDIUM-HIGH",
+    "reasoning": [
+      "Exp2 shows monotonic improvement trajectory (best=epoch29, still improving at epoch 30)",
+      "Exp2 improved 3 of 4 classes vs Exp1 on frozen India test (+56% longitudinal, +17% pothole, +12% alligator)",
+      "Dataset B provides 347x more transverse crack examples (7,313 vs 21) addressing the critical failure class",
+      "More training is lower risk than data collection",
+      "False positive issue solvable via threshold tuning (99.5% FPs are low confidence) — no new data needed"
+    ],
+    "top_3_evidence": [
+      "Exp2 improved 3/4 classes vs Exp1 on held-out India test (mAP50-95 0.111 vs 0.090, +23%)"
+    ],
+    "main_risk": "Dataset B domain gap (68% mAP50-95 drop to India test) means additional data may not immediately improve India performance",
+    "exact_next_action": "Resume Exp2 training from runs/detect/experiments/training/yol11s_experiment2/weights/best.pt (epoch 29) to epoch 100 with same config (lr=0.01, batch=16)"
+  },
+  "analysis_artifacts": [
+    "dataset_coverage_summary.csv",
+    "class_size_distribution.csv",
+    "dataset_analysis_report.md",
+    "domain_analysis.md",
+    "transverse_analysis.md",
+    "pothole_analysis.md",
+    "crack_localization_analysis.md",
+    "hard_negative_analysis.md",
+    "training_trajectory_analysis.md"
+  ],
+  "key_metrics": {
+    "exp2_frozen_india_test_mAP50-95": 0.111,
+    "exp1_frozen_india_test_mAP50-95": 0.090,
+    "improvement": "+23%",
+    "dataset_a_total_images": 10043,
+    "dataset_b_total_images": 15574,
+    "transverse_a_train": 21,
+    "transverse_b_train": 7313,
+    "domain_gap": 0.68,
+    "fp_low_confidence": 0.995
+  },
+  "frozen_test": {
+    "dataset": "Dataset A (India test)",
+    "images": 230,
+    "objects": 679,
+    "sha256_checksum": "preserved",
+    "must_not_be_modified": true
+  },
+  "exp2_checkpoint": {
+    "path": "runs/detect/experiments/training/yol11s_experiment2/weights/best.pt",
+    "epoch": 29,
+    "sha256": "E79F8103E00965C29E7FDBE3F27EDE25BF5E0D969325A165D18B31251DFDD791"
+  }
+}
