@@ -1,0 +1,85 @@
+{
+  "image": "road003.jpg",
+  "image_width": 978,
+  "image_height": 1390,
+  "inference_time_ms": 41.71549994498491,
+  "detections": [
+    {
+      "class_id": 2,
+      "class_name": "alligator_crack",
+      "confidence": 0.6298564076423645,
+      "bbox_xyxy": [
+        0.0,
+        210.39491271972656,
+        978.0,
+        875.3735961914062
+      ]
+    },
+    {
+      "class_id": 2,
+      "class_name": "alligator_crack",
+      "confidence": 0.4899863302707672,
+      "bbox_xyxy": [
+        0.0,
+        217.9885711669922,
+        978.0,
+        671.7487182617188
+      ]
+    },
+    {
+      "class_id": 2,
+      "class_name": "alligator_crack",
+      "confidence": 0.2989862561225891,
+      "bbox_xyxy": [
+        11.402873992919922,
+        224.19749450683594,
+        978.0,
+        553.432373046875
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.0784468725323677,
+      "bbox_xyxy": [
+        298.38861083984375,
+        1116.8115234375,
+        386.88800048828125,
+        1206.9417724609375
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.07653689384460449,
+      "bbox_xyxy": [
+        0.0,
+        220.8090057373047,
+        974.261474609375,
+        507.6859436035156
+      ]
+    },
+    {
+      "class_id": 2,
+      "class_name": "alligator_crack",
+      "confidence": 0.07045546919107437,
+      "bbox_xyxy": [
+        0.0,
+        255.43714904785156,
+        682.8935546875,
+        1006.9933471679688
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.062260452657938004,
+      "bbox_xyxy": [
+        0.0,
+        211.54127502441406,
+        808.8314208984375,
+        426.251220703125
+      ]
+    }
+  ]
+}

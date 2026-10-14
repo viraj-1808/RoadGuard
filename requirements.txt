@@ -1,0 +1,22 @@
+# RoadGuard AI - Requirements
+
+# Core Dependencies (verified importable, pinned to environment versions)
+ultralytics==8.4.138
+torch==2.14.0+cu126
+torchvision==0.29.0+cu126
+opencv-python==4.14.0
+numpy==2.5.2
+Pillow==12.3.0
+psutil==7.2.2
+pandas==3.0.6
+
+# Optional Dependencies
+tqdm==4.70.0
+rich>=13.7.0
+pyyaml>=6.0.1
+
+# Development / Testing (optional)
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Python Version Requirement: >= 3.10, < 3.14

@@ -1,0 +1,5 @@
+image,method,gt_status,gt_boxes,tp,fp,fn,precision,recall,f1,best_iou_pothole,best_iou_alligator,best_iou_longitudinal,best_iou_transverse,matched_any,num_detections,inference_time_ms,tile_count
+road018.jpg,standard,CLEAR,1,0,0,1,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,False,0,188.8,1
+road018.jpg,sahi_tiled,CLEAR,1,0,6,1,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,False,6,4005.8,6
+road021.jpg,standard,CLEAR,1,0,0,1,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,False,0,154.6,1
+road021.jpg,sahi_tiled,CLEAR,1,0,2,1,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,False,2,1527.8,2

@@ -1,0 +1,288 @@
+{
+  "version": "v1.0",
+  "timestamp": "2026-10-11T15:30:00Z",
+  "total_uncertain": 18,
+  "needs_human_review": 15,
+  "likely_negative": 3,
+  "class_mapping": {
+    "0": "longitudinal_crack",
+    "1": "transverse_crack",
+    "2": "alligator_crack",
+    "3": "pothole"
+  },
+  "uncertain_images": {
+    "needs_human_review": [
+      {
+        "image": "road013.jpg",
+        "width": 1200,
+        "height": 900,
+        "split": "train",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 1200x900 image; may be clean road or defects below threshold",
+        "review_flags": ["needs_human_review"],
+        "review_reason": "No detections at conf=0.05; high-res landscape (1200x900) - defects may be below threshold or absent. Human must inspect visually.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road016.jpg",
+        "width": 4096,
+        "height": 3072,
+        "split": "holdout",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 4096x3072 image; very high resolution may cause small defects to be missed at 720 imgsz",
+        "review_flags": ["needs_human_review", "high_res_may_miss_defects", "possible_missed_detections"],
+        "review_reason": "4K landscape (4096x3072) - extreme downsampling (5.6x) to 720 imgsz likely destroys small defect detail. SAHI inference found detections but they were FP. Human must inspect at native resolution.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road017.jpg",
+        "width": 3072,
+        "height": 4096,
+        "split": "val",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 3072x4096 image; portrait orientation + high res may cause missed defects",
+        "review_flags": ["needs_human_review", "portrait_orientation", "possible_missed_detections"],
+        "review_reason": "4K portrait (3072x4096) - portrait letterbox + extreme downsampling. SAHI inference found 0 detections. Human must inspect at native resolution.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road019.jpg",
+        "width": 3072,
+        "height": 4096,
+        "split": "holdout",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 3072x4096 image; high res portrait orientation",
+        "review_flags": ["needs_human_review", "portrait_orientation"],
+        "review_reason": "4K portrait - same issues as road017. Human must inspect.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road020.jpg",
+        "width": 960,
+        "height": 1280,
+        "split": "val",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 960x1280 portrait image",
+        "review_flags": ["needs_human_review", "portrait_orientation"],
+        "review_reason": "Portrait (960x1280) - no detections. Human must inspect for defects.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road023.jpg",
+        "width": 3072,
+        "height": 4096,
+        "split": "holdout",
+        "epoch72_predictions": [
+          "alligator_crack (conf=0.328, bbox=[0.0, 658.13, 3072.0, 1956.42])",
+          "longitudinal_crack (conf=0.210, bbox=[14.70, 2959.92, 282.04, 3477.35])",
+          "alligator_crack (conf=0.137, bbox=[1354.96, 854.90, 3063.25, 1979.51])",
+          "alligator_crack (conf=0.064, bbox=[0.0, 676.60, 3072.0, 3246.86])",
+          "transverse_crack (conf=0.051, bbox=[2077.39, 933.40, 3033.29, 1051.12])"
+        ],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 3072x4096 image",
+        "review_flags": ["needs_human_review"],
+        "review_reason": "4K portrait - epoch72 found 5 low-conf detections across 3 classes but original model found none. Highly ambiguous. Human must verify each detection.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road024.jpg",
+        "width": 960,
+        "height": 1280,
+        "split": "train",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 960x1280 portrait image",
+        "review_flags": ["needs_human_review", "portrait_orientation"],
+        "review_reason": "Portrait - no detections. Human must inspect.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road030.jpg",
+        "width": 3072,
+        "height": 4096,
+        "split": "train",
+        "epoch72_predictions": [
+          "alligator_crack (conf=0.110, bbox=[384.83, 3207.68, 2531.35, 4096.0])",
+          "alligator_crack (conf=0.085, bbox=[1209.40, 6.78, 2179.33, 870.08])"
+        ],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 3072x4096 image",
+        "review_flags": ["needs_human_review"],
+        "review_reason": "4K portrait - epoch72 found 2 low-conf alligator_crack. Human must verify.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road032.jpg",
+        "width": 4096,
+        "height": 3072,
+        "split": "val",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 4096x3072 image",
+        "review_flags": ["needs_human_review"],
+        "review_reason": "4K landscape - no detections. Human must inspect.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road034.jpg",
+        "width": 960,
+        "height": 1280,
+        "split": "train",
+        "epoch72_predictions": [
+          "alligator_crack (conf=0.166, bbox=[642.02, 323.15, 955.40, 545.51])",
+          "alligator_crack (conf=0.077, bbox=[506.94, 327.26, 957.19, 542.13])",
+          "pothole (conf=0.072, bbox=[0.0, 442.99, 960.0, 1276.25])"
+        ],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 960x1280 portrait image",
+        "review_flags": ["needs_human_review", "portrait_orientation"],
+        "review_reason": "Portrait - epoch72 found 3 low-conf detections (2 alligator_crack, 1 pothole) but original found none. Ambiguous. Human must verify.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road035.jpg",
+        "width": 4096,
+        "height": 3072,
+        "split": "train",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 4096x3072 image",
+        "review_flags": ["needs_human_review"],
+        "review_reason": "4K landscape - no detections. Human must inspect.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road036.jpg",
+        "width": 960,
+        "height": 1280,
+        "split": "train",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 960x1280 portrait image",
+        "review_flags": ["needs_human_review", "portrait_orientation"],
+        "review_reason": "Portrait - no detections. Human must inspect.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road037.jpg",
+        "width": 4096,
+        "height": 3072,
+        "split": "holdout",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 4096x3072 image",
+        "review_flags": ["needs_human_review"],
+        "review_reason": "4K landscape - no detections. Human must inspect.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road038.jpg",
+        "width": 1280,
+        "height": 960,
+        "split": "holdout",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 1280x960 image",
+        "review_flags": ["needs_human_review"],
+        "review_reason": "Standard resolution (1280x960) - no detections. Human must inspect for defects.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "image": "road039.jpg",
+        "width": 3072,
+        "height": 4096,
+        "split": "holdout",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 3072x4096 image",
+        "review_flags": ["needs_human_review"],
+        "review_reason": "4K portrait - no detections. Human must inspect.",
+        "status": "NEEDS_HUMAN_REVIEW"
+      }
+    ],
+    "likely_negative": [
+      {
+        "image": "road005.jpg",
+        "width": 452,
+        "height": 678,
+        "split": "holdout",
+        "epoch72_predictions": [],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections; image may contain subtle defects below confidence threshold or no visible damage",
+        "review_flags": ["needs_human_review", "likely_false_positive"],
+        "review_reason": "Small image (452x678) - no detections from either model. Likely clean road but human should confirm.",
+        "status": "LIKELY_NEGATIVE"
+      },
+      {
+        "image": "road012.jpg",
+        "width": 612,
+        "height": 406,
+        "split": "holdout",
+        "epoch72_predictions": [],
+        "original_predictions": [
+          "pothole (conf=0.315, bbox=[0.0, 0.0, 216.05, 79.12])"
+        ],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "bbox at image corner 0-216",
+        "review_flags": ["needs_human_review"],
+        "review_reason": "Original model predicted pothole at corner (0,0) - likely corner artifact. Epoch72 found nothing. Human should confirm if this is a real pothole or artifact.",
+        "status": "LIKELY_NEGATIVE"
+      },
+      {
+        "image": "road028.jpg",
+        "width": 3072,
+        "height": 4096,
+        "split": "train",
+        "epoch72_predictions": [
+          "alligator_crack (conf=0.051, bbox=[2023.61, 919.30, 3059.22, 1739.38])"
+        ],
+        "original_predictions": [],
+        "error_analysis_visible_damage": "uncertain",
+        "error_analysis_class": "uncertain",
+        "error_analysis_notes": "No detections on 3072x4096 image",
+        "review_flags": ["needs_human_review"],
+        "review_reason": "4K portrait - epoch72 found 1 very low-conf alligator_crack (0.051). Likely FP. Human should verify.",
+        "status": "LIKELY_NEGATIVE"
+      }
+    ]
+  }
+}

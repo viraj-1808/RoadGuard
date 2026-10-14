@@ -1,0 +1,13 @@
+{
+  "batches": 40,
+  "cache": false,
+  "data": "experiments/dataset/experiment2/data.yaml",
+  "device": "cuda:0",
+  "mean_batch_load_seconds": 0.13918676749599398,
+  "mean_gpu_transfer_seconds": 0.007017095004266593,
+  "non_blocking_transfer_used": true,
+  "pin_memory_expected": true,
+  "total_measured_seconds": 5.848154500010423,
+  "warmup": 5,
+  "workers": 6
+}

@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "trial_timestamp": "2026-10-09T05:49:04Z",
+    "python_version": "3.12.10",
+    "torch_version": "2.14.0+cu126",
+    "cuda_version": "12.6",
+    "ultralytics_version": "8.4.138",
+    "gpu_name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "cpu_count": 12,
+    "psutil_available": true
+  },
+  "checkpoint_before": {
+    "path": "runs/detect/experiments/training/yol11s_experiment2/weights/epoch72.pt",
+    "exists": true,
+    "sha256": "e455893192790a65fccf44c483775375aaebc837397bcbf16082533639eae6e5",
+    "internal_epoch": 72,
+    "displayed_completed_epoch": 73,
+    "next_epoch": 73,
+    "optimizer_present": true,
+    "optimizer_state_entries": 255,
+    "optimizer_param_groups": 3,
+    "best_fitness": 0.33329,
+    "size_bytes": 76023651
+  },
+  "baseline": {
+    "system_ram_total_gb": 15.65,
+    "system_ram_available_gb": 3.98,
+    "system_ram_used_gb": 11.67,
+    "system_ram_percent": 67.3,
+    "gpu_name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "gpu_total_gb": 6.0,
+    "gpu_allocated_mb": 0,
+    "gpu_reserved_mb": 0
+  },
+  "config": {
+    "workers": 2,
+    "prefetch_factor": 2,
+    "batch": 16,
+    "imgsz": 720,
+    "cache": false,
+    "device": "0",
+    "optimizer": "AdamW",
+    "amp": true,
+    "seed": 42,
+    "deterministic": true,
+    "augment": false,
+    "epochs_requested": 75,
+    "epochs_to_run": 3,
+    "resume_from_epoch": 72,
+    "checkpoint_modified": true,
+    "original_checkpoint_sha256": "e455893192790a65fccf44c483775375aaebc837397bcbf16082533639eae6e5"
+  },
+  "wall_clock_total_seconds": 0,
+  "peak_metrics": {
+    "peak_system_ram_percent": 97.0,
+    "peak_system_ram_used_gb": 15.2,
+    "mean_system_ram_percent": 93.5,
+    "peak_process_rss_gb": 3.0,
+    "peak_child_rss_gb": 8.5,
+    "peak_combined_rss_gb": 11.5,
+    "peak_gpu_allocated_mb": 5170,
+    "peak_gpu_reserved_mb": 5170,
+    "mean_gpu_allocated_mb": 5170,
+    "mean_cpu_percent": 13.0,
+    "samples_collected": 2,
+    "ram_warning_threshold_reached": true
+  },
+  "epoch_data": [],
+  "orphan_worker_processes": 0,
+  "git_status_before": "",
+  "git_status_after": "",
+  "checkpoint_unchanged": true,
+  "decision": "REJECT",
+  "decision_reason": "workers=2 + prefetch_factor=2 caused OOM crash at epoch 74 batch 58; 160x slower than benchmark prediction; peak RAM 97% vs 96% for workers=8; GPU utilization collapsed to 13%",
+  "adopt_recommendation": false,
+  "next_candidates": [
+    {"workers": 4, "prefetch_factor": 2, "benchmark_samples_per_sec": 117.18, "benchmark_peak_ram_pct": 96.1},
+    {"workers": 4, "prefetch_factor": 1, "benchmark_samples_per_sec": 104.30, "benchmark_peak_ram_pct": 96.5}
+  ],
+  "notes": "Micro-trial crashed due to memory pressure. Dataloader benchmark showed workers=2/pf2 at 87.6% RAM (safe in isolation) but combined training footprint pushed to 97%. Workers=8 production run also at 96% RAM but stable. No configuration is truly safe with 16 GB system RAM + 6 GB GPU."
+}

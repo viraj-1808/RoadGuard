@@ -1,0 +1,167 @@
+{
+  "timestamp": "2026-10-11T09:47:00.960046",
+  "command": "model.val(data='experiments/dataset/yolo_rdd2022_india/data.yaml', imgsz=720, batch=16, device=0, save_json=True, project='experiments/results/20261010_phase2_validation', name='exp2_epoch72_val', exist_ok=False, verbose=True)",
+  "model_sha256": "e455893192790a65fccf44c483775375aaebc837397bcbf16082533639eae6e5",
+  "package_versions": {
+    "ultralytics": "8.4.138",
+    "torch": "2.14.0+cu126",
+    "opencv": "4.14.0",
+    "numpy": "2.5.2"
+  },
+  "image_size": 720,
+  "effective_image_size": 736,
+  "batch_size": 16,
+  "device": "cuda:0",
+  "conf_threshold": 0.001,
+  "iou_threshold": 0.6,
+  "class_names": {
+    "0": "longitudinal_crack",
+    "1": "transverse_crack",
+    "2": "alligator_crack",
+    "3": "pothole"
+  },
+  "class_order": [
+    "longitudinal_crack",
+    "transverse_crack",
+    "alligator_crack",
+    "pothole"
+  ],
+  "per_class": {
+    "longitudinal_crack": {
+      "precision": 0.24309465110046727,
+      "recall": 0.17105263157894737,
+      "map50": 0.19536548070805898,
+      "map50_95": 0.08895222490935445,
+      "f1": 0.20080769104400462,
+      "instances": 4
+    },
+    "transverse_crack": {
+      "precision": 1.0,
+      "recall": 0.0,
+      "map50": 0.03572704081632652,
+      "map50_95": 0.007895408163265305,
+      "f1": 0.0,
+      "instances": 4
+    },
+    "alligator_crack": {
+      "precision": 0.4658164182882789,
+      "recall": 0.20833333333333334,
+      "map50": 0.2608820553994828,
+      "map50_95": 0.10416643219451541,
+      "f1": 0.28790365022002123,
+      "instances": 4
+    },
+    "pothole": {
+      "precision": 0.4461143827611859,
+      "recall": 0.4097792387473498,
+      "map50": 0.38583382849397235,
+      "map50_95": 0.1562202216376059,
+      "f1": 0.427175545110192,
+      "instances": 4
+    }
+  },
+  "confusion_matrix": [
+    [
+      7.0,
+      0.0,
+      0.0,
+      0.0,
+      7.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      15.0,
+      1.0,
+      5.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      110.0,
+      51.0
+    ],
+    [
+      69.0,
+      4.0,
+      80.0,
+      345.0,
+      0.0
+    ]
+  ],
+  "confusion_matrix_normalized": [
+    [
+      0.5,
+      0.0,
+      0.0,
+      0.0,
+      0.5
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.7142857142857143,
+      0.047619047619047616,
+      0.23809523809523808
+    ],
+    [
+      0.0,
+      0.0,
+      0.006172839506172839,
+      0.6790123456790124,
+      0.3148148148148148
+    ],
+    [
+      0.13855421686746988,
+      0.008032128514056224,
+      0.1606425702811245,
+      0.6927710843373494,
+      0.0
+    ]
+  ],
+  "metrics_summary": {
+    "mp": 0.538756363037483,
+    "mr": 0.19729130091490762,
+    "map50": 0.21945210135446014,
+    "map50_95": 0.08930857172618525,
+    "map75": 0.04910526914716675,
+    "fitness": 0.08930857172618525
+  },
+  "speed": {
+    "preprocess": 3.1671078599110962,
+    "inference": 11.953169869881238,
+    "loss": 0.0004371191989061093,
+    "postprocess": 0.803171616356706
+  },
+  "coco_metrics": {
+    "AP_IoU_50_95": 0.091,
+    "AP_IoU_50": 0.221,
+    "AP_IoU_75": 0.051,
+    "AP_small": 0.105,
+    "AP_medium": 0.093,
+    "AP_large": 0.106,
+    "AR_max1": 0.112,
+    "AR_max10": 0.319,
+    "AR_max100": 0.398,
+    "AR_small": 0.315,
+    "AR_medium": 0.288,
+    "AR_large": 0.438,
+    "AR_IoU_50": 0.806,
+    "AR_IoU_75": 0.313
+  }
+}

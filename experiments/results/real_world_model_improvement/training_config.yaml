@@ -1,0 +1,84 @@
+# Training configuration for YOLO11s real-world fine-tuning
+# Fine-tuning from Exp2 epoch72 checkpoint with 15 CLEAR manual images added
+
+# Model and checkpoint
+model: "runs/detect/experiments/training/yol11s_experiment2/weights/epoch72.pt"
+
+# Dataset configuration
+data: "experiments/dataset/yol11s_realworld_finetune/data.yaml"
+
+# Training parameters
+epochs: 10
+patience: 20
+batch: 16
+imgsz: 720
+
+# Hardware and performance
+device: 0
+workers: 2
+prefetch_factor: 2
+amp: True
+cache: False
+
+# Reproducibility
+seed: 42
+deterministic: True
+
+# Output configuration
+project: "experiments/training"
+name: "yol11s_realworld_finetune"
+exist_ok: True
+save: True
+save_period: 1
+
+# Training behavior
+resume: True
+optimizer: "auto"
+lr0: 0.001
+lrf: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+warmup_epochs: 0
+warmup_momentum: 0.8
+warmup_bias_lr: 0.1
+box: 7.5
+cls: 0.5
+dfl: 1.5
+close_mosaic: 10
+
+# Validation
+val: True
+split: "val"
+plots: True
+rect: False
+
+# Augmentation (conservative for fine-tuning)
+hsv_h: 0.015
+hsv_s: 0.7
+hsv_v: 0.4
+degrees: 0.0
+translate: 0.1
+scale: 0.5
+shear: 0.0
+perspective: 0.0
+flipud: 0.0
+fliplr: 0.5
+mosaic: 1.0
+mixup: 0.0
+copy_paste: 0.0
+
+# Other
+verbose: True
+cls_remap: True
+single_cls: False
+cos_lr: False
+fraction: 1.0
+profile: False
+freeze: None
+multi_scale: 0.0
+compile: False
+overlap_mask: True
+mask_ratio: 4
+dropout: 0.0
+augment: False
+agnostic_nms: False

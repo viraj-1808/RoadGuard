@@ -1,0 +1,19 @@
+{
+  "image": "road018.jpg",
+  "image_width": 4096,
+  "image_height": 3072,
+  "inference_time_ms": 149.84650001861155,
+  "detections": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.3298819065093994,
+      "bbox_xyxy": [
+        70.42646026611328,
+        0.0,
+        1581.5301513671875,
+        1009.9747924804688
+      ]
+    }
+  ]
+}

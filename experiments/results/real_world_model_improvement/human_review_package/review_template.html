@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoadGuard AI - Human Review Interface</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 { font-size: 1.5rem; }
+        .progress { font-size: 0.9rem; opacity: 0.8; }
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .review-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .image-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .image-title { font-size: 1.25rem; font-weight: 600; color: #2c3e50; }
+        .badges { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-needs-review { background: #fff3cd; color: #856404; }
+        .badge-train { background: #d1ecf1; color: #0c5460; }
+        .badge-val { background: #d4edda; color: #155724; }
+        .badge-holdout { background: #e2e3e5; color: #383d41; }
+        .image-container {
+            position: relative;
+            max-width: 100%;
+            overflow: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background: #fafafa;
+        }
+        .image-container img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        .canvas-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .predictions-panel {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .predictions-panel h3 { margin-bottom: 0.75rem; color: #2c3e50; }
+        .prediction-item {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #e74c3c;
+            font-family: monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .prediction-item.epoch72 { border-left-color: #e74c3c; }
+        .prediction-item.original { border-left-color: #3498db; }
+        .gt-section {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #e8f8f5;
+            border-radius: 4px;
+            border: 1px solid #82e0aa;
+        }
+        .gt-section h3 { margin-bottom: 0.75rem; color: #1e8e6e; }
+        .gt-instructions {
+            color: #1e8e6e;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .gt-boxes {
+            min-height: 60px;
+            background: white;
+            border: 2px dashed #82e0aa;
+            border-radius: 4px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+        .gt-boxes.has-boxes { color: #2c3e50; }
+        .gt-box { padding: 0.25rem; margin: 0.25rem 0; background: #f8f9fa; border-radius: 3px; }
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-primary { background: #2c3e50; color: white; }
+        .btn-primary:hover { background: #1a252f; }
+        .btn-secondary { background: #ecf0f1; color: #2c3e50; }
+        .btn-secondary:hover { background: #bdc3c7; }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-success:hover { background: #219653; }
+        .metadata {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        .metadata h3 { margin-bottom: 0.5rem; color: #2c3e50; }
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+        .metadata-item { display: flex; flex-direction: column; }
+        .metadata-label { font-weight: 600; color: #7f8c8d; font-size: 0.75rem; text-transform: uppercase; }
+        .metadata-value { color: #2c3e50; word-break: break-word; }
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        .hidden { display: none !important; }
+        .drawing-mode {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #27ae60;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            z-index: 100;
+        }
+        .drawing-mode.hidden { display: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>RoadGuard AI - Human Review</h1>
+        <div class="progress" id="progress">Image 1 of 15</div>
+    </header>
+    <main id="main"></main>
+
+    <div class="navigation">
+        <button class="btn-secondary" id="prevBtn" onclick="navigate(-1)">Previous</button>
+        <button class="btn-primary" id="nextBtn" onclick="navigate(1)">Next</button>
+    </div>
+
+    <script>
+        let metadata = [];
+        let currentIndex = 0;
+        let gtBoxes = {};
+        let isDrawing = false;
+        let currentBox = null;
+        let scale = 1;
+
+        async function loadMetadata() {
+            const response = await fetch('review_metadata.json');
+            metadata = await response.json();
+            renderCurrent();
+        }
+
+        function renderCurrent() {
+            const item = metadata[currentIndex];
+            const main = document.getElementById('main');
+            document.getElementById('progress').textContent = `Image ${currentIndex + 1} of ${metadata.length}`;
+
+            const epoch72Preds = item.epoch72_predictions === 'None' ? 'No detections' : item.epoch72_predictions;
+            const originalPreds = item.original_predictions === 'None' ? 'No detections' : item.original_predictions;
+
+            const storedBoxes = gtBoxes[item.image_path] || [];
+            const hasBoxes = storedBoxes.length > 0;
+
+            main.innerHTML = `
+                <div class="review-card">
+                    <div class="image-header">
+                        <h2 class="image-title">${item.image_path.replace('review_images/', '')}</h2>
+                        <div class="badges">
+                            <span class="badge badge-needs-review">${item.status}</span>
+                            <span class="badge badge-${item.split}">${item.split}</span>
+                        </div>
+                    </div>
+
+                    <div class="image-container" id="imageContainer">
+                        <img id="mainImage" src="${item.image_path}" alt="${item.image_path}" onload="setupCanvas()">
+                        <canvas class="canvas-overlay" id="overlayCanvas"></canvas>
+                    </div>
+
+                    <div class="predictions-panel">
+                        <h3>Epoch 72 Predictions (Red Boxes)</h3>
+                        <div class="prediction-item epoch72">${epoch72Preds}</div>
+                        <h3 style="margin-top: 1rem;">Original Model Predictions (Blue Boxes)</h3>
+                        <div class="prediction-item original">${originalPreds}</div>
+                    </div>
+
+                    <div class="gt-section">
+                        <h3>Ground Truth Annotation</h3>
+                        <p class="gt-instructions">Click and drag on the image to draw bounding boxes for ground truth. Press 'D' to toggle drawing mode.</p>
+                        <div class="gt-boxes ${hasBoxes ? 'has-boxes' : ''}" id="gtBoxes">
+                            ${hasBoxes ? storedBoxes.map((b, i) => `<div class="gt-box">Box ${i+1}: [${b.x1}, ${b.y1}, ${b.x2}, ${b.y2}] Class: ${b.class}</div>`).join('') : 'No ground truth boxes drawn yet'}
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn-success" onclick="saveCurrent()">Save Annotations</button>
+                        <button class="btn-secondary" onclick="clearBoxes()">Clear Boxes</button>
+                        <button class="btn-secondary" onclick="exportAll()">Export All Annotations</button>
+                    </div>
+
+                    <div class="metadata">
+                        <h3>Metadata</h3>
+                        <div class="metadata-grid">
+                            <div class="metadata-item">
+                                <span class="metadata-label">Dimensions</span>
+                                <span class="metadata-value">${item.dimensions}</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Split</span>
+                                <span class="metadata-value">${item.split}</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Visible Damage</span>
+                                <span class="metadata-value">${item.error_analysis_visible_damage}</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Class</span>
+                                <span class="metadata-value">${item.error_analysis_class}</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Notes</span>
+                                <span class="metadata-value">${item.error_analysis_notes}</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Review Flags</span>
+                                <span class="metadata-value">${item.review_flags}</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Review Reason</span>
+                                <span class="metadata-value">${item.review_reason}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === metadata.length - 1;
+
+            if (hasBoxes) {
+                drawSavedBoxes();
+            }
+        }
+
+        function setupCanvas() {
+            const img = document.getElementById('mainImage');
+            const canvas = document.getElementById('overlayCanvas');
+            const container = document.getElementById('imageContainer');
+
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+
+            scale = img.clientWidth / img.naturalWidth;
+        }
+
+        function drawSavedBoxes() {
+            const img = document.getElementById('mainImage');
+            const canvas = document.getElementById('overlayCanvas');
+            const ctx = canvas.getContext('2d');
+            const item = metadata[currentIndex];
+            const boxes = gtBoxes[item.image_path] || [];
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = '#27ae60';
+            ctx.lineWidth = 3 / scale;
+            ctx.font = `${14 / scale}px monospace`;
+
+            boxes.forEach((box, i) => {
+                ctx.strokeRect(box.x1, box.y1, box.x2 - box.x1, box.y2 - box.y1);
+                ctx.fillStyle = '#27ae60';
+                ctx.fillText(`GT ${i+1}: ${box.class}`, box.x1, box.y1 - 5 / scale);
+            });
+        }
+
+        let startX, startY;
+
+        document.getElementById('main').addEventListener('mousedown', (e) => {
+            if (!isDrawing) return;
+            const canvas = document.getElementById('overlayCanvas');
+            const rect = canvas.getBoundingClientRect();
+            startX = (e.clientX - rect.left) / scale;
+            startY = (e.clientY - rect.top) / scale;
+            currentBox = { x1: startX, y1: startY, x2: startX, y2: startY };
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDrawing || !currentBox) return;
+            const canvas = document.getElementById('overlayCanvas');
+            const rect = canvas.getBoundingClientRect();
+            currentBox.x2 = (e.clientX - rect.left) / scale;
+            currentBox.y2 = (e.clientY - rect.top) / scale;
+            drawTempBox();
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (!isDrawing || !currentBox) return;
+            const item = metadata[currentIndex];
+            if (!gtBoxes[item.image_path]) gtBoxes[item.image_path] = [];
+
+            const className = prompt('Enter defect class (alligator_crack, longitudinal_crack, transverse_crack, pothole):', 'alligator_crack');
+            if (className) {
+                currentBox.class = className;
+                // Normalize coordinates
+                currentBox.x1 = Math.min(currentBox.x1, currentBox.x2);
+                currentBox.y1 = Math.min(currentBox.y1, currentBox.y2);
+                currentBox.x2 = Math.max(currentBox.x1, currentBox.x2);
+                currentBox.y2 = Math.max(currentBox.y1, currentBox.y2);
+                gtBoxes[item.image_path].push(currentBox);
+                renderCurrent();
+            }
+            currentBox = null;
+        });
+
+        function drawTempBox() {
+            const canvas = document.getElementById('overlayCanvas');
+            const ctx = canvas.getContext('2d');
+            const item = metadata[currentIndex];
+            const boxes = gtBoxes[item.image_path] || [];
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = '#27ae60';
+            ctx.lineWidth = 3 / scale;
+
+            boxes.forEach((box, i) => {
+                ctx.strokeRect(box.x1, box.y1, box.x2 - box.x1, box.y2 - box.y1);
+                ctx.fillStyle = '#27ae60';
+                ctx.font = `${14 / scale}px monospace`;
+                ctx.fillText(`GT ${i+1}: ${box.class}`, box.x1, box.y1 - 5 / scale);
+            });
+
+            if (currentBox) {
+                ctx.strokeStyle = '#f39c12';
+                ctx.setLineDash([10 / scale, 5 / scale]);
+                ctx.strokeRect(currentBox.x1, currentBox.y1, currentBox.x2 - currentBox.x1, currentBox.y2 - currentBox.y1);
+                ctx.setLineDash([]);
+            }
+        }
+
+        function toggleDrawingMode() {
+            isDrawing = !isDrawing;
+            const indicator = document.getElementById('drawingIndicator');
+            if (indicator) indicator.classList.toggle('hidden', !isDrawing);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'd' || e.key === 'D') toggleDrawingMode();
+            if (e.key === 'ArrowLeft') navigate(-1);
+            if (e.key === 'ArrowRight') navigate(1);
+        });
+
+        function navigate(dir) {
+            const newIndex = currentIndex + dir;
+            if (newIndex >= 0 && newIndex < metadata.length) {
+                currentIndex = newIndex;
+                renderCurrent();
+            }
+        }
+
+        function saveCurrent() {
+            const item = metadata[currentIndex];
+            const boxes = gtBoxes[item.image_path] || [];
+            const data = {
+                image_path: item.image_path,
+                gt_boxes: boxes,
+                timestamp: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${item.image_path.replace('review_images/', '').replace('.jpg', '')}_gt.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('Annotations saved!');
+        }
+
+        function clearBoxes() {
+            const item = metadata[currentIndex];
+            gtBoxes[item.image_path] = [];
+            renderCurrent();
+        }
+
+        function exportAll() {
+            const exportData = {};
+            Object.entries(gtBoxes).forEach(([path, boxes]) => {
+                if (boxes.length > 0) {
+                    exportData[path] = boxes;
+                }
+            });
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'human_review_ground_truth.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('All annotations exported!');
+        }
+
+        // Add drawing mode indicator
+        const indicator = document.createElement('div');
+        indicator.id = 'drawingIndicator';
+        indicator.className = 'drawing-mode hidden';
+        indicator.innerHTML = '✏️ Drawing Mode Active (Press D to toggle)';
+        document.body.appendChild(indicator);
+
+        loadMetadata();
+    </script>
+</body>
+</html>

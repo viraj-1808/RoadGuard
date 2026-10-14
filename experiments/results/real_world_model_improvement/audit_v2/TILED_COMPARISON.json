@@ -1,0 +1,47 @@
+{
+  "sahi_available": false,
+  "tiling_implemented": false,
+  "searched_terms": ["sahi", "SlicingAided", "slice", "tile", "patch"],
+  "search_scope": "All .py files in repository",
+  "matches_found": [
+    "test_yolo_adapter.py: mock.patch (unittest mocking)",
+    "analyze_coverage.py: percentile function",
+    "test_diagnose_training_resources.py: mock.patch",
+    "continue_yol11s_experiment2_optimized.py: patch_ultralytics_resume_data_override",
+    "microtrial_workers2_prefetch2.py: patch_build_dataloader_prefetch",
+    "convert_arrow_to_yolo.py: 'patching defects' (domain term)",
+    "audit_h11_evidence_scope.py: percentile",
+    "audit_missed_pair_evidence.py: percentile",
+    "comprehensive_dataset_analysis.py: percentile",
+    "rdd2022_india_analysis.py: percentile",
+    "render_missed_pair_contact_sheets.py: percentile/tiles"
+  ],
+  "conclusion": "No SAHI, slicing, tiling, or patch-based inference implementation exists. The inference pipeline uses standard single-image letterbox resize only.",
+  "what_would_be_needed": {
+    "dependencies": ["sahi>=0.11.0"],
+    "implementation_steps": [
+      "Install sahi: pip install sahi",
+      "Create SAHI wrapper in inference/adapters/",
+      "Configure slice_height=640, slice_width=640, overlap_ratio=0.2",
+      "Implement prediction merging with NMS across slices",
+      "Map slice coordinates back to original image",
+      "Add tiled_mode parameter to YOLOAdapter.predict_image()",
+      "Benchmark: standard vs tiled on 4K images"
+    ],
+    "expected_benefit": "Tiled inference would process 4K images at native resolution (640px tiles), preserving defect detail that is lost in 5.6x downsampling."
+  },
+  "standard_inference_results": {
+    "checkpoint": "epoch72.pt",
+    "imgsz": 720,
+    "conf_thresholds_tested": [0.05, 0.10, 0.15, 0.20, 0.25],
+    "images_tested": 5,
+    "results_summary": {
+      "road002.jpg": {"tp": 0, "fp": 0, "fn": 1, "matched_at_any_threshold": false},
+      "road003.jpg": {"tp": 0, "fp": 0, "fn": 1, "matched_at_any_threshold": false},
+      "road007.jpg": {"tp": 0, "fp": 5, "fn": 1, "matched_at_any_threshold": false},
+      "road018.jpg": {"tp": 0, "fp": 0, "fn": 1, "matched_at_any_threshold": false},
+      "road021.jpg": {"tp": 0, "fp": 0, "fn": 1, "matched_at_any_threshold": false}
+    },
+    "overall": "0/5 CLEAR high-res images detected at any confidence threshold ≥0.05"
+  }
+}

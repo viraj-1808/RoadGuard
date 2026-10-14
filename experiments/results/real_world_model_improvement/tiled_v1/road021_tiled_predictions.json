@@ -1,0 +1,31 @@
+{
+  "image_path": "validation\\manual\\input\\road021.jpg",
+  "inference_time_ms": 1527.7738999575377,
+  "image_width": 3072,
+  "image_height": 4096,
+  "tile_count": 2,
+  "detections": [
+    {
+      "class_id": 1,
+      "class_name": "transverse_crack",
+      "confidence": 0.06913673877716064,
+      "bbox_xyxy": [
+        2049.6283913850784,
+        168.54776000976562,
+        2358.5911560058594,
+        237.42507934570312
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.060243017971515656,
+      "bbox_xyxy": [
+        2432.0,
+        3456.0,
+        3048.3375854492188,
+        4006.2962646484375
+      ]
+    }
+  ]
+}

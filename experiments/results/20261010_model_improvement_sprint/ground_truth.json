@@ -1,0 +1,778 @@
+{
+  "road001.webp": [],
+  "road002.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        251.0,
+        129.0,
+        494.0,
+        307.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        148.0,
+        41.0,
+        161.0,
+        56.0
+      ]
+    }
+  ],
+  "road003.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        959.1,
+        1198.875,
+        976.475,
+        1223.2
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        337.075,
+        1115.4750000000001,
+        359.6625,
+        1145.0125
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        446.5375,
+        1049.45,
+        463.9125,
+        1073.775
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        72.97500000000001,
+        783.6125000000001,
+        102.5125,
+        809.6750000000001
+      ]
+    }
+  ],
+  "road004.jpg": [],
+  "road005.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        356.0,
+        438.0,
+        368.0,
+        448.0
+      ]
+    }
+  ],
+  "road006.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        88.0,
+        50.0,
+        271.0,
+        136.0
+      ]
+    }
+  ],
+  "road007.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        26.0,
+        161.0,
+        49.0,
+        171.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        82.0,
+        138.0,
+        739.0,
+        415.0
+      ]
+    }
+  ],
+  "road008.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        65.0,
+        624.0,
+        88.0,
+        638.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        0.0,
+        424.0,
+        18.0,
+        448.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        0.0,
+        294.0,
+        33.0,
+        336.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        142.0,
+        185.0,
+        160.0,
+        201.0
+      ]
+    }
+  ],
+  "road009.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        52.0,
+        126.0,
+        67.0,
+        136.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        297.0,
+        123.0,
+        344.0,
+        134.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        0.0,
+        112.0,
+        204.0,
+        216.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        428.0,
+        63.0,
+        458.0,
+        104.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        160.0,
+        52.0,
+        176.0,
+        80.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        244.0,
+        17.0,
+        255.0,
+        31.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        332.0,
+        10.0,
+        344.0,
+        21.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        321.0,
+        0.0,
+        341.0,
+        15.0
+      ]
+    }
+  ],
+  "road010.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        0.0,
+        144.0,
+        16.0,
+        159.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        16.0,
+        128.0,
+        32.0,
+        152.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        491.0,
+        100.0,
+        506.0,
+        117.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        353.0,
+        96.0,
+        368.0,
+        112.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        16.0,
+        89.0,
+        31.0,
+        120.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        384.0,
+        79.0,
+        399.0,
+        97.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        40.0,
+        50.0,
+        246.0,
+        100.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        0.0,
+        7.0,
+        42.0,
+        79.0
+      ]
+    }
+  ],
+  "road011.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        321.0,
+        384.0,
+        352.0,
+        400.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        640.0,
+        272.0,
+        655.0,
+        287.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        64.0,
+        272.0,
+        79.0,
+        288.0
+      ]
+    }
+  ],
+  "road012.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        299.0,
+        192.0,
+        314.0,
+        205.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        0.0,
+        0.0,
+        224.0,
+        88.0
+      ]
+    }
+  ],
+  "road013.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        1074.0,
+        340.5,
+        1156.5,
+        366.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        496.5,
+        309.0,
+        520.5,
+        334.5
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        1168.5,
+        307.5,
+        1200.0,
+        322.5
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        273.0,
+        285.0,
+        303.0,
+        303.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        687.0,
+        219.0,
+        709.5,
+        282.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        751.5,
+        111.0,
+        1123.5,
+        352.5
+      ]
+    }
+  ],
+  "road014.webp": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        3.0,
+        0.0,
+        23.0,
+        13.0
+      ]
+    }
+  ],
+  "road015.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        909.0,
+        280.5,
+        1200.0,
+        585.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        187.5,
+        244.5,
+        294.0,
+        265.5
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        297.0,
+        180.0,
+        442.5,
+        234.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        412.5,
+        178.5,
+        441.0,
+        195.0
+      ]
+    }
+  ],
+  "road016.jpg": [],
+  "road017.jpg": [],
+  "road018.jpg": [],
+  "road019.jpg": [],
+  "road020.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        526.4,
+        976.0,
+        838.4,
+        1280.0
+      ]
+    }
+  ],
+  "road021.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        1868.8,
+        3993.6,
+        2048.0,
+        4096.0
+      ]
+    }
+  ],
+  "road022.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        116.8,
+        328.0,
+        910.4,
+        574.4
+      ]
+    }
+  ],
+  "road023.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        2913.28,
+        3921.92,
+        3010.56,
+        4024.32
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        0.0,
+        3266.56,
+        71.68,
+        3353.6
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        675.84,
+        2928.64,
+        727.04,
+        3020.8
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        1812.48,
+        2324.48,
+        1894.4,
+        2406.4
+      ]
+    }
+  ],
+  "road024.jpg": [],
+  "road025.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        1131.52,
+        3962.88,
+        1356.8,
+        4096.0
+      ]
+    }
+  ],
+  "road026.jpg": [],
+  "road027.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        604.16,
+        1966.08,
+        778.24,
+        2165.76
+      ]
+    }
+  ],
+  "road028.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        819.2,
+        3870.72,
+        1080.32,
+        4096.0
+      ]
+    }
+  ],
+  "road029.jpg": [],
+  "road030.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        2995.2,
+        3829.76,
+        3072.0,
+        4096.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        1740.8,
+        921.6,
+        1797.12,
+        1013.76
+      ]
+    }
+  ],
+  "road031.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        889.6,
+        955.2,
+        960.0,
+        1280.0
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        132.8,
+        332.8,
+        555.2,
+        934.4
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        944.0,
+        158.4,
+        960.0,
+        195.2
+      ]
+    }
+  ],
+  "road032.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        506.88,
+        235.52,
+        696.32,
+        378.88
+      ]
+    }
+  ],
+  "road033.jpg": [],
+  "road034.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        686.4,
+        419.2,
+        713.6,
+        448.0
+      ]
+    }
+  ],
+  "road035.jpg": [],
+  "road036.jpg": [],
+  "road037.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        2928.64,
+        1802.24,
+        3491.84,
+        3072.0
+      ]
+    }
+  ],
+  "road038.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        160.0,
+        75.2,
+        217.6,
+        118.4
+      ]
+    }
+  ],
+  "road039.jpg": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        2524.16,
+        1664.0,
+        2626.56,
+        1889.28
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        1397.76,
+        1510.4,
+        1454.08,
+        1576.96
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        1925.12,
+        1080.32,
+        1991.68,
+        1192.96
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        1408.0,
+        1080.32,
+        2042.88,
+        1797.12
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        87.04,
+        373.76,
+        655.36,
+        1105.92
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "bbox_xyxy": [
+        1551.36,
+        138.24,
+        2268.16,
+        1372.16
+      ]
+    }
+  ]
+}

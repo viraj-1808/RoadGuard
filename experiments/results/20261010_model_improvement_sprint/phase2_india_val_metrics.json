@@ -1,0 +1,23 @@
+[
+  {
+    "id": "exp1_best",
+    "label": "Experiment 1 best (Dataset A only, epoch 100)",
+    "checkpoint": "C:\\Users\\viraj\\Code_files\\Github\\RoadGuard AI\\runs\\detect\\experiments\\training\\yol11s_dataset_v2_split_v2\\weights\\best.pt",
+    "error": "TypeError: float() argument must be a string or a real number, not 'method'",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\viraj\\Code_files\\Github\\RoadGuard AI\\experiments\\results\\20261010_model_improvement_sprint\\phase2_validate_india_val.py\", line 141, in main\n    result = run_val(candidate)\n             ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\viraj\\Code_files\\Github\\RoadGuard AI\\experiments\\results\\20261010_model_improvement_sprint\\phase2_validate_india_val.py\", line 114, in run_val\n    \"fitness\": float(box.fitness),\n               ^^^^^^^^^^^^^^^^^^\nTypeError: float() argument must be a string or a real number, not 'method'\n"
+  },
+  {
+    "id": "exp2_best_stale",
+    "label": "Experiment 2 best.pt (stale, epoch 29)",
+    "checkpoint": "C:\\Users\\viraj\\Code_files\\Github\\RoadGuard AI\\runs\\detect\\experiments\\training\\yol11s_experiment2\\weights\\best.pt",
+    "error": "TypeError: float() argument must be a string or a real number, not 'method'",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\viraj\\Code_files\\Github\\RoadGuard AI\\experiments\\results\\20261010_model_improvement_sprint\\phase2_validate_india_val.py\", line 141, in main\n    result = run_val(candidate)\n             ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\viraj\\Code_files\\Github\\RoadGuard AI\\experiments\\results\\20261010_model_improvement_sprint\\phase2_validate_india_val.py\", line 114, in run_val\n    \"fitness\": float(box.fitness),\n               ^^^^^^^^^^^^^^^^^^\nTypeError: float() argument must be a string or a real number, not 'method'\n"
+  },
+  {
+    "id": "exp2_epoch72",
+    "label": "Experiment 2 epoch72.pt (strongest by recorded metrics)",
+    "checkpoint": "C:\\Users\\viraj\\Code_files\\Github\\RoadGuard AI\\runs\\detect\\experiments\\training\\yol11s_experiment2\\weights\\epoch72.pt",
+    "error": "TypeError: float() argument must be a string or a real number, not 'method'",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\viraj\\Code_files\\Github\\RoadGuard AI\\experiments\\results\\20261010_model_improvement_sprint\\phase2_validate_india_val.py\", line 141, in main\n    result = run_val(candidate)\n             ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\viraj\\Code_files\\Github\\RoadGuard AI\\experiments\\results\\20261010_model_improvement_sprint\\phase2_validate_india_val.py\", line 114, in run_val\n    \"fitness\": float(box.fitness),\n               ^^^^^^^^^^^^^^^^^^\nTypeError: float() argument must be a string or a real number, not 'method'\n"
+  }
+]

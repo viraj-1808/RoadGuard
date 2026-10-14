@@ -1,0 +1,1209 @@
+[
+  {
+    "image_path": "validation\\manual\\input\\road001.webp",
+    "image_name": "road001.webp",
+    "width": 1140,
+    "height": 760,
+    "annotations": [
+      {
+        "class_id": 3,
+        "x_center": 0.19315700196383292,
+        "y_center": 0.6337041955245168,
+        "width": 0.21894888626901726,
+        "height": 0.11070777491519326,
+        "confidence": 0.6540261507034302,
+        "source": "model_derived"
+      },
+      {
+        "class_id": 3,
+        "x_center": 0.785184679533306,
+        "y_center": 0.7594159979569285,
+        "width": 0.42963064093338815,
+        "height": 0.464177101536801,
+        "confidence": 0.4701067805290222,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [
+      "duplicate_detections_in_predictions"
+    ],
+    "model_predictions": [
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.6540261507034302,
+        "bbox_xyxy": [
+          95.39811706542969,
+          439.5462341308594,
+          344.9998474121094,
+          523.6841430664062
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.4701067805290222,
+        "bbox_xyxy": [
+          650.2210693359375,
+          400.76885986328125,
+          1140.0,
+          753.54345703125
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.3588443994522095,
+        "bbox_xyxy": [
+          346.9253234863281,
+          395.15924072265625,
+          1140.0,
+          758.6810913085938
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road002.jpg",
+    "image_name": "road002.jpg",
+    "width": 700,
+    "height": 525,
+    "annotations": [
+      {
+        "class_id": 3,
+        "x_center": 0.4816550990513393,
+        "y_center": 0.36984075637090774,
+        "width": 0.21828229631696427,
+        "height": 0.1654245140438988,
+        "confidence": 0.3970755338668823,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [],
+    "model_predictions": [
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.3970755338668823,
+        "bbox_xyxy": [
+          260.759765625,
+          150.74246215820312,
+          413.557373046875,
+          237.59033203125
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road003.jpg",
+    "image_name": "road003.jpg",
+    "width": 978,
+    "height": 1390,
+    "annotations": [
+      {
+        "class_id": 2,
+        "x_center": 0.5,
+        "y_center": 0.422265630488773,
+        "width": 1.0,
+        "height": 0.5452316064628766,
+        "confidence": 0.6029847264289856,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [
+      "duplicate_detections_in_predictions"
+    ],
+    "model_predictions": [
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.6029847264289856,
+        "bbox_xyxy": [
+          0.0,
+          208.0132598876953,
+          978.0,
+          965.8851928710938
+        ]
+      },
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.42536789178848267,
+        "bbox_xyxy": [
+          0.0,
+          227.5196990966797,
+          978.0,
+          649.1630859375
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road004.jpg",
+    "image_name": "road004.jpg",
+    "width": 640,
+    "height": 480,
+    "annotations": [
+      {
+        "class_id": 2,
+        "x_center": 0.5026016067713499,
+        "y_center": 0.6694530328114827,
+        "width": 0.9908989287912846,
+        "height": 0.6541522026062012,
+        "confidence": 0.705,
+        "source": "model_derived_epoch72"
+      }
+    ],
+    "status": "verified",
+    "review_flags": [
+      "verified"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road005.jpg",
+    "image_name": "road005.jpg",
+    "width": 452,
+    "height": 678,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review",
+      "likely_false_positive"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road006.jpg",
+    "image_name": "road006.jpg",
+    "width": 447,
+    "height": 447,
+    "annotations": [
+      {
+        "class_id": 3,
+        "x_center": 0.3797172358638755,
+        "y_center": 0.22129108335081096,
+        "width": 0.0980342378552328,
+        "height": 0.12675308807850952,
+        "confidence": 0.5724758505821228,
+        "source": "model_derived"
+      },
+      {
+        "class_id": 0,
+        "x_center": 0.14435587633376154,
+        "y_center": 0.5757888179497431,
+        "width": 0.2887117526675231,
+        "height": 0.39326326852410165,
+        "confidence": 0.45844778418540955,
+        "source": "model_derived"
+      },
+      {
+        "class_id": 3,
+        "x_center": 0.26790128191578844,
+        "y_center": 0.23789208260691938,
+        "width": 0.1296635399462126,
+        "height": 0.11933926234575992,
+        "confidence": 0.39042791724205017,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [
+      "duplicate_detections_in_predictions"
+    ],
+    "model_predictions": [
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.5724758505821228,
+        "bbox_xyxy": [
+          147.8229522705078,
+          70.58779907226562,
+          191.64425659179688,
+          127.24642944335938
+        ]
+      },
+      {
+        "class_id": 0,
+        "class_name": "longitudinal_crack",
+        "confidence": 0.45844778418540955,
+        "bbox_xyxy": [
+          0.0,
+          169.48326110839844,
+          129.0541534423828,
+          345.2719421386719
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.39042791724205017,
+        "bbox_xyxy": [
+          90.7720718383789,
+          79.66543579101562,
+          148.73167419433594,
+          133.0100860595703
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road007.jpg",
+    "image_name": "road007.jpg",
+    "width": 739,
+    "height": 415,
+    "annotations": [
+      {
+        "class_id": 3,
+        "x_center": 0.6387733800162805,
+        "y_center": 0.7294193497623306,
+        "width": 0.7224532399674392,
+        "height": 0.5411613004753388,
+        "confidence": 0.5388867855072021,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [],
+    "model_predictions": [
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.5388867855072021,
+        "bbox_xyxy": [
+          205.1070556640625,
+          190.41806030273438,
+          739.0,
+          415.0
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.3278866410255432,
+        "bbox_xyxy": [
+          104.4383773803711,
+          161.4778289794922,
+          697.5638427734375,
+          415.0
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road008.jpg",
+    "image_name": "road008.jpg",
+    "width": 479,
+    "height": 641,
+    "annotations": [
+      {
+        "class_id": 3,
+        "x_center": 0.22780639602023028,
+        "y_center": 0.159828382423627,
+        "width": 0.45400229656372787,
+        "height": 0.11397126386764454,
+        "confidence": 0.39706912636756897,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [],
+    "model_predictions": [
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.39706912636756897,
+        "bbox_xyxy": [
+          0.385713666677475,
+          65.92220306396484,
+          217.85281372070312,
+          138.977783203125
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road009.jpg",
+    "image_name": "road009.jpg",
+    "width": 518,
+    "height": 592,
+    "annotations": [
+      {
+        "class_id": 3,
+        "x_center": 0.45390832378137064,
+        "y_center": 0.3181841437881057,
+        "width": 0.11520974884622345,
+        "height": 0.09062733521332612,
+        "confidence": 0.619371235370636,
+        "source": "model_derived"
+      },
+      {
+        "class_id": 3,
+        "x_center": 0.4111493379452974,
+        "y_center": 0.45897595946853226,
+        "width": 0.30039094313691483,
+        "height": 0.107728623055123,
+        "confidence": 0.5713891983032227,
+        "source": "model_derived"
+      },
+      {
+        "class_id": 3,
+        "x_center": 0.6172222962250581,
+        "y_center": 0.7251278387533652,
+        "width": 0.7536596791624562,
+        "height": 0.4889755764523068,
+        "confidence": 0.394142210483551,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [],
+    "model_predictions": [
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.619371235370636,
+        "bbox_xyxy": [
+          205.28518676757812,
+          161.53932189941406,
+          264.9638366699219,
+          215.19070434570312
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.5713891983032227,
+        "bbox_xyxy": [
+          135.17410278320312,
+          239.8260955810547,
+          290.776611328125,
+          303.6014404296875
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.394142210483551,
+        "bbox_xyxy": [
+          124.5232925415039,
+          284.5389099121094,
+          514.9190063476562,
+          574.012451171875
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road010.jpg",
+    "image_name": "road010.jpg",
+    "width": 679,
+    "height": 452,
+    "annotations": [
+      {
+        "class_id": 3,
+        "x_center": 0.5023502580196061,
+        "y_center": 0.739211023381326,
+        "width": 0.5044991629464286,
+        "height": 0.46630494784464877,
+        "confidence": 0.7333250641822815,
+        "source": "model_derived"
+      },
+      {
+        "class_id": 3,
+        "x_center": 0.7082166489164328,
+        "y_center": 0.3318016254796391,
+        "width": 0.15347469818609627,
+        "height": 0.05700440533393252,
+        "confidence": 0.5022141933441162,
+        "source": "model_derived"
+      },
+      {
+        "class_id": 3,
+        "x_center": 0.09387736819102943,
+        "y_center": 0.7194471443648887,
+        "width": 0.18775473638205886,
+        "height": 0.510741039714982,
+        "confidence": 0.4253057837486267,
+        "source": "model_derived"
+      },
+      {
+        "class_id": 3,
+        "x_center": 0.1004252158138292,
+        "y_center": 0.5352464017614854,
+        "width": 0.1944262742645084,
+        "height": 0.14136684046382397,
+        "confidence": 0.3541198968887329,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [
+      "duplicate_detections_in_predictions"
+    ],
+    "model_predictions": [
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.7333250641822815,
+        "bbox_xyxy": [
+          169.818359375,
+          228.73846435546875,
+          512.373291015625,
+          439.50830078125
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.5022141933441162,
+        "bbox_xyxy": [
+          428.7744445800781,
+          137.09133911132812,
+          532.9837646484375,
+          162.85733032226562
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.4253057837486267,
+        "bbox_xyxy": [
+          0.0,
+          209.76263427734375,
+          127.48546600341797,
+          440.6175842285156
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.40031954646110535,
+        "bbox_xyxy": [
+          164.46371459960938,
+          237.57391357421875,
+          421.98760986328125,
+          441.2099914550781
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.3541198968887329,
+        "bbox_xyxy": [
+          2.1810014247894287,
+          209.9824676513672,
+          134.19644165039062,
+          273.8802795410156
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road011.jpg",
+    "image_name": "road011.jpg",
+    "width": 678,
+    "height": 452,
+    "annotations": [
+      {
+        "class_id": 0,
+        "x_center": 0.4136317542872246,
+        "y_center": 0.645484569853386,
+        "width": 0.09452768061364998,
+        "height": 0.28408938382579163,
+        "confidence": 0.7769435048103333,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [],
+    "model_predictions": [
+      {
+        "class_id": 0,
+        "class_name": "longitudinal_crack",
+        "confidence": 0.7769435048103333,
+        "bbox_xyxy": [
+          248.39744567871094,
+          227.55482482910156,
+          312.4872131347656,
+          355.9632263183594
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road012.jpg",
+    "image_name": "road012.jpg",
+    "width": 612,
+    "height": 406,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review"
+    ],
+    "model_predictions": [
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.31466442346572876,
+        "bbox_xyxy": [
+          0.0,
+          0.0,
+          216.05039978027344,
+          79.12346649169922
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road013.jpg",
+    "image_name": "road013.jpg",
+    "width": 1200,
+    "height": 900,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road014.webp",
+    "image_name": "road014.webp",
+    "width": 389,
+    "height": 280,
+    "annotations": [
+      {
+        "class_id": 2,
+        "x_center": 0.4933415783095176,
+        "y_center": 0.5823164667401995,
+        "width": 0.5854046976045348,
+        "height": 0.6359848294939313,
+        "confidence": 0.7726755738258362,
+        "source": "model_derived"
+      },
+      {
+        "class_id": 3,
+        "x_center": 0.6395173256685311,
+        "y_center": 0.5784120559692383,
+        "width": 0.2174548073109134,
+        "height": 0.18507216317313058,
+        "confidence": 0.5535354018211365,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [
+      "duplicate_detections_in_predictions"
+    ],
+    "model_predictions": [
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.7726755738258362,
+        "bbox_xyxy": [
+          78.04866027832031,
+          74.01073455810547,
+          305.7710876464844,
+          252.08648681640625
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.5535354018211365,
+        "bbox_xyxy": [
+          206.47727966308594,
+          136.04527282714844,
+          291.06719970703125,
+          187.865478515625
+        ]
+      },
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.25502318143844604,
+        "bbox_xyxy": [
+          62.2255859375,
+          88.63723754882812,
+          362.5242614746094,
+          257.1767272949219
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road015.jpg",
+    "image_name": "road015.jpg",
+    "width": 1200,
+    "height": 800,
+    "annotations": [
+      {
+        "class_id": 3,
+        "x_center": 0.87990478515625,
+        "y_center": 0.552923526763916,
+        "width": 0.2401904296875,
+        "height": 0.3506492233276367,
+        "confidence": 0.6443289518356323,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [],
+    "model_predictions": [
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.6443289518356323,
+        "bbox_xyxy": [
+          911.771484375,
+          302.0791320800781,
+          1200.0,
+          582.5985107421875
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road016.jpg",
+    "image_name": "road016.jpg",
+    "width": 4096,
+    "height": 3072,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review",
+      "high_res_may_miss_defects",
+      "possible_missed_detections"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road017.jpg",
+    "image_name": "road017.jpg",
+    "width": 3072,
+    "height": 4096,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review",
+      "portrait_orientation",
+      "possible_missed_detections"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road018.jpg",
+    "image_name": "road018.jpg",
+    "width": 4096,
+    "height": 3072,
+    "annotations": [
+      {
+        "class_id": 3,
+        "x_center": 0.21902640361804515,
+        "y_center": 0.16968770821889242,
+        "width": 0.43365379772149026,
+        "height": 0.33937541643778485,
+        "confidence": 0.568448543548584,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [],
+    "model_predictions": [
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.568448543548584,
+        "bbox_xyxy": [
+          9.009171485900879,
+          0.0,
+          1785.255126953125,
+          1042.561279296875
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road019.jpg",
+    "image_name": "road019.jpg",
+    "width": 3072,
+    "height": 4096,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review",
+      "portrait_orientation"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road020.jpg",
+    "image_name": "road020.jpg",
+    "width": 960,
+    "height": 1280,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review",
+      "portrait_orientation"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road021.jpg",
+    "image_name": "road021.jpg",
+    "width": 3072,
+    "height": 4096,
+    "annotations": [
+      {
+        "class_id": 2,
+        "x_center": 0.40552448729674023,
+        "y_center": 0.2558131515979767,
+        "width": 0.6659193138281504,
+        "height": 0.5116263031959534,
+        "confidence": 0.6219802498817444,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [],
+    "model_predictions": [
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.6219802498817444,
+        "bbox_xyxy": [
+          222.91915893554688,
+          0.0,
+          2268.623291015625,
+          2095.621337890625
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road022.jpg",
+    "image_name": "road022.jpg",
+    "width": 1280,
+    "height": 960,
+    "annotations": [
+      {
+        "class_id": 3,
+        "x_center": 0.4016579329967499,
+        "y_center": 0.4766727924346924,
+        "width": 0.6145880341529846,
+        "height": 0.22610375086466472,
+        "confidence": 0.311,
+        "source": "human_reviewed"
+      }
+    ],
+    "status": "verified",
+    "review_flags": [
+      "verified"
+    ],
+    "model_predictions": [
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.3112712502479553,
+        "bbox_xyxy": [
+          120.78581237792969,
+          349.0760803222656,
+          907.45849609375,
+          566.1356811523438
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road023.jpg",
+    "image_name": "road023.jpg",
+    "width": 3072,
+    "height": 4096,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road024.jpg",
+    "image_name": "road024.jpg",
+    "width": 960,
+    "height": 1280,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review",
+      "portrait_orientation"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road025.jpg",
+    "image_name": "road025.jpg",
+    "width": 3072,
+    "height": 4096,
+    "annotations": [
+      {
+        "class_id": 2,
+        "x_center": 0.48865904410680133,
+        "y_center": 0.1491408348083496,
+        "width": 0.42558149496714276,
+        "height": 0.2982816696166992,
+        "confidence": 0.6110787391662598,
+        "source": "model_derived"
+      },
+      {
+        "class_id": 2,
+        "x_center": 0.4879027009010315,
+        "y_center": 0.07309923321008682,
+        "width": 0.42414764563242596,
+        "height": 0.14619846642017365,
+        "confidence": 0.35372310876846313,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [
+      "duplicate_detections_in_predictions"
+    ],
+    "model_predictions": [
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.6110787391662598,
+        "bbox_xyxy": [
+          847.4674072265625,
+          0.0,
+          2154.853759765625,
+          1221.76171875
+        ]
+      },
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.35372310876846313,
+        "bbox_xyxy": [
+          847.3463134765625,
+          0.0,
+          2150.327880859375,
+          598.8289184570312
+        ]
+      },
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.32744017243385315,
+        "bbox_xyxy": [
+          856.9129638671875,
+          0.0,
+          2142.68408203125,
+          1936.8631591796875
+        ]
+      },
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.3216245770454407,
+        "bbox_xyxy": [
+          874.0623168945312,
+          0.0,
+          2165.335693359375,
+          860.169677734375
+        ]
+      },
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.29993876814842224,
+        "bbox_xyxy": [
+          101.69633483886719,
+          1087.93115234375,
+          1911.509521484375,
+          3155.3583984375
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road026.jpg",
+    "image_name": "road026.jpg",
+    "width": 960,
+    "height": 1280,
+    "annotations": [
+      {
+        "class_id": 2,
+        "x_center": 0.39028501907984414,
+        "y_center": 0.22678298950195314,
+        "width": 0.5724072058995565,
+        "height": 0.45356597900390627,
+        "confidence": 0.42237570881843567,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [],
+    "model_predictions": [
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.42237570881843567,
+        "bbox_xyxy": [
+          99.91815948486328,
+          0.0,
+          649.4290771484375,
+          580.564453125
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road027.jpg",
+    "image_name": "road027.jpg",
+    "width": 3072,
+    "height": 4096,
+    "annotations": [
+      {
+        "class_id": 2,
+        "x_center": 0.17031691130250692,
+        "y_center": 0.10410208255052567,
+        "width": 0.3365295398980379,
+        "height": 0.20820416510105133,
+        "confidence": 0.4219469726085663,
+        "source": "model_derived"
+      }
+    ],
+    "status": "clear",
+    "review_flags": [],
+    "model_predictions": [
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.4219469726085663,
+        "bbox_xyxy": [
+          6.304178237915039,
+          0.0,
+          1040.1229248046875,
+          852.8042602539062
+        ]
+      },
+      {
+        "class_id": 3,
+        "class_name": "pothole",
+        "confidence": 0.3035896420478821,
+        "bbox_xyxy": [
+          608.40771484375,
+          1986.2608642578125,
+          761.8475952148438,
+          2164.55224609375
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road028.jpg",
+    "image_name": "road028.jpg",
+    "width": 3072,
+    "height": 4096,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road029.jpg",
+    "image_name": "road029.jpg",
+    "width": 960,
+    "height": 1280,
+    "annotations": [
+      {
+        "class_id": 2,
+        "x_center": 0.5012529898434878,
+        "y_center": 0.3770814836025238,
+        "width": 0.9974940203130245,
+        "height": 0.4293610692024231,
+        "confidence": 0.337,
+        "source": "model_derived_epoch72"
+      }
+    ],
+    "status": "verified",
+    "review_flags": [
+      "verified"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road030.jpg",
+    "image_name": "road030.jpg",
+    "width": 3072,
+    "height": 4096,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road031.jpg",
+    "image_name": "road031.jpg",
+    "width": 960,
+    "height": 1280,
+    "annotations": [
+      {
+        "class_id": 2,
+        "x_center": 0.35873953501383465,
+        "y_center": 0.5024221062660217,
+        "width": 0.4335945129394531,
+        "height": 0.45184762477874757,
+        "confidence": 0.312,
+        "source": "human_reviewed"
+      }
+    ],
+    "status": "verified",
+    "review_flags": [
+      "verified"
+    ],
+    "model_predictions": [
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.3123217821121216,
+        "bbox_xyxy": [
+          136.26458740234375,
+          353.9178161621094,
+          552.5153198242188,
+          932.2827758789062
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road032.jpg",
+    "image_name": "road032.jpg",
+    "width": 4096,
+    "height": 3072,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road033.jpg",
+    "image_name": "road033.jpg",
+    "width": 960,
+    "height": 1280,
+    "annotations": [
+      {
+        "class_id": 2,
+        "x_center": 0.16244572003682453,
+        "y_center": 0.13007326126098634,
+        "width": 0.32489144007364906,
+        "height": 0.2601465225219727,
+        "confidence": 0.316,
+        "source": "human_reviewed"
+      }
+    ],
+    "status": "verified",
+    "review_flags": [
+      "verified"
+    ],
+    "model_predictions": [
+      {
+        "class_id": 2,
+        "class_name": "alligator_crack",
+        "confidence": 0.3162895441055298,
+        "bbox_xyxy": [
+          0.0,
+          0.0,
+          311.8957824707031,
+          332.987548828125
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "validation\\manual\\input\\road034.jpg",
+    "image_name": "road034.jpg",
+    "width": 960,
+    "height": 1280,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review",
+      "portrait_orientation"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road035.jpg",
+    "image_name": "road035.jpg",
+    "width": 4096,
+    "height": 3072,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road036.jpg",
+    "image_name": "road036.jpg",
+    "width": 960,
+    "height": 1280,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review",
+      "portrait_orientation"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road037.jpg",
+    "image_name": "road037.jpg",
+    "width": 4096,
+    "height": 3072,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road038.jpg",
+    "image_name": "road038.jpg",
+    "width": 1280,
+    "height": 960,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review"
+    ],
+    "model_predictions": []
+  },
+  {
+    "image_path": "validation\\manual\\input\\road039.jpg",
+    "image_name": "road039.jpg",
+    "width": 3072,
+    "height": 4096,
+    "annotations": [],
+    "status": "uncertain",
+    "review_flags": [
+      "needs_human_review"
+    ],
+    "model_predictions": []
+  }
+]

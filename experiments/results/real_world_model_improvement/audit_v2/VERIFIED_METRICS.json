@@ -1,0 +1,586 @@
+{
+  "experiment_id": "EXP-AUDIT-002",
+  "timestamp": "2026-10-11T07:55:02.309707Z",
+  "checkpoint": "runs\\detect\\experiments\\training\\yol11s_experiment2\\weights\\epoch72.pt",
+  "checkpoint_sha256": "e455893192790a65fccf44c483775375aaebc837397bcbf16082533639eae6e5",
+  "images_evaluated": [
+    "road001.webp",
+    "road002.jpg",
+    "road009.jpg",
+    "road010.jpg",
+    "road003.jpg",
+    "road007.jpg",
+    "road026.jpg"
+  ],
+  "smoke_test_images": [
+    "road001.webp",
+    "road002.jpg",
+    "road009.jpg",
+    "road010.jpg"
+  ],
+  "holdout_images": [
+    "road001.webp",
+    "road002.jpg",
+    "road003.jpg",
+    "road007.jpg",
+    "road026.jpg"
+  ],
+  "inference_config": {
+    "iou_threshold_nms": 0.7,
+    "match_iou_threshold": 0.5,
+    "imgsz": 720,
+    "device": "0"
+  },
+  "confidence_thresholds_tested": [
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25
+  ],
+  "results_by_threshold": {
+    "0.05": {
+      "summary": {
+        "confidence_threshold": 0.05,
+        "total_tp": 3,
+        "total_fp": 17,
+        "total_fn": 5,
+        "precision": 0.15,
+        "recall": 0.375,
+        "f1": 0.21428571428571425,
+        "class_metrics": {
+          "alligator_crack": {
+            "tp": 0,
+            "fp": 9,
+            "fn": 2,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pothole": {
+            "tp": 3,
+            "fp": 8,
+            "fn": 3,
+            "precision": 0.2727272727272727,
+            "recall": 0.5,
+            "f1": 0.3529411764705882
+          }
+        },
+        "smoke_test_matched": 3,
+        "smoke_test_total": 4,
+        "smoke_target_achieved": true,
+        "holdout_matched": 1,
+        "holdout_total": 5
+      },
+      "per_image": {
+        "road001.webp": {
+          "tp": 1,
+          "fp": 5,
+          "fn": 1,
+          "best_iou_pothole": 0.7675384884424064,
+          "best_iou_alligator": 0.0,
+          "matched_any": true,
+          "num_detections": 6,
+          "num_gt": 2
+        },
+        "road002.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road009.jpg": {
+          "tp": 1,
+          "fp": 3,
+          "fn": 0,
+          "best_iou_pothole": 0.599347530790157,
+          "best_iou_alligator": 0.0,
+          "matched_any": true,
+          "num_detections": 4,
+          "num_gt": 1
+        },
+        "road010.jpg": {
+          "tp": 1,
+          "fp": 3,
+          "fn": 0,
+          "best_iou_pothole": 0.8439272538671396,
+          "best_iou_alligator": 0.0,
+          "matched_any": true,
+          "num_detections": 4,
+          "num_gt": 1
+        },
+        "road003.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road007.jpg": {
+          "tp": 0,
+          "fp": 5,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 5,
+          "num_gt": 1
+        },
+        "road026.jpg": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 1,
+          "num_gt": 1
+        }
+      }
+    },
+    "0.1": {
+      "summary": {
+        "confidence_threshold": 0.1,
+        "total_tp": 1,
+        "total_fp": 9,
+        "total_fn": 7,
+        "precision": 0.1,
+        "recall": 0.125,
+        "f1": 0.11111111111111112,
+        "class_metrics": {
+          "alligator_crack": {
+            "tp": 0,
+            "fp": 5,
+            "fn": 2,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pothole": {
+            "tp": 1,
+            "fp": 4,
+            "fn": 5,
+            "precision": 0.2,
+            "recall": 0.16666666666666666,
+            "f1": 0.1818181818181818
+          }
+        },
+        "smoke_test_matched": 1,
+        "smoke_test_total": 4,
+        "smoke_target_achieved": false,
+        "holdout_matched": 0,
+        "holdout_total": 5
+      },
+      "per_image": {
+        "road001.webp": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 2,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 2,
+          "num_gt": 2
+        },
+        "road002.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road009.jpg": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 2,
+          "num_gt": 1
+        },
+        "road010.jpg": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 0,
+          "best_iou_pothole": 0.667724160086987,
+          "best_iou_alligator": 0.0,
+          "matched_any": true,
+          "num_detections": 3,
+          "num_gt": 1
+        },
+        "road003.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road007.jpg": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 3,
+          "num_gt": 1
+        },
+        "road026.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        }
+      }
+    },
+    "0.15": {
+      "summary": {
+        "confidence_threshold": 0.15,
+        "total_tp": 0,
+        "total_fp": 5,
+        "total_fn": 8,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "class_metrics": {
+          "alligator_crack": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 2,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pothole": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 6,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "smoke_test_matched": 0,
+        "smoke_test_total": 4,
+        "smoke_target_achieved": false,
+        "holdout_matched": 0,
+        "holdout_total": 5
+      },
+      "per_image": {
+        "road001.webp": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 2
+        },
+        "road002.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road009.jpg": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 1,
+          "num_gt": 1
+        },
+        "road010.jpg": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 2,
+          "num_gt": 1
+        },
+        "road003.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road007.jpg": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 2,
+          "num_gt": 1
+        },
+        "road026.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        }
+      }
+    },
+    "0.2": {
+      "summary": {
+        "confidence_threshold": 0.2,
+        "total_tp": 0,
+        "total_fp": 4,
+        "total_fn": 8,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "class_metrics": {
+          "alligator_crack": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 2,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pothole": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 6,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "smoke_test_matched": 0,
+        "smoke_test_total": 4,
+        "smoke_target_achieved": false,
+        "holdout_matched": 0,
+        "holdout_total": 5
+      },
+      "per_image": {
+        "road001.webp": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 2
+        },
+        "road002.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road009.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road010.jpg": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 2,
+          "num_gt": 1
+        },
+        "road003.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road007.jpg": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 2,
+          "num_gt": 1
+        },
+        "road026.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        }
+      }
+    },
+    "0.25": {
+      "summary": {
+        "confidence_threshold": 0.25,
+        "total_tp": 0,
+        "total_fp": 1,
+        "total_fn": 8,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "class_metrics": {
+          "alligator_crack": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pothole": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 6,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "smoke_test_matched": 0,
+        "smoke_test_total": 4,
+        "smoke_target_achieved": false,
+        "holdout_matched": 0,
+        "holdout_total": 5
+      },
+      "per_image": {
+        "road001.webp": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 2
+        },
+        "road002.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road009.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road010.jpg": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 1,
+          "num_gt": 1
+        },
+        "road003.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road007.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        },
+        "road026.jpg": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "best_iou_pothole": 0.0,
+          "best_iou_alligator": 0.0,
+          "matched_any": false,
+          "num_detections": 0,
+          "num_gt": 1
+        }
+      }
+    }
+  },
+  "best_operating_point": {
+    "confidence_threshold": 0.05,
+    "overall_f1": 0.21428571428571425,
+    "overall_precision": 0.15,
+    "overall_recall": 0.375,
+    "smoke_test_matched": 3,
+    "smoke_target_achieved": true,
+    "holdout_matched": 1
+  },
+  "conclusions": {
+    "smoke_test_3_of_4_verified": true,
+    "holdout_clear_0_of_5_verified": false
+  }
+}

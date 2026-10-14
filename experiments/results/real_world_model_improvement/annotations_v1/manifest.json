@@ -1,0 +1,36 @@
+{
+  "version": "v1.0",
+  "timestamp": "2026-10-11T14:55:00Z",
+  "total_images": 39,
+  "confirmed_count": 20,
+  "uncertain_count": 18,
+  "class_mapping": {
+    "0": "longitudinal_crack",
+    "1": "transverse_crack",
+    "2": "alligator_crack",
+    "3": "pothole"
+  },
+  "provenance_summary": {
+    "model_derived": 15,
+    "model_derived_epoch72": 2,
+    "human_reviewed": 3,
+    "liase_negative": 3
+  },
+  "confirmed_images": [
+    "road001.webp", "road002.jpg", "road003.jpg", "road004.jpg", "road006.jpg",
+    "road007.jpg", "road008.jpg", "road009.jpg", "road010.jpg", "road011.jpg",
+    "road014.webp", "road015.jpg", "road018.jpg", "road021.jpg", "road025.jpg",
+    "road026.jpg", "road027.jpg", "road022.jpg", "road029.jpg", "road031.jpg",
+    "road033.jpg"
+  ],
+  "uncertain_images": {
+    "needs_human_review": [
+      "road013.jpg", "road016.jpg", "road017.jpg", "road019.jpg", "road020.jpg",
+      "road023.jpg", "road024.jpg", "road030.jpg", "road032.jpg", "road034.jpg",
+      "road035.jpg", "road036.jpg", "road037.jpg", "road038.jpg", "road039.jpg"
+    ],
+    "likely_negative": [
+      "road005.jpg", "road012.jpg", "road028.jpg"
+    ]
+  }
+}

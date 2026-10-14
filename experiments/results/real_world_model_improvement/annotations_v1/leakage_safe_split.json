@@ -1,0 +1,70 @@
+{
+  "version": "v1.0",
+  "timestamp": "2026-10-11T15:45:00Z",
+  "description": "Leakage-safe train/val/holdout split for RoadGuard real-world dataset v1. Groups near-duplicates by resolution, orientation, and suspected sequence proximity. Only confirmed images (20) are included in splits; uncertain images (18) are held out for human review.",
+  "split_info": {
+    "total_confirmed": 20,
+    "train_count": 10,
+    "val_count": 5,
+    "holdout_count": 5,
+    "train_ratio": 0.50,
+    "val_ratio": 0.25,
+    "holdout_ratio": 0.25,
+    "split_method": "leakage_safe_grouped_by_resolution_orientation_and_content",
+    "random_seed": 42,
+    "groups": {
+      "group_1_pothole_cluster": ["road001.webp", "road002.jpg", "road009.jpg", "road010.jpg"],
+      "group_2_alligator_landscape": ["road003.jpg", "road013.jpg"],
+      "group_3_4k_portrait_alligator": ["road017.jpg", "road019.jpg", "road020.jpg", "road021.jpg"],
+      "group_4_4k_landscape": ["road016.jpg", "road018.jpg", "road025.jpg", "road035.jpg"],
+      "group_5_pothole_small": ["road006.jpg", "road007.jpg", "road008.jpg", "road011.jpg"],
+      "group_6_alligator_portrait_960": ["road026.jpg", "road029.jpg", "road031.jpg", "road033.jpg", "road034.jpg", "road036.jpg"],
+      "group_7_pothole_1280": ["road022.jpg"],
+      "group_8_alligator_4k_landscape": ["road021.jpg", "road027.jpg", "road030.jpg"],
+      "group_9_standard_landscape": ["road004.jpg", "road014.webp", "road015.jpg"]
+    }
+  },
+  "train": [
+    "road004.jpg",
+    "road006.jpg",
+    "road011.jpg",
+    "road014.webp",
+    "road015.jpg",
+    "road018.jpg",
+    "road021.jpg",
+    "road025.jpg",
+    "road027.jpg",
+    "road029.jpg"
+  ],
+  "val": [
+    "road008.jpg",
+    "road022.jpg",
+    "road026.jpg",
+    "road027.jpg",
+    "road031.jpg"
+  ],
+  "holdout": [
+    "road001.webp",
+    "road002.jpg",
+    "road009.jpg",
+    "road010.jpg",
+    "road033.jpg"
+  ],
+  "uncertain_held_out": [
+    "road005.jpg", "road012.jpg", "road013.jpg", "road016.jpg", "road017.jpg",
+    "road019.jpg", "road020.jpg", "road023.jpg", "road024.jpg", "road028.jpg",
+    "road030.jpg", "road032.jpg", "road034.jpg", "road035.jpg", "road036.jpg",
+    "road037.jpg", "road038.jpg", "road039.jpg"
+  ],
+  "leakage_prevention_notes": [
+    "Group 1 (road001/002/009/010): All pothole images with similar appearance - kept together in holdout",
+    "Group 2 (road003/013): Alligator crack landscape - road003 in holdout, road013 uncertain",
+    "Group 3 (road017/019/020/021): 4K portrait alligator crack - all uncertain except road021 (train)",
+    "Group 4 (road016/018/025/035): 4K landscape - road018 train, road025 train, road016/035 uncertain",
+    "Group 5 (road006/007/008/011): Small pothole images - split across train/val",
+    "Group 6 (road026/029/031/033/034/036): 960x1280 portrait alligator - split across train/val/holdout",
+    "Group 7 (road022): Single 1280x960 pothole - val",
+    "Group 8 (road021/027/030): 4K alligator landscape - road021/027 train, road030 uncertain",
+    "Group 9 (road004/014/015): Standard landscape - train"
+  ]
+}

@@ -1,0 +1,42 @@
+# Checkpoint Hashes Manifest
+# Generated: 2026-10-11T07:38:51Z
+# Experiment: EXP-RWMI-001 (Real-World Model Improvement)
+
+## Best Model (Recommended for Deployment)
+# YOLO11s Exp2 epoch72 - Beat frozen test baseline
+e455893192790a65fccf44c483775375aaebc837397bcbf16082533639eae6e5  runs/detect/experiments/training/yol11s_experiment2/weights/epoch72.pt
+
+## Fine-Tuned Checkpoints (Training Crashed - NOT Recommended)
+# Fine-tuning from epoch72 with 15 CLEAR images - crashed after 3 epochs due to RAM pressure
+e5854a2ef13b15e5aea290f8d52a978819bbb06d6cb0a385c404275eb483c0eb  runs/detect/experiments/training/yol11s_realworld_finetune/weights/last.pt
+4dfe87e6b31d7d6d7f6418748935387e8b8537428ab480b4c6a399b5a164da14  runs/detect/experiments/training/yol11s_realworld_finetune/weights/best.pt
+
+# Fine-tune epoch checkpoints (partial SHA-256 shown - full verification needed)
+# epoch0.pt (56,984,741 bytes)
+# epoch1.pt (56,984,549 bytes)
+# epoch2.pt (56,984,933 bytes)
+
+## Exp2 Training Checkpoints (Epoch 0-72)
+# All checkpoints from original Exp2 training (76,018,000 - 76,023,000 bytes each)
+# epoch0.pt through epoch72.pt available in runs/detect/experiments/training/yol11s_experiment2/weights/
+# epoch72.pt is the selected best checkpoint (see above)
+
+## Verification Commands
+# Windows (PowerShell):
+# certutil -hashfile "path\to\checkpoint.pt" SHA256
+
+# Linux/macOS:
+# sha256sum path/to/checkpoint.pt
+
+## File Sizes (for quick integrity check)
+# epoch72.pt: 76,023,651 bytes
+# last.pt (finetune): 56,984,549 bytes
+# best.pt (finetune): 56,984,741 bytes
+# epoch0.pt (finetune): 56,984,741 bytes
+# epoch1.pt (finetune): 56,984,549 bytes
+# epoch2.pt (finetune): 56,984,933 bytes
+
+## Notes
+- Exp1 epoch86 checkpoint NOT FOUND in filesystem
+- Fine-tuned model metrics identical to original epoch72 (no effective learning in 3 epochs)
+- Use epoch72.pt for all inference and deployment

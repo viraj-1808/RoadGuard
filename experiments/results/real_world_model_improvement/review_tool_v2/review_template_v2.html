@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoadGuard AI - Review Tool v2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .status-badge {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .status-btn {
+            padding: 8px 16px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .status-btn:hover {
+            border-color: #3498db;
+            color: #3498db;
+        }
+        .status-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        .status-btn.CONFIRMED_POSITIVE.active {
+            background: #27ae60;
+            border-color: #27ae60;
+        }
+        .status-btn.CONFIRMED_NEGATIVE.active {
+            background: #e74c3c;
+            border-color: #e74c3c;
+        }
+        .status-btn.UNCERTAIN.active {
+            background: #f39c12;
+            border-color: #f39c12;
+        }
+        .progress {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        .canvas-container {
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            touch-action: none;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s ease;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .btn.secondary {
+            background: #95a5a6;
+        }
+        .btn.secondary:hover {
+            background: #7f8c8d;
+        }
+        .btn.danger {
+            background: #e74c3c;
+        }
+        .btn.danger:hover {
+            background: #c0392b;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .class-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .class-selector label {
+            font-weight: 500;
+        }
+        .class-selector select {
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+        .prediction-panel {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .prediction-item {
+            flex: 1;
+            padding: 10px;
+            border-left: 3px solid;
+        }
+        .prediction-item.epoch72 {
+            border-left-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.05);
+        }
+        .prediction-item.original {
+            border-left-color: #3498db;
+            background: rgba(52, 152, 219, 0.05);
+        }
+        .prediction-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .prediction-boxes {
+            font-size: 0.85rem;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        .prediction-box {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .prediction-box:last-child {
+            border-bottom: none;
+        }
+        .confidence {
+            font-weight: bold;
+        }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .toast.success {
+            background: #27ae60;
+        }
+        .toast.error {
+            background: #e74c3c;
+        }
+        .toast.info {
+            background: #3498db;
+        }
+        .image-info {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .hidden {
+            display: none;
+        }
+        .resize-handle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #3498db;
+            border: 2px solid white;
+            border-radius: 2px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .resize-handle.nw { cursor: nwse-resize; top: -4px; left: -4px; }
+        .resize-handle.ne { cursor: nesw-resize; top: -4px; right: -4px; }
+        .resize-handle.sw { cursor: nesw-resize; bottom: -4px; left: -4px; }
+        .resize-handle.se { cursor: nwse-resize; bottom: -4px; right: -4px; }
+        .resize-handle.n { cursor: ns-resize; top: -4px; left: 50%; transform: translateX(-50%); }
+        .resize-handle.s { cursor: ns-resize; bottom: -4px; left: 50%; transform: translateX(-50%); }
+        .resize-handle.w { cursor: ew-resize; top: 50%; left: -4px; transform: translateY(-50%); }
+        .resize-handle.e { cursor: ew-resize; top: 50%; right: -4px; transform: translateY(-50%); }
+        .delete-btn {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 16px;
+            height: 16px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+        .box-selected .delete-btn {
+            opacity: 1;
+        }
+        .box {
+            position: absolute;
+            border: 2px solid #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+        }
+        .box-selected {
+            border-color: #e67e22;
+            background: rgba(230, 126, 34, 0.1);
+        }
+        .prediction-box-overlay {
+            position: absolute;
+            border: 2px dashed;
+        }
+        .prediction-box-overlay.epoch72 {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.2);
+        }
+        .prediction-box-overlay.original {
+            border-color: #3498db;
+            background: rgba(52, 152, 219, 0.2);
+        }
+        .zoom-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .zoom-indicator.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">RoadGuard AI - Review Tool v2</div>
+            <div>
+                <div class="progress">Image <span id="currentIndex">0</span> of <span id="totalImages">0</span></div>
+                <div class="status-badge">
+                    <span>Status: </span>
+                    <button class="status-btn CONFIRMED_POSITIVE" id="btnConfirmedPositive">Confirmed Positive</button>
+                    <button class="status-btn CONFIRMED_NEGATIVE" id="btnConfirmedNegative">Confirmed Negative</button>
+                    <button class="status-btn UNCERTAIN" id="btnUncertain">Uncertain</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-info">
+            <span id="filename"></span> | 
+            <span id="dimensions"></span> |
+            <span id="split"></span>
+        </div>
+        
+        <div class="canvas-container">
+            <canvas id="annotationCanvas"></canvas>
+            <div id="zoomIndicator" class="zoom-indicator hidden">100%</div>
+        </div>
+        
+        <div class="prediction-panel">
+            <div class="prediction-item epoch72">
+                <div class="prediction-label">
+                    <span>●</span> Epoch 72 Predictions (Red Boxes)
+                </div>
+                <div class="prediction-boxes" id="epoch72Predictions"></div>
+            </div>
+            <div class="prediction-item original">
+                <div class="prediction-label">
+                    <span>●</span> Original Model Predictions (Blue Boxes)
+                </div>
+                <div class="prediction-boxes" id="originalPredictions"></div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="btnDrawMode">Draw Mode (D)</button>
+            <button class="btn" id="btnClearBoxes">Clear Boxes</button>
+            <button class="btn secondary" id="btnSaveCurrent">Save Current</button>
+            <button class="btn secondary" id="btnExportAll">Export All</button>
+            <button class="btn secondary" id="btnImport">Import Annotations</button>
+            <button class="btn danger" id="btnExportYolo">Export YOLO Labels</button>
+            <div class="class-selector">
+                <label for="classSelect">Class: </label>
+                <select id="classSelect">
+                    <option value="0">0 - longitudinal_crack</option>
+                    <option value="1">1 - transverse_crack</option>
+                    <option value="2">2 - alligator_crack</option>
+                    <option value="3">3 - pothole</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="toastContainer"></div>
+    </div>
+
+    <script>
+        // Configuration
+        const CLASS_MAPPING = {
+            0: "longitudinal_crack",
+            1: "transverse_crack",
+            2: "alligator_crack",
+            3: "pothole"
+        };
+        
+        const LOCAL_STORAGE_KEY = 'roadguard_review_v2';
+        
+        // State
+        let metadata = [];
+        let gtBoxes = {}; // { imagePath: [{x1,y1,x2,y2,classId,className}] }
+        let imageStatus = {}; // { imagePath: "CONFIRMED_POSITIVE" | "CONFIRMED_NEGATIVE" | "UNCERTAIN" | "NEEDS_HUMAN_REVIEW" }
+        let currentIndex = 0;
+        let isDrawing = false;
+        let startX, startY;
+        let currentBox = null;
+        let selectedBox = null; // { imagePath, indexInArray }
+        let scale = 1;
+        let canvas, ctx;
+        let img = new Image();
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', init);
+        
+        async function init() {
+            // Get canvas and context
+            canvas = document.getElementById('annotationCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Load metadata
+            await loadMetadata();
+            
+            // Load from localStorage
+            loadFromLocalStorage();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Load first image
+            loadImage();
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', handleKeyboardShortcuts);
+        }
+        
+        async function loadMetadata() {
+            try {
+                // Load main review metadata
+                const mainResponse = await fetch('../human_review_package/review_metadata.json');
+                const mainData = await mainResponse.json();
+                
+                // Load uncertain metadata to get LIKELY_NEGATIVE images
+                const uncertainResponse = await fetch('../annotations_v1/uncertain/metadata.json');
+                const uncertainData = await uncertainResponse.json();
+                
+                // Combine all images
+                metadata = [...mainData];
+                
+                // Add LIKELY_NEGATIVE images
+                if (uncertainData.uncertain_images && uncertainData.uncertain_images.likely_negative) {
+                    uncertainData.uncertain_images.likely_negative.forEach(item => {
+                        metadata.push({
+                            image_path: `review_images/${item.image}`,
+                            dimensions: `${item.width}x${item.height}`,
+                            split: item.split,
+                            epoch72_predictions: item.epoch72_predictions.join('; '),
+                            original_predictions: item.original_predictions.join('; '),
+                            error_analysis_visible_damage: item.error_analysis_visible_damage,
+                            error_analysis_class: item.error_analysis_class,
+                            error_analysis_notes: item.error_analysis_notes,
+                            review_flags: item.review_flags,
+                            proposed_gt: item.proposed_gt,
+                            status: item.status, // LIKELY_NEGATIVE
+                            review_reason: item.review_reason
+                        });
+                    });
+                }
+                
+                // Initialize state for all images
+                metadata.forEach(item => {
+                    if (!gtBoxes[item.image_path]) {
+                        gtBoxes[item.image_path] = [];
+                    }
+                    if (!imageStatus[item.image_path]) {
+                        imageStatus[item.image_path] = item.status || "NEEDS_HUMAN_REVIEW";
+                    }
+                });
+                
+                document.getElementById('totalImages').textContent = metadata.length;
+            } catch (error) {
+                showToast('Failed to load metadata: ' + error.message, 'error');
+                console.error(error);
+            }
+        }
+        
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.gtBoxes) gtBoxes = parsed.gtBoxes;
+                    if (parsed.imageStatus) imageStatus = parsed.imageStatus;
+                }
+            } catch (error) {
+                console.warn('Failed to load from localStorage:', error);
+            }
+        }
+        
+        function saveToLocalStorage() {
+            try {
+                const data = {
+                    gtBoxes: gtBoxes,
+                    imageStatus: imageStatus
+                };
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+            } catch (error) {
+                console.warn('Failed to save to localStorage:', error);
+            }
+        }
+        
+        function setupEventListeners() {
+            // Status buttons
+            document.getElementById('btnConfirmedPositive').addEventListener('click', () => setImageStatus('CONFIRMED_POSITIVE'));
+            document.getElementById('btnConfirmedNegative').addEventListener('click', () => setImageStatus('CONFIRMED_NEGATIVE'));
+            document.getElementById('btnUncertain').addEventListener('click', () => setImageStatus('UNCERTAIN'));
+            
+            // Drawing controls
+            document.getElementById('btnDrawMode').addEventListener('click', toggleDrawMode);
+            document.getElementById('btnClearBoxes').addEventListener('click', clearBoxes);
+            
+            // Export/Import
+            document.getElementById('btnSaveCurrent').addEventListener('click', saveCurrent);
+            document.getElementById('btnExportAll').addEventListener('click', exportAll);
+            document.getElementById('btnImport').addEventListener('click', () => document.getElementById('importFile').click());
+            document.getElementById('btnExportYolo').addEventListener('click', exportYoloLabels);
+            
+            // File input for import
+            const importInput = document.createElement('input');
+            importInput.type = 'file';
+            importInput.id = 'importFile';
+            importInput.accept = '.json';
+            importInput.classList.add('hidden');
+            importInput.addEventListener('change', handleImport);
+            document.body.appendChild(importInput);
+            
+            // Canvas events for drawing
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseleave', stopDrawing);
+            
+            // Canvas events for box selection and manipulation
+            canvas.addEventListener('mousedown', handleCanvasMouseDown, true);
+            canvas.addEventListener('mousemove', handleCanvasMouseMove, true);
+            canvas.addEventListener('mouseup', handleCanvasMouseUp, true);
+            
+            // Zoom with mouse wheel
+            canvas.addEventListener('wheel', handleZoom, { passive: false });
+            
+            // Class selector
+            document.getElementById('classSelect').addEventListener('change', updateCurrentBoxClass);
+        }
+        
+        function loadImage() {
+            if (currentIndex >= metadata.length) {
+                showToast('No more images to review', 'info');
+                return;
+            }
+            
+            const item = metadata[currentIndex];
+            img.onload = () => {
+                updateCanvasSize();
+                drawCanvas();
+                updateUI();
+            };
+            img.onerror = () => {
+                showToast('Failed to load image: ' + item.image_path, 'error');
+            };
+            img.src = item.image_path;
+        }
+        
+        function updateCanvasSize() {
+            // Set canvas to natural image size
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            
+            // Calculate scale for display (canvas CSS size matches displayed image)
+            const container = document.querySelector('.canvas-container');
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+            
+            const scaleX = containerWidth / img.naturalWidth;
+            const scaleY = containerHeight / img.naturalHeight;
+            scale = Math.min(scaleX, scaleY, 1); // Don't scale up beyond natural size
+            
+            // Apply CSS scaling to make image fit container while maintaining aspect ratio
+            const displayWidth = img.naturalWidth * scale;
+            const displayHeight = img.naturalHeight * scale;
+            canvas.style.width = `${displayWidth}px`;
+            canvas.style.height = `${displayHeight}px`;
+        }
+        
+        function drawCanvas() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw image
+            ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+            
+            // Draw prediction boxes
+            drawPredictions();
+            
+            // Draw ground truth boxes
+            drawGroundTruthBoxes();
+            
+            // Draw selection handles if box selected
+            if (selectedBox) {
+                drawSelectionHandles();
+            }
+        }
+        
+        function drawPredictions() {
+            const item = metadata[currentIndex];
+            
+            // Parse Epoch 72 predictions
+            const epoch72Boxes = parsePredictionString(item.epoch72_predictions);
+            epoch72Boxes.forEach(box => {
+                drawPredictionBox(box, '#e74c3c', 0.4); // Red, 40% opacity
+            });
+            
+            // Draw original predictions
+            const originalBoxes = parsePredictionString(item.original_predictions);
+            originalBoxes.forEach(box => {
+                drawPredictionBox(box, '#3498db', 0.4); // Blue, 40% opacity
+            });
+        }
+        
+        function parsePredictionString(str) {
+            if (!str || str === 'None' || str.trim() === '') return [];
+            
+            // Format: "class (conf=0.XXX, bbox=[x1, y1, x2, y2]); ..."
+            const boxes = [];
+            const parts = str.split(');');
+            
+            parts.forEach(part => {
+                part = part.trim();
+                if (!part) return;
+                
+                try {
+                    // Extract class
+                    const classMatch = part.match(/^([^\\s]+)/);
+                    if (!classMatch) return;
+                    const className = classMatch[1];
+                    
+                    // Extract confidence
+                    const confMatch = part.match(/conf=([\\d.]+)/);
+                    const confidence = confMatch ? parseFloat(confMatch[1]) : 0;
+                    
+                    // Extract bbox
+                    const bboxMatch = part.match(/bbox=\\[([^\\]]+)\\]/);
+                    if (!bboxMatch) return;
+                    const bboxParts = bboxMatch[1].split(',').map(p => parseFloat(p.trim()));
+                    if (bboxParts.length !== 4) return;
+                    
+                    const [x1, y1, x2, y2] = bboxParts;
+                    
+                    // Find class ID
+                    let classId = -1;
+                    for (const [id, name] of Object.entries(CLASS_MAPPING)) {
+                        if (name === className) {
+                            classId = parseInt(id);
+                            break;
+                        }
+                    }
+                    
+                    if (classId >= 0) {
+                        boxes.push({ x1, y1, x2, y2, classId, className, confidence });
+                    }
+                } catch (e) {
+                    console.warn('Failed to parse prediction part:', part, e);
+                }
+            });
+            
+            return boxes;
+        }
+        
+        function drawPredictionBox(box, color, opacity) {
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.fillStyle = hexToRgba(color, opacity);
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 3]);
+            
+            ctx.beginPath();
+            ctx.rect(box.x1, box.y1, box.x2 - box.x1, box.y2 - box.y1);
+            ctx.stroke();
+            ctx.fill();
+            
+            // Draw label
+            ctx.fillStyle = color;
+            ctx.font = '12px Arial';
+            ctx.textBaseline = 'top';
+            const label = `${box.className} ${(box.confidence * 100).toFixed(0)}%`;
+            ctx.fillText(label, box.x1, Math.max(0, box.y1 - 15));
+            
+            ctx.restore();
+        }
+        
+        function drawGroundTruthBoxes() {
+            const item = metadata[currentIndex];
+            const boxes = gtBoxes[item.image_path] || [];
+            
+            boxes.forEach((box, index) => {
+                const isSelected = selectedBox && selectedBox.imagePath === item.image_path && selectedBox.index === index;
+                
+                // Draw box
+                ctx.save();
+                ctx.strokeStyle = isSelected ? '#e67e22' : '#2ecc71';
+                ctx.fillStyle = isSelected ? 'rgba(230, 126, 34, 0.1)' : 'rgba(46, 204, 113, 0.1)';
+                ctx.lineWidth = isSelected ? 3 : 2;
+                
+                ctx.beginPath();
+                ctx.rect(box.x1, box.y1, box.x2 - box.x1, box.y2 - box.y1);
+                ctx.stroke();
+                ctx.fill();
+                
+                // Draw label
+                ctx.fillStyle = isSelected ? '#e67e22' : '#2ecc71';
+                ctx.font = '14px Arial';
+                ctx.textBaseline = 'top';
+                const label = `${box.className}`;
+                ctx.fillText(label, box.x1, Math.max(0, box.y1 - 20));
+                
+                ctx.restore();
+            });
+        }
+        
+        function drawSelectionHandles() {
+            if (!selectedBox) return;
+            
+            const item = metadata[currentIndex];
+            if (selectedBox.imagePath !== item.image_path) return;
+            
+            const boxes = gtBoxes[item.image_path] || [];
+            const box = boxes[selectedBox.index];
+            if (!box) return;
+            
+            // Draw resize handles
+            const handles = [
+                { x: box.x1, y: box.y1, cursor: 'nwse-resize' }, // NW
+                { x: box.x2, y: box.y1, cursor: 'nesw-resize' }, // NE
+                { x: box.x1, y: box.y2, cursor: 'nesw-resize' }, // SW
+                { x: box.x2, y: box.y2, cursor: 'nwse-resize' }, // SE
+                { x: box.x1, y: (box.y1 + box.y2) / 2, cursor: 'ns-resize' }, // W
+                { x: box.x2, y: (box.y1 + box.y2) / 2, cursor: 'ns-resize' }, // E
+                { x: (box.x1 + box.x2) / 2, y: box.y1, cursor: 'ew-resize' }, // N
+                { x: (box.x1 + box.x2) / 2, y: box.y2, cursor: 'ew-resize' }  // S
+            ];
+            
+            handles.forEach(handle => {
+                ctx.save();
+                ctx.fillStyle = '#3498db';
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 2;
+                
+                ctx.beginPath();
+                ctx.rect(handle.x - 4, handle.y - 4, 8, 8);
+                ctx.fill();
+                ctx.stroke();
+                
+                ctx.restore();
+            });
+            
+            // Draw delete button
+            ctx.save();
+            ctx.fillStyle = '#e74c3c';
+            ctx.beginPath();
+            ctx.arc(box.x2 + 8, box.y1 - 8, 8, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('×', box.x2 + 8, box.y1 - 8);
+            
+            ctx.restore();
+        }
+        
+        function startDrawing(e) {
+            if (!document.getElementById('btnDrawMode').classList.contains('active')) return;
+            
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            startX = (e.clientX - rect.left) / scale;
+            startY = (e.clientY - rect.top) / scale;
+            
+            currentBox = {
+                x1: startX,
+                y1: startY,
+                x2: startX,
+                y2: startY,
+                classId: parseInt(document.getElementById('classSelect').value),
+                className: CLASS_MAPPING[parseInt(document.getElementById('classSelect').value)]
+            };
+        }
+        
+        function draw(e) {
+            if (!isDrawing || !currentBox) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            currentBox.x2 = Math.max(0, Math.min((e.clientX - rect.left) / scale, img.naturalWidth));
+            currentBox.y2 = Math.max(0, Math.min((e.clientY - rect.top) / scale, img.naturalHeight));
+            
+            drawCanvas();
+            
+            // Draw current box being created
+            ctx.save();
+            ctx.strokeStyle = '#2ecc71';
+            ctx.fillStyle = 'rgba(46, 204, 113, 0.1)';
+            ctx.lineWidth = 2;
+            
+            ctx.beginPath();
+            ctx.rect(currentBox.x1, currentBox.y1, currentBox.x2 - currentBox.x1, currentBox.y2 - currentBox.y1);
+            ctx.stroke();
+            ctx.fill();
+            
+            ctx.restore();
+        }
+        
+        function stopDrawing(e) {
+            if (!isDrawing || !currentBox) return;
+            
+            isDrawing = false;
+            
+            // Normalize coordinates (ensure x1 < x2, y1 < y2)
+            const normalizedBox = {
+                x1: Math.min(currentBox.x1, currentBox.x2),
+                y1: Math.min(currentBox.y1, currentBox.y2),
+                x2: Math.max(currentBox.x1, currentBox.x2),
+                y2: Math.max(currentBox.y1, currentBox.y2),
+                classId: currentBox.classId,
+                className: currentBox.className
+            };
+            
+            // Validate box has minimum size
+            const width = normalizedBox.x2 - normalizedBox.x1;
+            const height = normalizedBox.y2 - normalizedBox.y1;
+            
+            if (width > 5 && height > 5) {
+                // Add to gtBoxes
+                const item = metadata[currentIndex];
+                if (!gtBoxes[item.image_path]) {
+                    gtBoxes[item.image_path] = [];
+                }
+                gtBoxes[item.image_path].push(normalizedBox);
+                
+                // Auto-save
+                saveToLocalStorage();
+                
+                // Clear current box
+                currentBox = null;
+                
+                drawCanvas();
+            } else {
+                // Box too small, discard
+                currentBox = null;
+                drawCanvas();
+            }
+        }
+        
+        function handleCanvasMouseDown(e) {
+            // Check if clicking on an existing box to select/move it
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = (e.clientX - rect.left) / scale;
+            const mouseY = (e.clientY - rect.top) / scale;
+            
+            const item = metadata[currentIndex];
+            const boxes = gtBoxes[item.image_path] || [];
+            
+            // Check if clicking on a box (with 5px tolerance)
+            for (let i = boxes.length - 1; i >= 0; i--) {
+                const box = boxes[i];
+                const tolerance = 5;
+                if (mouseX >= box.x1 - tolerance && mouseX <= box.x2 + tolerance &&
+                    mouseY >= box.y1 - tolerance && mouseY <= box.y2 + tolerance) {
+                    
+                    selectedBox = { imagePath: item.image_path, index: i };
+                    // Store offset for dragging
+                    selectedBox.offsetX = mouseX - box.x1;
+                    selectedBox.offsetY = mouseY - box.y1;
+                    
+                    drawCanvas();
+                    return;
+                }
+            }
+            
+            // Check if clicking on resize handle
+            const handle = getResizeHandleAt(mouseX, mouseY, boxes);
+            if (handle) {
+                selectedBox = { imagePath: item.image_path, index: handle.index, handle: handle.position };
+                drawCanvas();
+                return;
+            }
+            
+            // Check if clicking on delete button
+            for (let i = boxes.length - 1; i >= 0; i--) {
+                const box = boxes[i];
+                const dx = mouseX - (box.x2 + 8);
+                const dy = mouseY - (box.y1 - 8);
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance <= 8) {
+                    // Delete box
+                    boxes.splice(i, 1);
+                    saveToLocalStorage();
+                    selectedBox = null;
+                    drawCanvas();
+                    showToast('Box deleted', 'info');
+                    return;
+                }
+            }
+            
+            // Clicked outside any box - clear selection
+            selectedBox = null;
+            drawCanvas();
+        }
+        
+        function handleCanvasMouseMove(e) {
+            if (!selectedBox) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = (e.clientX - rect.left) / scale;
+            const mouseY = (e.clientY - rect.top) / scale;
+            
+            const item = metadata[currentIndex];
+            const boxes = gtBoxes[item.image_path] || [];
+            const box = boxes[selectedBox.index];
+            if (!box) return;
+            
+            if (selectedBox.handle) {
+                // Resizing
+                resizeBox(box, selectedBox.handle, mouseX, mouseY);
+            } else if (selectedBox.offsetX !== undefined && selectedBox.offsetY !== undefined) {
+                // Moving
+                moveBox(box, mouseX - selectedBox.offsetX, mouseY - selectedBox.offsetY);
+            }
+            
+            drawCanvas();
+        }
+        
+        function handleCanvasMouseUp(e) {
+            // Clear move/resize state
+            if (selectedBox) {
+                selectedBox.offsetX = undefined;
+                selectedBox.offsetY = undefined;
+                selectedBox.handle = undefined;
+            }
+        }
+        
+        function getResizeHandleAt(mouseX, mouseY, boxes) {
+            const tolerance = 8;
+            
+            for (let i = boxes.length - 1; i >= 0; i--) {
+                const box = boxes[i];
+                
+                // Check each handle
+                const handles = [
+                    { x: box.x1, y: box.y1, position: 'nw' }, // NW
+                    { x: box.x2, y: box.y1, position: 'ne' }, // NE
+                    { x: box.x1, y: box.y2, position: 'sw' }, // SW
+                    { x: box.x2, y: box.y2, position: 'se' }, // SE
+                    { x: box.x1, y: (box.y1 + box.y2) / 2, position: 'w' }, // W
+                    { x: box.x2, y: (box.y1 + box.y2) / 2, position: 'e' }, // E
+                    { x: (box.x1 + box.x2) / 2, y: box.y1, position: 'n' }, // N
+                    { x: (box.x1 + box.x2) / 2, y: box.y2, position: 's' }  // S
+                ];
+                
+                for (const handle of handles) {
+                    if (Math.abs(mouseX - handle.x) <= tolerance && Math.abs(mouseY - handle.y) <= tolerance) {
+                        return { index: i, position: handle.position };
+                    }
+                }
+            }
+            
+            return null;
+        }
+        
+        function moveBox(box, newX, newY) {
+            const width = box.x2 - box.x1;
+            const height = box.y2 - box.y1;
+            
+            // Keep within image bounds
+            box.x1 = Math.max(0, Math.min(newX, img.naturalWidth - width));
+            box.y1 = Math.max(0, Math.min(newY, img.naturalHeight - height));
+            box.x2 = box.x1 + width;
+            box.y2 = box.y1 + height;
+        }
+        
+        function resizeBox(box, handle, mouseX, mouseY) {
+            // Clamp to image bounds
+            mouseX = Math.max(0, Math.min(mouseX, img.naturalWidth));
+            mouseY = Math.max(0, Math.min(mouseY, img.naturalHeight));
+            
+            switch (handle) {
+                case 'nw': // Northwest
+                    box.x1 = mouseX;
+                    box.y1 = mouseY;
+                    break;
+                case 'ne': // Northeast
+                    box.x2 = mouseX;
+                    box.y1 = mouseY;
+                    break;
+                case 'sw': // Southwest
+                    box.x1 = mouseX;
+                    box.y2 = mouseY;
+                    break;
+                case 'se': // Southeast
+                    box.x2 = mouseX;
+                    box.y2 = mouseY;
+                    break;
+                case 'w': // West
+                    box.x1 = mouseX;
+                    break;
+                case 'e': // East
+                    box.x2 = mouseX;
+                    break;
+                case 'n': // North
+                    box.y1 = mouseY;
+                    break;
+                case 's': // South
+                    box.y2 = mouseY;
+                    break;
+            }
+            
+            // Ensure valid box dimensions
+            if (box.x2 < box.x1) {
+                const temp = box.x1;
+                box.x1 = box.x2;
+                box.x2 = temp;
+            }
+            if (box.y2 < box.y1) {
+                const temp = box.y1;
+                box.y1 = box.y2;
+                box.y2 = temp;
+            }
+        }
+        
+        function toggleDrawMode() {
+            const btn = document.getElementById('btnDrawMode');
+            btn.classList.toggle('active');
+            
+            if (btn.classList.contains('active')) {
+                btn.textContent = 'Draw Mode (D) - ON';
+                canvas.style.cursor = 'crosshair';
+            } else {
+                btn.textContent = 'Draw Mode (D)';
+                canvas.style.cursor = 'default';
+            }
+        }
+        
+        function clearBoxes() {
+            if (confirm('Are you sure you want to clear all boxes for this image?')) {
+                const item = metadata[currentIndex];
+                gtBoxes[item.image_path] = [];
+                selectedBox = null;
+                saveToLocalStorage();
+                drawCanvas();
+                showToast('Boxes cleared', 'info');
+            }
+        }
+        
+        function setImageStatus(status) {
+            const item = metadata[currentIndex];
+            imageStatus[item.image_path] = status;
+            
+            // Update button states
+            document.getElementById('btnConfirmedPositive').classList.toggle('active', status === 'CONFIRMED_POSITIVE');
+            document.getElementById('btnConfirmedNegative').classList.toggle('active', status === 'CONFIRMED_NEGATIVE');
+            document.getElementById('btnUncertain').classList.toggle('active', status === 'UNCERTAIN');
+            
+            saveToLocalStorage();
+            showToast(`Status set to ${status.replace('_', ' ')}`, 'info');
+            updateUI();
+        }
+        
+        function updateCurrentBoxClass() {
+            if (!currentBox) return;
+            currentBox.classId = parseInt(document.getElementById('classSelect').value);
+            currentBox.className = CLASS_MAPPING[currentBox.classId];
+        }
+        
+        function saveCurrent() {
+            const item = metadata[currentIndex];
+            const boxes = gtBoxes[item.image_path] || [];
+            
+            if (boxes.length === 0 && imageStatus[item.image_path] === 'NEEDS_HUMAN_REVIEW') {
+                if (!confirm('No boxes drawn and status is NEEDS_HUMAN_REVIEW. Save anyway?')) {
+                    return;
+                }
+            }
+            
+            // In a real implementation, this would save to a file or database
+            // For now, we'll just show a success toast since we're using localStorage
+            showToast('Annotations saved to localStorage', 'success');
+        }
+        
+        function exportAll() {
+            try {
+                // Validate all boxes before export
+                const validationErrors = [];
+                
+                metadata.forEach((item, index) => {
+                    const boxes = gtBoxes[item.image_path] || [];
+                    boxes.forEach((box, boxIndex) => {
+                        // Validate coordinates
+                        if (box.x1 < 0 || box.y1 < 0 || box.x2 > img.naturalWidth || box.y2 > img.naturalHeight) {
+                            validationErrors.push(`Image ${item.image_path}: Box ${boxIndex} has coordinates outside image bounds`);
+                        }
+                        if (box.x2 <= box.x1 || box.y2 <= box.y1) {
+                            validationErrors.push(`Image ${item.image_path}: Box ${boxIndex} has invalid dimensions (width or height <= 0)`);
+                        }
+                        if (box.classId < 0 || box.classId > 3) {
+                            validationErrors.push(`Image ${item.image_path}: Box ${boxIndex} has invalid class_id: ${box.classId}`);
+                        }
+                    });
+                });
+                
+                if (validationErrors.length > 0) {
+                    showToast('Validation failed:\\n' + validationErrors.join('\\n'), 'error');
+                    return;
+                }
+                
+                // Prepare export data
+                const exportData = {
+                    version: "v2.0",
+                    timestamp: new Date().toISOString(),
+                    class_mapping: CLASS_MAPPING,
+                    annotations: {}
+                };
+                
+                metadata.forEach(item => {
+                    const boxes = gtBoxes[item.image_path] || [];
+                    exportData.annotations[item.image_path] = {
+                        status: imageStatus[item.image_path] || "NEEDS_HUMAN_REVIEW",
+                        boxes: boxes.map(box => ({
+                            x1: Math.round(box.x1),
+                            y1: Math.round(box.y1),
+                            x2: Math.round(box.x2),
+                            y2: Math.round(box.y2),
+                            class_id: box.classId,
+                            class_name: box.className
+                        })),
+                        width: item.dimensions.split('x')[0],
+                        height: item.dimensions.split('x')[1]
+                    };
+                });
+                
+                // Create and trigger download
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ground_truth_review_v2.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showToast('Export successful!', 'success');
+            } catch (error) {
+                showToast('Export failed: ' + error.message, 'error');
+                console.error(error);
+            }
+        }
+        
+        function exportYoloLabels() {
+            try {
+                // Collect confirmed positive images
+                const confirmedImages = metadata.filter(item => 
+                    imageStatus[item.image_path] === 'CONFIRMED_POSITIVE'
+                );
+                
+                if (confirmedImages.length === 0) {
+                    showToast('No confirmed positive images to export', 'info');
+                    return;
+                }
+                
+                // Create a ZIP-like structure using individual downloads
+                // Since we can't create actual ZIP files in pure JS, we'll create multiple text files
+                confirmedImages.forEach(item => {
+                    const boxes = gtBoxes[item.image_path] || [];
+                    
+                    if (boxes.length === 0) {
+                        // Still create empty file for confirmed positive with no boxes
+                        const blob = new Blob([''], { type: 'text/plain' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        const filename = item.image_path.replace('review_images/', '').replace(/\.[^.]+$/, '.txt');
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                        return;
+                    }
+                    
+                    const lines = boxes.map(box => {
+                        // YOLO format: class_id x_center y_center width height (all normalized)
+                        const xCenter = (box.x1 + box.x2) / 2 / parseInt(item.dimensions.split('x')[0]);
+                        const yCenter = (box.y1 + box.y2) / 2 / parseInt(item.dimensions.split('x')[1]);
+                        const width = (box.x2 - box.x1) / parseInt(item.dimensions.split('x')[0]);
+                        const height = (box.y2 - box.y1) / parseInt(item.dimensions.split('x')[1]);
+                        
+                        return `${box.class_id} ${xCenter.toFixed(6)} ${yCenter.toFixed(6)} ${width.toFixed(6)} ${height.toFixed(6)}`;
+                    });
+                    
+                    const blob = new Blob([lines.join('\\n')], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    const filename = item.image_path.replace('review_images/', '').replace(/\.[^.]+$/, '.txt');
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                });
+                
+                showToast(`Exported YOLO labels for ${confirmedImages.length} images`, 'success');
+            } catch (error) {
+                showToast('YOLO export failed: ' + error.message, 'error');
+                console.error(error);
+            }
+        }
+        
+        function handleImport(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const importedData = JSON.parse(event.target.result);
+                    
+                    // Validate import data
+                    if (!importedData.version || !importedData.annotations) {
+                        throw new Error('Invalid import file format');
+                    }
+                    
+                    // Merge with existing data
+                    let mergedCount = 0;
+                    Object.keys(importedData.annotations).forEach(imagePath => {
+                        if (importedData.annotations[imagePath]) {
+                            // Update GT boxes
+                            if (importedData.annotations[imagePath].boxes) {
+                                gtBoxes[imagePath] = importedData.annotations[imagePath].boxes.map(box => ({
+                                    x1: box.x1,
+                                    y1: box.y1,
+                                    x2: box.x2,
+                                    y2: box.y2,
+                                    classId: box.class_id,
+                                    className: box.class_name
+                                }));
+                                mergedCount++;
+                            }
+                            
+                            // Update status
+                            if (importedData.annotations[imagePath].status) {
+                                imageStatus[imagePath] = importedData.annotations[imagePath].status;
+                            }
+                        }
+                    });
+                    
+                    saveToLocalStorage();
+                    drawCanvas();
+                    
+                    showToast(`Imported annotations for ${mergedCount} images`, 'success');
+                    
+                    // Reset file input
+                    e.target.value = '';
+                } catch (error) {
+                    showToast('Import failed: ' + error.message, 'error');
+                    console.error(error);
+                    e.target.value = '';
+                }
+            };
+            reader.onerror = () => {
+                showToast('Failed to read file', 'error');
+                e.target.value = '';
+            };
+            reader.readAsText(file);
+        }
+        
+        function updateUI() {
+            const item = metadata[currentIndex];
+            
+            // Update progress
+            document.getElementById('currentIndex').textContent = currentIndex + 1;
+            
+            // Update image info
+            document.getElementById('filename').textContent = item.image_path.split('/').pop();
+            document.getElementById('dimensions').textContent = item.dimensions;
+            document.getElementById('split').textContent = `Split: ${item.split}`;
+            
+            // Update status buttons
+            const status = imageStatus[item.image_path] || "NEEDS_HUMAN_REVIEW";
+            document.getElementById('btnConfirmedPositive').classList.toggle('active', status === 'CONFIRMED_POSITIVE');
+            document.getElementById('btnConfirmedNegative').classList.toggle('active', status === 'CONFIRMED_NEGATIVE');
+            document.getElementById('btnUncertain').classList.toggle('active', status === 'UNCERTAIN');
+            
+            // Update prediction displays
+            updatePredictionDisplay('epoch72Predictions', item.epoch72_predictions);
+            updatePredictionDisplay('originalPredictions', item.original_predictions);
+            
+            // Redraw canvas
+            drawCanvas();
+        }
+        
+        function updatePredictionDisplay(elementId, predictionString) {
+            const element = document.getElementById(elementId);
+            if (!predictionString || predictionString === 'None' || predictionString.trim() === '') {
+                element.innerHTML = '<em>None</em>';
+                return;
+            }
+            
+            try {
+                const boxes = parsePredictionString(predictionString);
+                if (boxes.length === 0) {
+                    element.innerHTML = '<em>None</em>';
+                    return;
+                }
+                
+                element.innerHTML = boxes.map(box => {
+                    return `<div class="prediction-box">
+                        <span>${box.className}</span>
+                        <span class="confidence">${(box.confidence * 100).toFixed(1)}%</span>
+                    </div>`;
+                }).join('');
+            } catch (e) {
+                element.innerHTML = '<em>Error parsing predictions</em>';
+                console.error(e);
+            }
+        }
+        
+        function handleZoom(e) {
+            e.preventDefault(); // Prevent page scroll
+            
+            const delta = e.deltaY < 0 ? 1 : -1; // Wheel up = zoom in, wheel down = zoom out
+            const zoomFactor = 1.1;
+            
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            // Get current scale from CSS
+            const currentScale = parseFloat(canvas.style.width) / img.naturalWidth;
+            let newScale = currentScale * (delta > 0 ? zoomFactor : 1 / zoomFactor);
+            
+            // Limit zoom range
+            newScale = Math.max(0.1, Math.min(newScale, 5));
+            
+            // Apply zoom
+            canvas.style.width = `${img.naturalWidth * newScale}px`;
+            canvas.style.height = `${img.naturalHeight * newScale}px`;
+            
+            // Update zoom indicator
+            const zoomPercent = Math.round(newScale * 100);
+            const zoomIndicator = document.getElementById('zoomIndicator');
+            zoomIndicator.textContent = `${zoomPercent}%`;
+            zoomIndicator.classList.add('show');
+            
+            // Hide after delay
+            clearTimeout(window.zoomTimeout);
+            window.zoomTimeout = setTimeout(() => {
+                zoomIndicator.classList.remove('show');
+            }, 1500);
+        }
+        
+        function handleKeyboardShortcuts(e) {
+            // D = Toggle draw mode
+            if (e.key.toLowerCase() === 'd' && !e.metaKey && !e.ctrlKey) {
+                e.preventDefault();
+                toggleDrawMode();
+            }
+            
+            // Delete = Delete selected box
+            if (e.key === 'Delete' && selectedBox) {
+                e.preventDefault();
+                const item = metadata[currentIndex];
+                if (selectedBox.imagePath === item.image_path) {
+                    gtBoxes[item.image_path].splice(selectedBox.index, 1);
+                    selectedBox = null;
+                    saveToLocalStorage();
+                    drawCanvas();
+                    showToast('Box deleted', 'info');
+                }
+            }
+            
+            // Escape = Cancel drawing/deselect
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                if (isDrawing) {
+                    isDrawing = false;
+                    currentBox = null;
+                    drawCanvas();
+                } else if (selectedBox) {
+                    selectedBox = null;
+                    drawCanvas();
+                }
+            }
+        }
+        
+        function showToast(message, type = 'info') {
+            // Remove any existing toasts
+            const existingToasts = document.querySelectorAll('.toast');
+            existingToasts.forEach(toast => toast.remove());
+            
+            // Create toast
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            // Show toast
+            requestAnimationFrame(() => {
+                toast.classList.add('show');
+            });
+            
+            // Hide after delay
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // Hex to RGBA conversion
+        function hexToRgba(hex, alpha) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+        
+        // Handle visibility change to save state
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') {
+                saveToLocalStorage();
+            }
+        });
+        
+        // Handle page unload
+        window.addEventListener('beforeunload', () => {
+            saveToLocalStorage();
+        });
+    </script>
+</body>
+</html>

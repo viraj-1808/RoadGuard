@@ -1,0 +1,7 @@
+{
+  "image_path": "validation\\manual\\input\\road018.jpg",
+  "inference_time_ms": 188.8477000175044,
+  "image_width": 4096,
+  "image_height": 3072,
+  "detections": []
+}

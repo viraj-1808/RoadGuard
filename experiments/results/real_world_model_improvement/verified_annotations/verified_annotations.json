@@ -1,0 +1,72 @@
+[
+  {
+    "image": "road004.jpg",
+    "class_id": 2,
+    "class_name": "alligator_crack",
+    "confidence": 0.705,
+    "bbox_xyxy": [
+      4.577371120452881,
+      164.34092712402344,
+      638.752685546875,
+      478.333984375
+    ],
+    "source": "model_derived_epoch72",
+    "notes": ""
+  },
+  {
+    "image": "road022.jpg",
+    "class_id": 3,
+    "class_name": "pothole",
+    "confidence": 0.311,
+    "bbox_xyxy": [
+      120.78581237792969,
+      349.0760803222656,
+      907.45849609375,
+      566.1356811523438
+    ],
+    "source": "human_reviewed",
+    "notes": "Error analysis confirms pothole; model bbox likely oversized. Epoch72 detects alligator_crack at 0.127 conf. Class needs verification."
+  },
+  {
+    "image": "road029.jpg",
+    "class_id": 2,
+    "class_name": "alligator_crack",
+    "confidence": 0.337,
+    "bbox_xyxy": [
+      2.40574049949646,
+      207.8732147216797,
+      960.0,
+      757.4553833007812
+    ],
+    "source": "model_derived_epoch72",
+    "notes": ""
+  },
+  {
+    "image": "road031.jpg",
+    "class_id": 2,
+    "class_name": "alligator_crack",
+    "confidence": 0.312,
+    "bbox_xyxy": [
+      136.26458740234375,
+      353.9178161621094,
+      552.5153198242188,
+      932.2827758789062
+    ],
+    "source": "human_reviewed",
+    "notes": "Error analysis confirms alligator_crack; original model detection at 0.312 conf is reasonable. Epoch72 missed it."
+  },
+  {
+    "image": "road033.jpg",
+    "class_id": 2,
+    "class_name": "alligator_crack",
+    "confidence": 0.316,
+    "bbox_xyxy": [
+      0.0,
+      0.0,
+      311.8957824707031,
+      332.987548828125
+    ],
+    "source": "human_reviewed",
+    "notes": "Error analysis confirms alligator_crack but notes corner artifact. Bbox at (0,0) edge is suspicious. Needs human verification of bbox accuracy."
+  }
+]

@@ -1,0 +1,75 @@
+{
+  "image_path": "validation\\manual\\input\\road018.jpg",
+  "inference_time_ms": 4005.832799943164,
+  "image_width": 4096,
+  "image_height": 3072,
+  "tile_count": 6,
+  "detections": [
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.1850065290927887,
+      "bbox_xyxy": [
+        3457.006443142891,
+        1.39043390750885,
+        4079.921630859375,
+        466.69049072265625
+      ]
+    },
+    {
+      "class_id": 1,
+      "class_name": "transverse_crack",
+      "confidence": 0.09809307008981705,
+      "bbox_xyxy": [
+        3652.3470153808594,
+        1253.9553527832031,
+        3848.7638244628906,
+        1316.8157958984375
+      ]
+    },
+    {
+      "class_id": 1,
+      "class_name": "transverse_crack",
+      "confidence": 0.09492931514978409,
+      "bbox_xyxy": [
+        3647.856414794922,
+        1255.516586303711,
+        3921.740997314453,
+        1355.5376586914062
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.09249527007341385,
+      "bbox_xyxy": [
+        3456.216435968876,
+        513.7787766456604,
+        4077.9683837890625,
+        1061.6022338867188
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.06296834349632263,
+      "bbox_xyxy": [
+        3072.0598675236106,
+        85.44586944580078,
+        3707.8181762695312,
+        640.0
+      ]
+    },
+    {
+      "class_id": 1,
+      "class_name": "transverse_crack",
+      "confidence": 0.05962635576725006,
+      "bbox_xyxy": [
+        512.0,
+        0.0,
+        1123.8997192382812,
+        67.84793853759766
+      ]
+    }
+  ]
+}

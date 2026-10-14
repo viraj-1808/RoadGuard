@@ -1,0 +1,114 @@
+{
+  "experiment": "Phase B: SAHI Tiled Inference Comparison",
+  "checkpoint": "runs\\detect\\experiments\\training\\yol11s_experiment2\\weights\\epoch72.pt",
+  "images": [
+    "road018.jpg",
+    "road021.jpg"
+  ],
+  "inference_config": {
+    "standard": {
+      "imgsz": 720,
+      "conf": 0.05,
+      "iou": 0.7,
+      "device": "0"
+    },
+    "sahi_tiled": {
+      "slice_height": 640,
+      "slice_width": 640,
+      "overlap_height_ratio": 0.2,
+      "overlap_width_ratio": 0.2,
+      "conf": 0.05,
+      "iou": 0.7,
+      "postprocess": "NMS",
+      "match_metric": "IOU",
+      "match_threshold": 0.5,
+      "device": "0"
+    }
+  },
+  "matching_config": {
+    "iou_threshold": 0.5,
+    "class_match_required": true
+  },
+  "results": [
+    {
+      "image": "road018.jpg",
+      "method": "standard",
+      "gt_status": "CLEAR",
+      "gt_boxes": 1,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "best_ious": {
+        "pothole": 0.0
+      },
+      "matched_any": false,
+      "num_detections": 0,
+      "inference_time_ms": 188.8477000175044,
+      "tile_count": 1,
+      "matches": []
+    },
+    {
+      "image": "road018.jpg",
+      "method": "sahi_tiled",
+      "gt_status": "CLEAR",
+      "gt_boxes": 1,
+      "tp": 0,
+      "fp": 6,
+      "fn": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "best_ious": {
+        "pothole": 0.0
+      },
+      "matched_any": false,
+      "num_detections": 6,
+      "inference_time_ms": 4005.832799943164,
+      "tile_count": 6,
+      "matches": []
+    },
+    {
+      "image": "road021.jpg",
+      "method": "standard",
+      "gt_status": "CLEAR",
+      "gt_boxes": 1,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "best_ious": {
+        "alligator_crack": 0.0
+      },
+      "matched_any": false,
+      "num_detections": 0,
+      "inference_time_ms": 154.58540001418442,
+      "tile_count": 1,
+      "matches": []
+    },
+    {
+      "image": "road021.jpg",
+      "method": "sahi_tiled",
+      "gt_status": "CLEAR",
+      "gt_boxes": 1,
+      "tp": 0,
+      "fp": 2,
+      "fn": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "best_ious": {
+        "alligator_crack": 0.0
+      },
+      "matched_any": false,
+      "num_detections": 2,
+      "inference_time_ms": 1527.7738999575377,
+      "tile_count": 2,
+      "matches": []
+    }
+  ]
+}

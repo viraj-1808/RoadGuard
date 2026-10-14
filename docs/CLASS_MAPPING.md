@@ -141,7 +141,7 @@ normalized_rdd2022_india/
 
 - **docs/DECISION_LOG.md**: D-015 expanded with exact deterministic mapping (D01→D00, D11→D10, D43/D44/D50 excluded)
 - **docs/DATASET_AUDIT.md**: §18.15.5 updated with final deterministic mapping; §18.15.7 updated with all decisions resolved except train/val/test split and artifact expansion
-- **docs/DATASET_AUDIT_SUMMARY.md**: Updated with final class mapping table and D50 resolution
+- **docs/DATASET_AUDIT.md**: §18.15.5 updated with final deterministic mapping; §18.15.7 updated with all decisions resolved
 - **docs/DATA_PIPELINE.md**: Updated with transformation spec, invariants, and audit requirements
 - **docs/RESEARCH_REGISTER.md**: R-009 updated with D50 resolution and class-mapping decision
 - **docs/ENGINEERING_LOG.md**: Added D50 resolution lesson and D01/D11 merge decision

@@ -1,0 +1,59 @@
+{
+  "experiment_id": "EXP-INF-003",
+  "analysis_date": "2026-10-10",
+  "description": "Four unambiguous pothole annotations identified from manual error analysis of EXP-INF-003 predictions. These represent high-confidence, well-localized pothole detections with minimal overlap/duplication issues.",
+  "annotations": [
+    {
+      "image": "road001.webp",
+      "bbox_xyxy": [
+        95.39811706542969,
+        439.5462341308594,
+        344.9998474121094,
+        523.6841430664062
+      ],
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.6540261507034302,
+      "notes": "Primary pothole detection; two additional overlapping detections at lower confidence are likely duplicates"
+    },
+    {
+      "image": "road002.jpg",
+      "bbox_xyxy": [
+        260.759765625,
+        150.74246215820312,
+        413.557373046875,
+        237.59033203125
+      ],
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.3970755338668823,
+      "notes": "Single pothole detection in image; well-localized bounding box around visible defect"
+    },
+    {
+      "image": "road009.jpg",
+      "bbox_xyxy": [
+        205.28518676757812,
+        161.53932189941406,
+        264.9638366699219,
+        215.19070434570312
+      ],
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.619371235370636,
+      "notes": "Well-localized pothole at high confidence; two other detections in image (one overlapping, one oversized)"
+    },
+    {
+      "image": "road010.jpg",
+      "bbox_xyxy": [
+        169.818359375,
+        228.73846435546875,
+        512.373291015625,
+        439.50830078125
+      ],
+      "class_id": 3,
+      "class_name": "pothole",
+      "confidence": 0.7333250641822815,
+      "notes": "Highest-confidence pothole detection in dataset; four additional overlapping detections in same image are likely duplicates"
+    }
+  ]
+}

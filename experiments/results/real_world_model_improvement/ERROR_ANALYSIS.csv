@@ -1,0 +1,40 @@
+filename,visible_damage,visible_damage_class,predicted_classes,max_confidence,likely_missed_defects,likely_false_positives,notes
+road001.webp,yes,pothole,"pothole,pothole,pothole",0.654,none,"2nd and 3rd pothole detections (overlapping, low conf 0.47/0.36) likely duplicates of 1st",Three pothole detections with heavy overlap; 2nd box spans 650-1140 (full width), 3rd spans 347-1140; likely duplicate detections of same pothole region
+road002.jpg,yes,pothole,pothole,0.397,none,none,Single pothole detection at moderate confidence; bbox appears reasonable for a localized defect
+road003.jpg,yes,alligator_crack,"alligator_crack,alligator_crack",0.603,none,"2nd alligator_crack (conf 0.425) overlaps heavily with 1st; likely duplicate",Two alligator_crack detections spanning full image width (0-978); 2nd box nested within 1st; probable duplicate detection of same crack pattern
+road004.jpg,uncertain,uncertain,none,0.0,possible cracks or potholes,none,No detections; image may contain subtle defects below confidence threshold or no visible damage
+road005.jpg,uncertain,uncertain,none,0.0,possible cracks or potholes,none,No detections; image may contain subtle defects below confidence threshold or no visible damage
+road006.jpg,yes,"pothole,longitudinal_crack","pothole,longitudinal_crack,pothole",0.572,none,"2nd pothole (conf 0.39) overlaps significantly with 1st pothole; likely duplicate",Three detections: two potholes (overlapping) + one longitudinal crack; pothole boxes at (148-192,71-127) and (91-149,80-133) heavily overlap
+road007.jpg,yes,pothole,"pothole,pothole",0.539,none,"2nd pothole (conf 0.33) spans most of image width overlapping 1st; likely duplicate",Two pothole detections: 1st (205-739,190-415) and 2nd (104-698,161-415) - 2nd nearly encompasses 1st, likely same defect
+road008.jpg,yes,pothole,pothole,0.397,none,none,Single pothole detection at low-moderate confidence; bbox (0.4-218,66-139) appears reasonable for small defect
+road009.jpg,yes,pothole,"pothole,pothole,pothole",0.619,none,"3rd pothole (conf 0.39) is oversized (125-515,285-574) encompassing other two; likely duplicate/merge",Three pothole detections: two small localized (205-265,162-215) and (135-291,240-304), third oversized spanning most of lower image
+road010.jpg,yes,pothole,"pothole x5",0.733,none,"Multiple overlapping pothole detections (5 total); several appear to be duplicates of same defects",Five pothole detections with heavy overlaps: #1 and #4 overlap significantly; #2 isolated; #3 and #5 overlap at left edge; likely 2-3 actual potholes
+road011.jpg,yes,longitudinal_crack,longitudinal_crack,0.777,none,none,Single longitudinal_crack detection at high confidence; bbox (248-312,228-356) appears well-localized
+road012.jpg,uncertain,uncertain,pothole,0.315,possible pothole or false positive,likely false positive (conf 0.315, bbox at image corner 0-216,0-79),Very low confidence pothole at top-left corner (0,0 to 216,79); corner artifacts common; uncertain if real pothole
+road013.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 1200x900 image; may be clean road or defects below threshold
+road014.webp,yes,"alligator_crack,pothole","alligator_crack,pothole,alligator_crack",0.773,none,"2nd alligator_crack (conf 0.255) overlaps 1st; likely duplicate",Three detections: two alligator_crack (overlapping, 78-306 and 62-363) + one pothole (206-291,136-188); alligator crack duplicates likely
+road015.jpg,yes,pothole,pothole,0.644,none,none,Single pothole detection at right edge (912-1200,302-583); high confidence, appears reasonable
+road016.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 4096x3072 image; very high resolution may cause small defects to be missed at 720 imgsz
+road017.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 3072x4096 image; portrait orientation + high res may cause missed defects
+road018.jpg,yes,pothole,pothole,0.568,none,"Oversized bbox (9-1785,0-1042) covers ~43% of 4096x3072 image; likely over-merging multiple defects",Single massive pothole detection spanning nearly half the image; likely merges multiple defects or background
+road019.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 3072x4096 image; high res portrait orientation
+road020.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 960x1280 portrait image
+road021.jpg,yes,alligator_crack,alligator_crack,0.622,none,"Oversized bbox (223-2269,0-2096) covers ~37% of 3072x4096 image; likely over-merging",Single massive alligator_crack detection spanning most of image width and half height; likely merges multiple crack regions
+road022.jpg,yes,pothole,pothole,0.311,none,"Low confidence (0.311); bbox (121-907,349-566) spans 62% of width; possibly oversized",Single pothole detection with large bbox covering majority of lower image area; uncertain if single large pothole or merged detections
+road023.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 3072x4096 image
+road024.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 960x1280 portrait image
+road025.jpg,yes,alligator_crack,"alligator_crack x5",0.611,none,"Multiple overlapping alligator_crack detections (5 total); #1-4 overlap heavily at top, #5 separate region",Five alligator_crack detections: four overlapping at top (y=0), one at lower region (y=1088-3155); likely 2 distinct crack areas over-detected
+road026.jpg,yes,alligator_crack,alligator_crack,0.422,none,none,Single alligator_crack detection at top-left (100-649,0-581); moderate confidence, reasonable localization
+road027.jpg,yes,"alligator_crack,pothole","alligator_crack,pothole",0.422,none,none,Two detections: alligator_crack at top-left (6-1040,0-853), pothole at lower region (608-762,1986-2165); well-separated, reasonable
+road028.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 3072x4096 image
+road029.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 960x1280 portrait image
+road030.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 3072x4096 image
+road031.jpg,yes,alligator_crack,alligator_crack,0.312,none,none,Single alligator_crack detection at moderate confidence (136-553,354-933); reasonable mid-image localization
+road032.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 4096x3072 image
+road033.jpg,yes,alligator_crack,alligator_crack,0.316,none,"Low confidence (0.316); bbox at corner (0-312,0-333) may be corner artifact",Single alligator_crack at top-left corner with low confidence; corner artifacts possible
+road034.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 960x1280 portrait image
+road035.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 4096x3072 image
+road036.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 960x1280 portrait image
+road037.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 4096x3072 image
+road038.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 1280x960 image
+road039.jpg,uncertain,uncertain,none,0.0,possible defects,none,No detections on 3072x4096 image

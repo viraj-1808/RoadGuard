@@ -1,0 +1,81 @@
+{
+  "cache_estimate": {
+    "decoded_image_bytes": 146536715340,
+    "decoded_image_gib": 136.473,
+    "fits_with_margin": false,
+    "free_c_bytes": 156863442944,
+    "free_c_gib": 146.09,
+    "images_sampled": 22020,
+    "with_ultralytics_50_percent_margin_bytes": 219805073010,
+    "with_ultralytics_50_percent_margin_gib": 204.709
+  },
+  "checkpoint": {
+    "best_fitness": 0.34476,
+    "displayed_completed_epoch": 54,
+    "epoch_index": 53,
+    "exists": true,
+    "optimizer_param_groups": 3,
+    "optimizer_present": true,
+    "optimizer_state_entries": 255,
+    "path": "runs/detect/experiments/training/yol11s_experiment2/weights/epoch53.pt",
+    "sha256": "7c23b4e1cd12fe4ffe27638d7f837297851f1a70dde10484b9354b9a69a157e4",
+    "size_bytes": 76021091,
+    "train_args_subset": {
+      "amp": true,
+      "augment": false,
+      "batch": 16,
+      "cache": false,
+      "data": "experiments\\dataset\\experiment2\\data.yaml",
+      "deterministic": true,
+      "epochs": 100,
+      "imgsz": 736,
+      "model": "runs\\detect\\experiments\\training\\yol11s_experiment2\\weights\\epoch52.pt",
+      "optimizer": "AdamW",
+      "resume": "runs\\detect\\experiments\\training\\yol11s_experiment2\\weights\\epoch52.pt",
+      "seed": 42,
+      "workers": 6
+    },
+    "ultralytics_version": "8.4.138"
+  },
+  "gates": {
+    "labels_complete": true,
+    "optimizer_state_ok": true,
+    "resume_epoch_ok": true,
+    "train_count_ok": true,
+    "val_count_ok": true
+  },
+  "generated_at": "2026-10-08 00:35:12 +0530",
+  "project_root": "C:\\Users\\viraj\\Code_files\\Github\\RoadGuard AI",
+  "source_data_yaml": "experiments/dataset/experiment2/data.yaml",
+  "source_data_yaml_sha256": "c64efcdc63118e12eeff94bef60e8c42d9b3c5745a0d211bfadac3688d81acd0",
+  "splits": {
+    "train": {
+      "first_image": "experiments/dataset/experiment2/images/train/China_Drone_000001.jpg",
+      "image_bytes": 6445100458,
+      "image_count": 19719,
+      "label_bytes": 1999690,
+      "label_content_sha256": "04dca712629a3c463911858dadc3843d554ed44e5e6a5dc5426743488131f4ed",
+      "label_count": 19719,
+      "last_image": "experiments/dataset/experiment2/images/train/United_States_004804.jpg",
+      "membership_sha256": "da5eb90c31ee37340cd20af980b8aabb1f912f7945e9a7ea97da6121edaf3d05",
+      "missing_labels": [],
+      "split": "train"
+    },
+    "val": {
+      "first_image": "experiments/dataset/experiment2/images/val/China_Drone_000021.jpg",
+      "image_bytes": 780121437,
+      "image_count": 2301,
+      "label_bytes": 222035,
+      "label_content_sha256": "6468d095e0f78f57ab47a60131eb0c5e93d30192c37397693a8a6c20c32d4012",
+      "label_count": 2301,
+      "last_image": "experiments/dataset/experiment2/images/val/United_States_004802.jpg",
+      "membership_sha256": "5b33153e7191cd1425f20a23fcf4bc940abe0177606ae0a30aa72444800fda52",
+      "missing_labels": [],
+      "split": "val"
+    }
+  },
+  "ultralytics_disk_cache_behavior": {
+    "default_npy_location": "Path(image).with_suffix('.npy') beside each image",
+    "project_strategy": "use cache/decoded_images mirror so .npy files stay under project-local cache"
+  }
+}

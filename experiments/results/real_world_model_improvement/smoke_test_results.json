@@ -1,0 +1,794 @@
+{
+  "experiment_id": "EXP-SMOKE-001",
+  "timestamp": "2026-10-11T05:12:00.914147Z",
+  "checkpoint": "runs\\detect\\experiments\\training\\yol11s_experiment2\\weights\\epoch72.pt",
+  "input_images": [
+    "road001.webp",
+    "road002.jpg",
+    "road009.jpg",
+    "road010.jpg"
+  ],
+  "ground_truth": {
+    "road001.webp": [
+      95.39811706542969,
+      439.5462341308594,
+      344.9998474121094,
+      523.6841430664062
+    ],
+    "road002.jpg": [
+      260.759765625,
+      150.74246215820312,
+      413.557373046875,
+      237.59033203125
+    ],
+    "road009.jpg": [
+      205.28518676757812,
+      161.53932189941406,
+      264.9638366699219,
+      215.19070434570312
+    ],
+    "road010.jpg": [
+      169.818359375,
+      228.73846435546875,
+      512.373291015625,
+      439.50830078125
+    ]
+  },
+  "inference_config": {
+    "iou_threshold": 0.7,
+    "imgsz": 720,
+    "device": "0"
+  },
+  "confidence_thresholds_tested": [
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3
+  ],
+  "results_by_threshold": {
+    "0.05": {
+      "road001.webp": {
+        "image": "road001.webp",
+        "ground_truth_bbox": [
+          95.39811706542969,
+          439.5462341308594,
+          344.9998474121094,
+          523.6841430664062
+        ],
+        "detections": [
+          {
+            "class_id": 3,
+            "confidence": 0.11533478647470474,
+            "bbox_xyxy": [
+              482.822021484375,
+              432.05780029296875,
+              599.6257934570312,
+              462.06781005859375
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.07882022112607956,
+            "bbox_xyxy": [
+              116.94950103759766,
+              449.07098388671875,
+              290.31256103515625,
+              510.456787109375
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.056998152285814285,
+            "bbox_xyxy": [
+              691.0909423828125,
+              419.4252014160156,
+              975.1707153320312,
+              589.7504272460938
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.05272085592150688,
+            "bbox_xyxy": [
+              105.36833953857422,
+              432.8994445800781,
+              340.4412841796875,
+              513.2183227539062
+            ]
+          }
+        ],
+        "best_match_iou": 0.7675384884424064,
+        "best_match_detection": {
+          "class_id": 3,
+          "confidence": 0.05272085592150688,
+          "bbox_xyxy": [
+            105.36833953857422,
+            432.8994445800781,
+            340.4412841796875,
+            513.2183227539062
+          ]
+        },
+        "tp": 1,
+        "fp": 3,
+        "fn": 0,
+        "matched": true
+      },
+      "road002.jpg": {
+        "image": "road002.jpg",
+        "ground_truth_bbox": [
+          260.759765625,
+          150.74246215820312,
+          413.557373046875,
+          237.59033203125
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road009.jpg": {
+        "image": "road009.jpg",
+        "ground_truth_bbox": [
+          205.28518676757812,
+          161.53932189941406,
+          264.9638366699219,
+          215.19070434570312
+        ],
+        "detections": [
+          {
+            "class_id": 3,
+            "confidence": 0.10159306228160858,
+            "bbox_xyxy": [
+              75.9898681640625,
+              160.43414306640625,
+              181.92672729492188,
+              267.2442321777344
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.061132632195949554,
+            "bbox_xyxy": [
+              206.92544555664062,
+              164.1659393310547,
+              260.1689147949219,
+              200.20822143554688
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.053742799907922745,
+            "bbox_xyxy": [
+              14.3809814453125,
+              154.35772705078125,
+              187.3027801513672,
+              302.321044921875
+            ]
+          }
+        ],
+        "best_match_iou": 0.599347530790157,
+        "best_match_detection": {
+          "class_id": 3,
+          "confidence": 0.061132632195949554,
+          "bbox_xyxy": [
+            206.92544555664062,
+            164.1659393310547,
+            260.1689147949219,
+            200.20822143554688
+          ]
+        },
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "matched": true
+      },
+      "road010.jpg": {
+        "image": "road010.jpg",
+        "ground_truth_bbox": [
+          169.818359375,
+          228.73846435546875,
+          512.373291015625,
+          439.50830078125
+        ],
+        "detections": [
+          {
+            "class_id": 3,
+            "confidence": 0.41155996918678284,
+            "bbox_xyxy": [
+              4.4410176277160645,
+              209.9180908203125,
+              132.50579833984375,
+              270.5628662109375
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.21208611130714417,
+            "bbox_xyxy": [
+              89.22205352783203,
+              162.33938598632812,
+              170.21412658691406,
+              191.76515197753906
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.12809854745864868,
+            "bbox_xyxy": [
+              176.6414794921875,
+              223.43524169921875,
+              638.7630615234375,
+              449.6462707519531
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.06241907179355621,
+            "bbox_xyxy": [
+              177.27684020996094,
+              243.12905883789062,
+              500.35430908203125,
+              448.7286071777344
+            ]
+          }
+        ],
+        "best_match_iou": 0.8439272538671396,
+        "best_match_detection": {
+          "class_id": 3,
+          "confidence": 0.06241907179355621,
+          "bbox_xyxy": [
+            177.27684020996094,
+            243.12905883789062,
+            500.35430908203125,
+            448.7286071777344
+          ]
+        },
+        "tp": 1,
+        "fp": 3,
+        "fn": 0,
+        "matched": true
+      },
+      "summary": {
+        "confidence_threshold": 0.05,
+        "total_tp": 3,
+        "total_fp": 8,
+        "total_fn": 1,
+        "matched_images": 3,
+        "total_images": 4,
+        "target_achieved": true,
+        "precision": 0.2727272727272727,
+        "recall": 0.75,
+        "f1": 0.39999999999999997
+      }
+    },
+    "0.1": {
+      "road001.webp": {
+        "image": "road001.webp",
+        "ground_truth_bbox": [
+          95.39811706542969,
+          439.5462341308594,
+          344.9998474121094,
+          523.6841430664062
+        ],
+        "detections": [
+          {
+            "class_id": 3,
+            "confidence": 0.11533478647470474,
+            "bbox_xyxy": [
+              482.822021484375,
+              432.05780029296875,
+              599.6257934570312,
+              462.06781005859375
+            ]
+          }
+        ],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1,
+        "matched": false
+      },
+      "road002.jpg": {
+        "image": "road002.jpg",
+        "ground_truth_bbox": [
+          260.759765625,
+          150.74246215820312,
+          413.557373046875,
+          237.59033203125
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road009.jpg": {
+        "image": "road009.jpg",
+        "ground_truth_bbox": [
+          205.28518676757812,
+          161.53932189941406,
+          264.9638366699219,
+          215.19070434570312
+        ],
+        "detections": [
+          {
+            "class_id": 3,
+            "confidence": 0.10159306228160858,
+            "bbox_xyxy": [
+              75.9898681640625,
+              160.43414306640625,
+              181.92672729492188,
+              267.2442321777344
+            ]
+          }
+        ],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1,
+        "matched": false
+      },
+      "road010.jpg": {
+        "image": "road010.jpg",
+        "ground_truth_bbox": [
+          169.818359375,
+          228.73846435546875,
+          512.373291015625,
+          439.50830078125
+        ],
+        "detections": [
+          {
+            "class_id": 3,
+            "confidence": 0.41155996918678284,
+            "bbox_xyxy": [
+              4.4410176277160645,
+              209.9180908203125,
+              132.50579833984375,
+              270.5628662109375
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.21208611130714417,
+            "bbox_xyxy": [
+              89.22205352783203,
+              162.33938598632812,
+              170.21412658691406,
+              191.76515197753906
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.12809854745864868,
+            "bbox_xyxy": [
+              176.6414794921875,
+              223.43524169921875,
+              638.7630615234375,
+              449.6462707519531
+            ]
+          }
+        ],
+        "best_match_iou": 0.667724160086987,
+        "best_match_detection": {
+          "class_id": 3,
+          "confidence": 0.12809854745864868,
+          "bbox_xyxy": [
+            176.6414794921875,
+            223.43524169921875,
+            638.7630615234375,
+            449.6462707519531
+          ]
+        },
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "matched": true
+      },
+      "summary": {
+        "confidence_threshold": 0.1,
+        "total_tp": 1,
+        "total_fp": 4,
+        "total_fn": 3,
+        "matched_images": 1,
+        "total_images": 4,
+        "target_achieved": false,
+        "precision": 0.2,
+        "recall": 0.25,
+        "f1": 0.22222222222222224
+      }
+    },
+    "0.15": {
+      "road001.webp": {
+        "image": "road001.webp",
+        "ground_truth_bbox": [
+          95.39811706542969,
+          439.5462341308594,
+          344.9998474121094,
+          523.6841430664062
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road002.jpg": {
+        "image": "road002.jpg",
+        "ground_truth_bbox": [
+          260.759765625,
+          150.74246215820312,
+          413.557373046875,
+          237.59033203125
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road009.jpg": {
+        "image": "road009.jpg",
+        "ground_truth_bbox": [
+          205.28518676757812,
+          161.53932189941406,
+          264.9638366699219,
+          215.19070434570312
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road010.jpg": {
+        "image": "road010.jpg",
+        "ground_truth_bbox": [
+          169.818359375,
+          228.73846435546875,
+          512.373291015625,
+          439.50830078125
+        ],
+        "detections": [
+          {
+            "class_id": 3,
+            "confidence": 0.41155996918678284,
+            "bbox_xyxy": [
+              4.4410176277160645,
+              209.9180908203125,
+              132.50579833984375,
+              270.5628662109375
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.21208611130714417,
+            "bbox_xyxy": [
+              89.22205352783203,
+              162.33938598632812,
+              170.21412658691406,
+              191.76515197753906
+            ]
+          }
+        ],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 2,
+        "fn": 1,
+        "matched": false
+      },
+      "summary": {
+        "confidence_threshold": 0.15,
+        "total_tp": 0,
+        "total_fp": 2,
+        "total_fn": 4,
+        "matched_images": 0,
+        "total_images": 4,
+        "target_achieved": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "0.2": {
+      "road001.webp": {
+        "image": "road001.webp",
+        "ground_truth_bbox": [
+          95.39811706542969,
+          439.5462341308594,
+          344.9998474121094,
+          523.6841430664062
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road002.jpg": {
+        "image": "road002.jpg",
+        "ground_truth_bbox": [
+          260.759765625,
+          150.74246215820312,
+          413.557373046875,
+          237.59033203125
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road009.jpg": {
+        "image": "road009.jpg",
+        "ground_truth_bbox": [
+          205.28518676757812,
+          161.53932189941406,
+          264.9638366699219,
+          215.19070434570312
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road010.jpg": {
+        "image": "road010.jpg",
+        "ground_truth_bbox": [
+          169.818359375,
+          228.73846435546875,
+          512.373291015625,
+          439.50830078125
+        ],
+        "detections": [
+          {
+            "class_id": 3,
+            "confidence": 0.41155996918678284,
+            "bbox_xyxy": [
+              4.4410176277160645,
+              209.9180908203125,
+              132.50579833984375,
+              270.5628662109375
+            ]
+          },
+          {
+            "class_id": 3,
+            "confidence": 0.21208611130714417,
+            "bbox_xyxy": [
+              89.22205352783203,
+              162.33938598632812,
+              170.21412658691406,
+              191.76515197753906
+            ]
+          }
+        ],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 2,
+        "fn": 1,
+        "matched": false
+      },
+      "summary": {
+        "confidence_threshold": 0.2,
+        "total_tp": 0,
+        "total_fp": 2,
+        "total_fn": 4,
+        "matched_images": 0,
+        "total_images": 4,
+        "target_achieved": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "0.25": {
+      "road001.webp": {
+        "image": "road001.webp",
+        "ground_truth_bbox": [
+          95.39811706542969,
+          439.5462341308594,
+          344.9998474121094,
+          523.6841430664062
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road002.jpg": {
+        "image": "road002.jpg",
+        "ground_truth_bbox": [
+          260.759765625,
+          150.74246215820312,
+          413.557373046875,
+          237.59033203125
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road009.jpg": {
+        "image": "road009.jpg",
+        "ground_truth_bbox": [
+          205.28518676757812,
+          161.53932189941406,
+          264.9638366699219,
+          215.19070434570312
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road010.jpg": {
+        "image": "road010.jpg",
+        "ground_truth_bbox": [
+          169.818359375,
+          228.73846435546875,
+          512.373291015625,
+          439.50830078125
+        ],
+        "detections": [
+          {
+            "class_id": 3,
+            "confidence": 0.41155996918678284,
+            "bbox_xyxy": [
+              4.4410176277160645,
+              209.9180908203125,
+              132.50579833984375,
+              270.5628662109375
+            ]
+          }
+        ],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1,
+        "matched": false
+      },
+      "summary": {
+        "confidence_threshold": 0.25,
+        "total_tp": 0,
+        "total_fp": 1,
+        "total_fn": 4,
+        "matched_images": 0,
+        "total_images": 4,
+        "target_achieved": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "0.3": {
+      "road001.webp": {
+        "image": "road001.webp",
+        "ground_truth_bbox": [
+          95.39811706542969,
+          439.5462341308594,
+          344.9998474121094,
+          523.6841430664062
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road002.jpg": {
+        "image": "road002.jpg",
+        "ground_truth_bbox": [
+          260.759765625,
+          150.74246215820312,
+          413.557373046875,
+          237.59033203125
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road009.jpg": {
+        "image": "road009.jpg",
+        "ground_truth_bbox": [
+          205.28518676757812,
+          161.53932189941406,
+          264.9638366699219,
+          215.19070434570312
+        ],
+        "detections": [],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "matched": false
+      },
+      "road010.jpg": {
+        "image": "road010.jpg",
+        "ground_truth_bbox": [
+          169.818359375,
+          228.73846435546875,
+          512.373291015625,
+          439.50830078125
+        ],
+        "detections": [
+          {
+            "class_id": 3,
+            "confidence": 0.41155996918678284,
+            "bbox_xyxy": [
+              4.4410176277160645,
+              209.9180908203125,
+              132.50579833984375,
+              270.5628662109375
+            ]
+          }
+        ],
+        "best_match_iou": 0.0,
+        "best_match_detection": null,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1,
+        "matched": false
+      },
+      "summary": {
+        "confidence_threshold": 0.3,
+        "total_tp": 0,
+        "total_fp": 1,
+        "total_fn": 4,
+        "matched_images": 0,
+        "total_images": 4,
+        "target_achieved": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    }
+  },
+  "best_operating_point": {
+    "confidence_threshold": 0.05,
+    "matched_images": 3,
+    "target_achieved": true,
+    "precision": 0.2727272727272727,
+    "recall": 0.75,
+    "f1": 0.39999999999999997
+  }
+}
