@@ -170,3 +170,6 @@ temp/
 # Editor backup files
 *#
 *#
+# Local development database
+roadguard.db
+
