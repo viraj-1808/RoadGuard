@@ -1,0 +1,63 @@
+# MANUAL-INF — Manual Inference Smoke Test
+
+## Experiment Identity
+
+- **Experiment ID**: MANUAL-INF
+- **Timestamp**: 2026-10-13T16:35:55.296610Z
+- **Source Directory**: validation\manual\input
+- **Number of Images**: 39
+
+## Model Provenance
+
+- **Model Path**: runs\detect\experiments\training\yol11s_experiment2\weights\epoch72.pt
+- **Model SHA256**: e455893192790a65fccf44c483775375aaebc837397bcbf16082533639eae6e5
+- **Model Name**: YOLO11s
+- **Training Run ID**: yol11s_experiment2
+
+## Inference Configuration
+
+- **Confidence Threshold**: 0.25
+- **NMS/IoU Threshold**: 0.7
+- **Image Size**: 720
+- **Device**: 0
+
+## Processing Results
+
+- **Images Discovered**: 39
+- **Successfully Processed**: 39
+- **Failed**: 0
+- **Total Detections**: 7
+- **Detections by Class**:
+  - alligator_crack: 5
+  - longitudinal_crack: 1
+  - pothole: 1
+
+## Inference Timing
+
+- **Average Inference Time**: 78.3 ms
+- **Minimum Inference Time**: 19.7 ms
+- **Maximum Inference Time**: 161.5 ms
+
+## Output Artifacts
+
+- Annotated images: 39 images in validation\manual\output\run_20261013_220544\annotated
+- Predictions JSON: validation\manual\output\run_20261013_220544\predictions.json
+- Summary report: validation\manual\output\run_20261013_220544\summary.txt
+- Run metadata: validation\manual\output\run_20261013_220544\run_metadata.json
+
+## Important Limitation
+
+> **This experiment measures whether the inference pipeline operates correctly on unseen images and allows qualitative inspection of predictions. It does NOT establish real-world precision, recall, F1, IoU, or model accuracy because the images do not currently have ground-truth annotations.**
+
+## Verification Status
+
+### VERIFIED
+
+- [x] Checkpoint loaded
+- [x] Inference executed
+- [x] Images processed
+- [x] Predictions generated
+- [x] Annotated outputs generated
+- [x] JSON generated
+- [x] Summary generated
+- [x] Run directory created uniquely

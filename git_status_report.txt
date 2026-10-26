@@ -1,0 +1,100 @@
+================================================================================
+                    INITIAL GIT STATUS REPORT
+================================================================================
+Generated: 2026-10-13
+Repository: C:\Users\viraj\Code_files\Github\RoadGuard AI
+
+--------------------------------------------------------------------------------
+#1) git status
+--------------------------------------------------------------------------------
+On branch chore/viraj-model-training
+Your branch is ahead of 'origin/chore/viraj-model-training' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   experiments/evaluation/exp1_frozen_dataset_a_test/predictions.json
+	modified:   experiments/evaluation/exp2_frozen_dataset_a_test/eval/predictions.json
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	analyze_checkpoints.py
+	baseline_discovery.py
+	baseline_discovery_output.txt
+	cache/
+	check_holdout_gt.py
+	create_yolo_annotations.py
+	debug_high_res.py
+	experiments/optimization/
+	experiments/results/
+	experiments/training/create_combined_dataset.py
+	experiments/training/create_combined_dataset_v2.py
+	experiments/training/resume_realworld_finetune.py
+	experiments/training/resume_realworld_finetune_v2.py
+	experiments/training/run_realworld_finetune.py
+	experiments/training/run_realworld_finetune_v2.py
+	generate_review_sheet.py
+	holdout_evaluation.py
+	inference/adapters/sahi_adapter.py
+	inspect_checkpoints.py
+	inspect_state_tmp.py
+	launch_microtrial.py
+	package-lock.json
+	package.json
+	run_inference_uncertain.py
+	run_microtrial.bat
+	run_validation.py
+	scan_images.py
+	scripts/annotation/
+	scripts/audit_v2_evaluation.py
+	scripts/compare_standard_vs_tiled.py
+	scripts/finetune_v2_evaluation.py
+	scripts/optimization/
+	scripts/smoke_test_phase3.py
+	test_review_tool.js
+	threshold_analysis.py
+	update_ground_truth.py
+	validate_exp2_epoch72.py
+	validation/manual/output/test2/
+
+no changes added to commit (use "git add" and/or "git commit -a)
+
+--------------------------------------------------------------------------------
+#2) git log --oneline -10
+--------------------------------------------------------------------------------
+09b6d3f final_training_decision_report: CONTINUE_EXP2_TRAINING decision with analysis artifacts
+290d011 cleanup: organize repository structure, fix stale references, update gitignore
+53cb8e2 restructure: organize repository scripts and configs
+6e7fc9c chore: checkpoint repository before cleanup
+312d4f4 Merge branch 'main' of https://github.com/viraj-1808/RoadGuard
+75edb83 initialized base repo
+86a028d Initial commit
+
+--------------------------------------------------------------------------------
+#3) git branch
+--------------------------------------------------------------------------------
+* chore/viraj-model-training
+  main
+
+================================================================================
+                         REPORT SUMMARY
+================================================================================
+Current Branch:        chore/viraj-model-training
+Latest Commit Hash:    09b6d3f
+Latest Commit Message: final_training_decision_report: CONTINUE_EXP2_TRAINING decision with analysis artifacts
+
+Uncommitted Changes:
+  - Modified files (2):
+      * experiments/evaluation/exp1_frozen_dataset_a_test/predictions.json
+      * experiments/evaluation/exp2_frozen_dataset_a_test/eval/predictions.json
+  - Untracked files/directories (many): analysis scripts, cache dirs,
+    training/experiment code, package.json, evaluation scripts, etc.
+
+Branch Status:
+  - Local branch 'chore/viraj-model-training' is ahead of origin by 1 commit.
+  - Other branch present: main
+
+Note: Pre-existing uncommitted work (modified predictions.json files and
+untracked experiment/analysis files) has been recorded above and preserved.
+================================================================================

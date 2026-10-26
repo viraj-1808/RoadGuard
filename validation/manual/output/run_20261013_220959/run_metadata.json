@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-10-13T16:40:06.044980",
+  "experiment_id": "MANUAL-INF",
+  "checkpoint": {
+    "path": "runs/detect/experiments/training/yol11s_experiment2/weights/epoch72.pt",
+    "sha256": "e455893192790a65fccf44c483775375aaebc837397bcbf16082533639eae6e5",
+    "name": "YOLO11s",
+    "protected": true
+  },
+  "inference_config": {
+    "confidence_threshold": 0.25,
+    "iou_threshold": 0.7,
+    "imgsz": 720,
+    "device": "0"
+  },
+  "class_mapping": {
+    "0": "longitudinal_crack",
+    "1": "transverse_crack",
+    "2": "alligator_crack",
+    "3": "pothole"
+  },
+  "input_directory": "validation\\manual\\input",
+  "output_directory": "validation\\manual\\output\\run_20261013_220959",
+  "output_root": "validation\\manual\\output",
+  "device": "0",
+  "requirements": {
+    "protected_checkpoint": "e455893192790a65fccf44c483775375aaebc837397bcbf16082533639eae6e5",
+    "manual_input_path": "validation\\manual\\input",
+    "manual_output_path": "validation\\manual\\output"
+  }
+}

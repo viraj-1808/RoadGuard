@@ -1,0 +1,460 @@
+{
+  "experiment_id": "MANUAL-INF",
+  "timestamp": "2026-10-13T16:21:52.174889",
+  "model": {
+    "path": "runs\\detect\\experiments\\training\\yol11s_experiment2\\weights\\epoch72.pt",
+    "sha256": "e455893192790a65fccf44c483775375aaebc837397bcbf16082533639eae6e5",
+    "name": "YOLO11s",
+    "class_names": {
+      "0": "longitudinal_crack",
+      "1": "transverse_crack",
+      "2": "alligator_crack",
+      "3": "pothole"
+    },
+    "training_run_id": "yol11s_experiment2"
+  },
+  "inference_config": {
+    "confidence_threshold": 0.25,
+    "iou_threshold": 0.7,
+    "imgsz": 720,
+    "device": "0"
+  },
+  "source_directory": "validation\\manual\\input",
+  "images": [
+    {
+      "file": "road001.webp",
+      "path": "validation\\manual\\input\\road001.webp",
+      "width": 1140,
+      "height": 760,
+      "inference_time_ms": 124.06010006088763,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road002.jpg",
+      "path": "validation\\manual\\input\\road002.jpg",
+      "width": 700,
+      "height": 525,
+      "inference_time_ms": 65.61520008835942,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road003.jpg",
+      "path": "validation\\manual\\input\\road003.jpg",
+      "width": 978,
+      "height": 1390,
+      "inference_time_ms": 71.31949998438358,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road004.jpg",
+      "path": "validation\\manual\\input\\road004.jpg",
+      "width": 640,
+      "height": 480,
+      "inference_time_ms": 74.88239998929203,
+      "detections": [
+        {
+          "class_id": 2,
+          "class_name": "alligator_crack",
+          "confidence": 0.7053495645523071,
+          "bbox_xyxy": [
+            4.577371120452881,
+            164.34092712402344,
+            638.752685546875,
+            478.333984375
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road005.jpg",
+      "path": "validation\\manual\\input\\road005.jpg",
+      "width": 452,
+      "height": 678,
+      "inference_time_ms": 56.73220008611679,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road006.jpg",
+      "path": "validation\\manual\\input\\road006.jpg",
+      "width": 447,
+      "height": 447,
+      "inference_time_ms": 43.24659996200353,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road007.jpg",
+      "path": "validation\\manual\\input\\road007.jpg",
+      "width": 739,
+      "height": 415,
+      "inference_time_ms": 58.50400007329881,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road008.jpg",
+      "path": "validation\\manual\\input\\road008.jpg",
+      "width": 479,
+      "height": 641,
+      "inference_time_ms": 64.71200007945299,
+      "detections": [
+        {
+          "class_id": 2,
+          "class_name": "alligator_crack",
+          "confidence": 0.47187677025794983,
+          "bbox_xyxy": [
+            1.0402820110321045,
+            91.01947021484375,
+            475.8706359863281,
+            570.533203125
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road009.jpg",
+      "path": "validation\\manual\\input\\road009.jpg",
+      "width": 518,
+      "height": 592,
+      "inference_time_ms": 68.76119994558394,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road010.jpg",
+      "path": "validation\\manual\\input\\road010.jpg",
+      "width": 679,
+      "height": 452,
+      "inference_time_ms": 45.97870004363358,
+      "detections": [
+        {
+          "class_id": 3,
+          "class_name": "pothole",
+          "confidence": 0.41155996918678284,
+          "bbox_xyxy": [
+            4.4410176277160645,
+            209.9180908203125,
+            132.50579833984375,
+            270.5628662109375
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road011.jpg",
+      "path": "validation\\manual\\input\\road011.jpg",
+      "width": 678,
+      "height": 452,
+      "inference_time_ms": 54.83859998639673,
+      "detections": [
+        {
+          "class_id": 0,
+          "class_name": "longitudinal_crack",
+          "confidence": 0.4838803708553314,
+          "bbox_xyxy": [
+            206.76217651367188,
+            180.2496795654297,
+            329.2871398925781,
+            443.7516174316406
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road012.jpg",
+      "path": "validation\\manual\\input\\road012.jpg",
+      "width": 612,
+      "height": 406,
+      "inference_time_ms": 55.06270006299019,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road013.jpg",
+      "path": "validation\\manual\\input\\road013.jpg",
+      "width": 1200,
+      "height": 900,
+      "inference_time_ms": 53.85370005387813,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road014.webp",
+      "path": "validation\\manual\\input\\road014.webp",
+      "width": 389,
+      "height": 280,
+      "inference_time_ms": 67.17260007280856,
+      "detections": [
+        {
+          "class_id": 2,
+          "class_name": "alligator_crack",
+          "confidence": 0.7837181687355042,
+          "bbox_xyxy": [
+            6.90889310836792,
+            71.2655029296875,
+            386.9172058105469,
+            260.4613037109375
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road015.jpg",
+      "path": "validation\\manual\\input\\road015.jpg",
+      "width": 1200,
+      "height": 800,
+      "inference_time_ms": 58.65240003913641,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road016.jpg",
+      "path": "validation\\manual\\input\\road016.jpg",
+      "width": 4096,
+      "height": 3072,
+      "inference_time_ms": 163.3612000150606,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road017.jpg",
+      "path": "validation\\manual\\input\\road017.jpg",
+      "width": 3072,
+      "height": 4096,
+      "inference_time_ms": 175.30799994710833,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road018.jpg",
+      "path": "validation\\manual\\input\\road018.jpg",
+      "width": 4096,
+      "height": 3072,
+      "inference_time_ms": 161.92720003891736,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road019.jpg",
+      "path": "validation\\manual\\input\\road019.jpg",
+      "width": 3072,
+      "height": 4096,
+      "inference_time_ms": 179.558000061661,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road020.jpg",
+      "path": "validation\\manual\\input\\road020.jpg",
+      "width": 960,
+      "height": 1280,
+      "inference_time_ms": 48.84249996393919,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road021.jpg",
+      "path": "validation\\manual\\input\\road021.jpg",
+      "width": 3072,
+      "height": 4096,
+      "inference_time_ms": 185.67799997981638,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road022.jpg",
+      "path": "validation\\manual\\input\\road022.jpg",
+      "width": 1280,
+      "height": 960,
+      "inference_time_ms": 59.07469999510795,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road023.jpg",
+      "path": "validation\\manual\\input\\road023.jpg",
+      "width": 3072,
+      "height": 4096,
+      "inference_time_ms": 190.44699997175485,
+      "detections": [
+        {
+          "class_id": 2,
+          "class_name": "alligator_crack",
+          "confidence": 0.3276614546775818,
+          "bbox_xyxy": [
+            0.0,
+            658.130615234375,
+            3072.0,
+            1956.4248046875
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road024.jpg",
+      "path": "validation\\manual\\input\\road024.jpg",
+      "width": 960,
+      "height": 1280,
+      "inference_time_ms": 66.7068000184372,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road025.jpg",
+      "path": "validation\\manual\\input\\road025.jpg",
+      "width": 3072,
+      "height": 4096,
+      "inference_time_ms": 172.29999997653067,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road026.jpg",
+      "path": "validation\\manual\\input\\road026.jpg",
+      "width": 960,
+      "height": 1280,
+      "inference_time_ms": 69.36730002053082,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road027.jpg",
+      "path": "validation\\manual\\input\\road027.jpg",
+      "width": 3072,
+      "height": 4096,
+      "inference_time_ms": 181.8908000132069,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road028.jpg",
+      "path": "validation\\manual\\input\\road028.jpg",
+      "width": 3072,
+      "height": 4096,
+      "inference_time_ms": 191.32980005815625,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road029.jpg",
+      "path": "validation\\manual\\input\\road029.jpg",
+      "width": 960,
+      "height": 1280,
+      "inference_time_ms": 79.78209992870688,
+      "detections": [
+        {
+          "class_id": 2,
+          "class_name": "alligator_crack",
+          "confidence": 0.3374497592449188,
+          "bbox_xyxy": [
+            2.40574049949646,
+            207.8732147216797,
+            960.0,
+            757.4553833007812
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "road030.jpg",
+      "path": "validation\\manual\\input\\road030.jpg",
+      "width": 3072,
+      "height": 4096,
+      "inference_time_ms": 176.79270007647574,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road031.jpg",
+      "path": "validation\\manual\\input\\road031.jpg",
+      "width": 960,
+      "height": 1280,
+      "inference_time_ms": 61.82169995736331,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road032.jpg",
+      "path": "validation\\manual\\input\\road032.jpg",
+      "width": 4096,
+      "height": 3072,
+      "inference_time_ms": 205.2372999023646,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road033.jpg",
+      "path": "validation\\manual\\input\\road033.jpg",
+      "width": 960,
+      "height": 1280,
+      "inference_time_ms": 82.08230009768158,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road034.jpg",
+      "path": "validation\\manual\\input\\road034.jpg",
+      "width": 960,
+      "height": 1280,
+      "inference_time_ms": 57.01330001465976,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road035.jpg",
+      "path": "validation\\manual\\input\\road035.jpg",
+      "width": 4096,
+      "height": 3072,
+      "inference_time_ms": 194.96079999953508,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road036.jpg",
+      "path": "validation\\manual\\input\\road036.jpg",
+      "width": 960,
+      "height": 1280,
+      "inference_time_ms": 58.49319999106228,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road037.jpg",
+      "path": "validation\\manual\\input\\road037.jpg",
+      "width": 4096,
+      "height": 3072,
+      "inference_time_ms": 174.27269998006523,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road038.jpg",
+      "path": "validation\\manual\\input\\road038.jpg",
+      "width": 1280,
+      "height": 960,
+      "inference_time_ms": 54.79849991388619,
+      "detections": [],
+      "error": null
+    },
+    {
+      "file": "road039.jpg",
+      "path": "validation\\manual\\input\\road039.jpg",
+      "width": 3072,
+      "height": 4096,
+      "inference_time_ms": 185.01359992660582,
+      "detections": [],
+      "error": null
+    }
+  ]
+}

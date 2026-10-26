@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-10-11T09:33:51.753926",
+  "parameters": {
+    "interval_seconds": 0.5,
+    "duration_seconds": 5.0
+  },
+  "environment": {
+    "python_version": "3.12.10",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "cpu_count": 12,
+    "ultralytics_version": "8.4.138",
+    "torch_version": "2.14.0+cu126",
+    "cuda_version": "12.6",
+    "cuda_available": true,
+    "checkpoint_sha256": null,
+    "checkpoint_path": "C:\\Users\\viraj\\Code_files\\Github\\RoadGuard AI\\runs\\detect\\experiments\\training\\yol11s_experiment2\\weights\\epoch72.pt"
+  },
+  "samples": [
+    {
+      "physical_memory": {
+        "note": "windows_memory",
+        "physical_total_gb": 15.649,
+        "physical_available_gb": 4.207,
+        "physical_used_gb": 11.442,
+        "physical_cached_gb": "unavailable",
+        "physical_percent_used": 73.1,
+        "swap_total_gb": 47.992,
+        "swap_used_gb": 0.526,
+        "windows_committed_bytes": 18984079360,
+        "windows_commit_limit_bytes": 68333981696,
+        "pagefile": [
+          {
+            "name": "C:\\pagefile.sys",
+            "allocated_bytes": 49143,
+            "usage_bytes": 537
+          }
+        ]
+      },
+      "gpu": {
+        "note": "gpu",
+        "gpu_available": true,
+        "gpu_device": "NVIDIA GeForce RTX 4050 Laptop GPU",
+        "gpu_total_memory_gb": 5.997,
+        "gpu_allocated_bytes": 0,
+        "gpu_reserved_bytes": 0,
+        "gpu_allocated_gb": 0.0,
+        "gpu_reserved_gb": 0.0,
+        "gpu_utilization_percent": "\n==============NVSMI LOG==============\n\nTimestamp                                              : Sun Oct 11 09:33:51 2026\nDriver Version                                         : 592.82\nCUDA Version                                           : 13.1\n\nAttached GPUs                                          : 1\nGPU 00000000:01:00.0\n    Utilization\n        GPU                                            : 33 %\n        Memory                                         : 1 %\n        Encoder                                        : 0 %\n        Decoder                                        : 0 %\n        JPEG                                           : 0 %\n        OFA                                            : 0 %\n    GPU Utilization Samples\n        Duration                                       : 14.04 sec\n        Number of Samples                              : 71\n        Max                                            : 63 %\n        Min                                            : 0 %\n        Avg                                            : 31 %\n    Memory Utilization Samples\n        Duration                                       : 14.04 sec\n        Number of Samples                              : 71\n        Max                                            : 1 %\n        Min                                            : 0 %\n        Avg                                            : 0 %\n    ENC Utilization Samples\n        Duration                                       : 14.04 sec\n        Number of Samples                              : 71\n        Max                                            : 0 %\n        Min                                            : 0 %\n        Avg                                            : 0 %\n    DEC Utilization Samples\n        Duration                                       : 14.04 sec\n        Number of Samples                              : 71\n        Max                                            : 0 %\n        Min                                            : 0 %\n        Avg                                            : 0 %\n    JPG Utilization Samples\n        Duration                                       : 14.04 sec\n        Number of Samples                              : 71\n        Max                                            : 0 %\n        Min                                            : 0 %\n        Avg                                            : 0 %\n    OFA Utilization Samples\n        Duration                                       : 14.04 sec\n        Number of Samples                              : 71\n        Max                                            : 0 %\n        Min                                            : 0 %\n        Avg                                            : 0 %\n\n"
+      },
+      "process_memory": {
+        "note": "process_memory",
+        "main_process_name": "python.exe",
+        "main_pid": 15960,
+        "main_rss_gb": 0.519,
+        "main_vms_gb": 1.095,
+        "child_processes": [],
+        "children_rss_total_gb": 0.0,
+        "combined_rss_gb": 0.519
+      },
+      "disk": {
+        "note": "disk",
+        "drive": "\\",
+        "disk_total_gb": 475.836,
+        "disk_used_gb": 368.119,
+        "disk_free_gb": 107.717,
+        "disk_used_percent": 77.36
+      },
+      "disk_throughput": {
+        "note": "disk_throughput",
+        "wmic_disk_info": "unavailable: FileNotFoundError: [WinError 2] The system cannot find the file specified"
+      },
+      "gpu_utilization_percent": {
+        "note": "gpu_utilization_percent",
+        "gpu_utilization_percent": 33.0
+      }
+    }
+  ]
+}

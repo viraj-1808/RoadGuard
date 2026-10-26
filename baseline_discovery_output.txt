@@ -1,0 +1,380 @@
+================================================================================
+ROADGUARD AI BASELINE DISCOVERY
+Root: C:\Users\viraj\Code_files\Github\RoadGuard AI
+================================================================================
+
+--- PROTECTED CHECKPOINT ---
+path: C:\Users\viraj\Code_files\Github\RoadGuard AI\runs/detect/experiments/training/yol11s_experiment2/weights/epoch72.pt
+sha256: e455893192790a65fccf44c483775375aaebc837397bcbf16082533639eae6e5
+expected: e455893192790a65fccf44c483775375aaebc837397bcbf16082533639eae6e5
+size: 76,023,651 bytes
+match: True
+
+================================================================================
+TOP-LEVEL TREE
+================================================================================
+
+./
+  .git/
+  .kilo/
+  .pytest_cache/
+  __pycache__/
+  analysis/
+  backend/
+  cache/
+  configs/
+  contracts/
+  docs/
+  experiments/
+  frontend/
+  inference/
+  ml/
+  node_modules/
+  orchestration/
+  runs/
+  scripts/
+  tests/
+  validation/
+  weights/
+  .env.example
+  .gitignore
+  README.md
+  analysis_report_d40.md
+  analyze_checkpoints.py
+  baseline_discovery.py
+  check_holdout_gt.py
+  create_yolo_annotations.py
+  debug_high_res.py
+  domain_gap_analysis.md
+  eval_frozen_test.py
+  generate_review_sheet.py
+  holdout_evaluation.py
+  inspect_checkpoints.py
+  inspect_state_tmp.py
+  launch_microtrial.py
+  microtrial_output.log
+  package-lock.json
+  package.json
+  run_inference_uncertain.py
+  run_microtrial.bat
+  run_validation.py
+  scan_images.py
+  test_review_tool.js
+  threshold_analysis.py
+  update_ground_truth.py
+  validate_exp2_epoch72.py
+
+================================================================================
+TOP-LEVEL DIRECTORY SIZES (KB)
+================================================================================
+__pycache__                               8 KB
+analysis                                715 KB
+backend                                   0 KB
+cache                                    20 KB
+configs                                  13 KB
+contracts                                 3 KB
+docs                                    308 KB
+experiments                      32,923,271 KB
+frontend                                  0 KB
+inference                                74 KB
+ml                                       67 KB
+node_modules                         18,255 KB
+orchestration                           156 KB
+runs                             14,412,872 KB
+scripts                               2,344 KB
+tests                                   405 KB
+validation                          244,414 KB
+weights                              24,275 KB
+
+================================================================================
+GIT STATUS
+================================================================================
+M experiments/evaluation/exp1_frozen_dataset_a_test/predictions.json
+ M experiments/evaluation/exp2_frozen_dataset_a_test/eval/predictions.json
+?? analyze_checkpoints.py
+?? baseline_discovery.py
+?? cache/
+?? check_holdout_gt.py
+?? create_yolo_annotations.py
+?? debug_high_res.py
+?? experiments/optimization/
+?? experiments/results/
+?? experiments/training/create_combined_dataset.py
+?? experiments/training/create_combined_dataset_v2.py
+?? experiments/training/resume_realworld_finetune.py
+?? experiments/training/resume_realworld_finetune_v2.py
+?? experiments/training/run_realworld_finetune.py
+?? experiments/training/run_realworld_finetune_v2.py
+?? generate_review_sheet.py
+?? holdout_evaluation.py
+?? inference/adapters/sahi_adapter.py
+?? inspect_checkpoints.py
+?? inspect_state_tmp.py
+?? launch_microtrial.py
+?? package-lock.json
+?? package.json
+?? run_inference_uncertain.py
+?? run_microtrial.bat
+?? run_validation.py
+?? scripts/annotation/
+?? scripts/audit_v2_evaluation.py
+?? scripts/compare_standard_vs_tiled.py
+?? scripts/finetune_v2_evaluation.py
+?? scripts/optimization/
+?? scripts/smoke_test_phase3.py
+?? test_review_tool.js
+?? threshold_analysis.py
+?? update_ground_truth.py
+?? validate_exp2_epoch72.py
+?? validation/manual/output/test2/
+
+================================================================================
+MANUAL INFERENCE INPUT / OUTPUT
+================================================================================
+
+[INPUT] C:\Users\viraj\Code_files\Github\RoadGuard AI\validation/manual/input
+  road001.webp
+  road002.jpg
+  road003.jpg
+  road004.jpg
+  road005.jpg
+  road006.jpg
+  road007.jpg
+  road008.jpg
+  road009.jpg
+  road010.jpg
+  road011.jpg
+  road012.jpg
+  road013.jpg
+  road014.webp
+  road015.jpg
+  road016.jpg
+  road017.jpg
+  road018.jpg
+  road019.jpg
+  road020.jpg
+  road021.jpg
+  road022.jpg
+  road023.jpg
+  road024.jpg
+  road025.jpg
+  road026.jpg
+  road027.jpg
+  road028.jpg
+  road029.jpg
+  road030.jpg
+  road031.jpg
+  road032.jpg
+  road033.jpg
+  road034.jpg
+  road035.jpg
+  road036.jpg
+  road038.jpg
+  road039.jpg
+
+[OUTPUT] C:\Users\viraj\Code_files\Github\RoadGuard AI\validation/manual/output
+  INFERENCE_VALIDATION_REPORT.md
+  predictions.json
+  road001_annotated.webp
+  road002_annotated.jpg
+  road003_annotated.jpg
+  road004_annotated.jpg
+  road005_annotated.jpg
+  road006_annotated.jpg
+  road007_annotated.jpg
+  road008_annotated.jpg
+  road009_annotated.jpg
+  road010_annotated.jpg
+  road011_annotated.jpg
+  road012_annotated.jpg
+  road013_annotated.jpg
+  road014_annotated.webp
+  road015_annotated.jpg
+  test2/  (41 items)
+
+================================================================================
+experiments/ contents
+================================================================================
+
+experiments/
+  analysis/
+  benchmarks/
+  dataset/
+  error_analysis/
+  evaluation/
+  optimization/
+  results/
+  training/
+  README.md
+
+================================================================================
+configs/ contents
+================================================================================
+
+configs/
+  data/
+  training/
+
+================================================================================
+docs/ contents
+================================================================================
+
+docs/
+  API_CONTRACTS.md
+  ARCHITECTURE.md
+  CLASS_MAPPING.md
+  DATABASE_SCHEMA.md
+  DATASET_AUDIT.md
+  DATASET_AUDIT_SUMMARY.md
+  DATA_PIPELINE.md
+  DATA_PIPELINE_UPDATES.md
+  DECISION_LOG.md
+  DEPLOYMENT.md
+  ENGINEERING_LOG.md
+  EVENT_SCHEMAS.md
+  INFERENCE_ARCHITECTURE.md
+  MODEL_EVALUATION.md
+  MODEL_TRAINING.md
+  PROJECT.md
+  RESEARCH_REGISTER.md
+  RESEARCH_REGISTER_ADDITIONS.md
+  SECURITY_ARCHITECTURE.md
+  TEAM_WORKSTREAMS.md
+
+================================================================================
+validation/ contents
+================================================================================
+
+validation/
+  manual/
+
+================================================================================
+ml/ contents
+================================================================================
+
+ml/
+  __pycache__/
+  configs/
+  data/
+  evaluation/
+  models/
+  preprocessing/
+  training/
+  __init__.py
+
+================================================================================
+inference/ contents
+================================================================================
+
+inference/
+  __pycache__/
+  adapters/
+  capture/
+  events/
+  preprocessing/
+  runtime/
+  tracking/
+  __init__.py
+  cli.py
+
+================================================================================
+backend/ contents
+================================================================================
+
+backend/
+  api/
+  app/
+  models/
+  services/
+  tests/
+
+================================================================================
+frontend/ contents
+================================================================================
+
+frontend/
+  components/
+  pages/
+  src/
+  tests/
+
+================================================================================
+scripts/ contents
+================================================================================
+
+scripts/
+  __pycache__/
+  analysis/
+  annotation/
+  benchmark/
+  download/
+  evaluation/
+  experiment2/
+  inspection/
+  optimization/
+  utils/
+  validation/
+  __init__.py
+  audit_v2_evaluation.py
+  compare_standard_vs_tiled.py
+  finetune_v2_evaluation.py
+  smoke_test_phase3.py
+
+================================================================================
+tests/ contents
+================================================================================
+
+tests/
+  __pycache__/
+  contracts/
+  integration/
+  ml/
+  system/
+  __init__.py
+
+================================================================================
+cache/ contents
+================================================================================
+
+cache/
+  README.md
+  diagnose_training_resources_20261009_134421.json
+  diagnose_training_resources_20261009_135312.json
+  diagnose_training_resources_20261011_093351.json
+
+================================================================================
+analysis/ contents
+================================================================================
+
+analysis/
+  __pycache__/
+  output/
+
+================================================================================
+contracts/ contents
+================================================================================
+
+contracts/
+  api/
+  events/
+  detection/
+
+================================================================================
+orchestration/ contents
+================================================================================
+
+orchestration/
+  audit/
+  checkpoints/
+  implementation/
+  synthesis/
+
+================================================================================
+Analysis report and research files
+================================================================================
+analysis_report_d40.md
+domain_gap_analysis.md
+
+================================================================================
+DONE
+================================================================================
