@@ -70,52 +70,59 @@ class RoadGuardApiClient {
         baseUrl: this.baseUrl,
         errorMessage: 'Manual demo mode enabled.',
         modelStatus: {
-          weightsLoaded: true,
-          modelName: 'YOLO26s (Simulated Fallback)'
+          weightsLoaded: false,
+          modelName: 'Demo mode',
+          details: 'Results are simulated; model readiness was not checked.'
         }
       };
     }
 
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2500);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2500);
 
-      const response = await fetch(`${this.baseUrl}/api/events?limit=1`, {
+    try {
+      const response = await fetch(`${this.baseUrl}/api/detect/status`, {
         method: 'GET',
         headers: { 'Accept': 'application/json' },
         signal: controller.signal
       });
 
-      clearTimeout(timeoutId);
-
-      if (response.ok) {
+      if (!response.ok) {
         this.backendAvailable = true;
         return {
           isBackendConnected: true,
           isDemoMode: false,
           baseUrl: this.baseUrl,
-          modelStatus: {
-            weightsLoaded: true,
-            modelName: 'YOLO26s (Backend Online)'
-          }
-        };
-      } else {
-        this.backendAvailable = false;
-        return {
-          isBackendConnected: false,
-          isDemoMode: true,
-          baseUrl: this.baseUrl,
-          errorMessage: `Backend returned HTTP ${response.status}: ${response.statusText}`,
+          errorMessage: `Backend is reachable, but model status returned HTTP ${response.status}: ${response.statusText}`,
           modelStatus: {
             weightsLoaded: false,
             modelName: 'Unknown',
-            details: 'Backend endpoint error'
+            details: 'Model readiness could not be confirmed.'
           }
         };
       }
+
+      const data = await response.json();
+      const weightsLoaded = data.checkpoint_exists === true || data.configured === true;
+
+      this.backendAvailable = true;
+
+      return {
+        isBackendConnected: true,
+        isDemoMode: false,
+        baseUrl: this.baseUrl,
+        modelStatus: {
+          weightsLoaded,
+          modelName: typeof data.model_name === 'string' ? data.model_name : 'Unknown',
+          details: weightsLoaded
+            ? 'Checkpoint file is present.'
+            : `Model checkpoint is missing or not configured${typeof data.checkpoint_path === 'string' ? `: ${data.checkpoint_path}` : ''}.`
+        }
+      };
     } catch (err: unknown) {
       this.backendAvailable = false;
       const message = err instanceof Error ? err.message : 'Network failure or CORS issue';
+
       return {
         isBackendConnected: false,
         isDemoMode: true,
@@ -124,12 +131,13 @@ class RoadGuardApiClient {
         modelStatus: {
           weightsLoaded: false,
           modelName: 'Offline',
-          details: 'Backend service offline or unreachable'
+          details: 'Backend service offline or unreachable.'
         }
       };
+    } finally {
+      clearTimeout(timeoutId);
     }
   }
-
   /**
    * GET /api/events - List events with filters
    * (docs/API_CONTRACTS.md#5-frontend-query-api)
@@ -345,12 +353,10 @@ class RoadGuardApiClient {
     return { report: null, isDemo: true };
   }
 
+
   /**
-   * Image Upload Inference Endpoint
-   * Gap analysis: docs/API_CONTRACTS.md currently defines /api/events and /api/reports,
-   * but does not yet standardize an ad-hoc single-image inference route (e.g. /api/detect).
-   * This method attempts /api/detect, and if unavailable or if weights are missing,
-   * explicitly surfaces the gap or switches to client-side test runner.
+   * Run image inference through the backend detection endpoint.
+   * Demo simulation is used only when demo mode is explicitly enabled.
    */
   public async detectPotholesInImage(
     file: File,
@@ -360,55 +366,85 @@ class RoadGuardApiClient {
     backendAttempted: boolean;
     backendGapNotice?: string;
   }> {
-    if (!this.isUsingDemoMode()) {
-      try {
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('min_confidence', minConfidence.toString());
-
-        const response = await fetch(`${this.baseUrl}/api/detect`, {
-          method: 'POST',
-          body: formData
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          return {
-            result: {
-              ...result,
-              is_demo_data: false
-            },
-            backendAttempted: true
-          };
-        }
-
-        // If backend returned 503 or custom code indicating weights missing
-        if (response.status === 503 || response.status === 422) {
-          const errData = await response.json().catch(() => ({}));
-          throw new Error(errData.detail || 'Model weights not loaded on backend server');
-        }
-
-        if (response.status === 404 || response.status === 501) {
-          // Endpoint not implemented yet on backend
-          return {
-            result: await this.runSimulatedImageDetection(file, minConfidence),
-            backendAttempted: true,
-            backendGapNotice: 'Backend /api/detect endpoint is not yet implemented in docs/API_CONTRACTS.md. Using client-side detection simulation.'
-          };
-        }
-      } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : 'Backend detection request failed';
-        return {
-          result: await this.runSimulatedImageDetection(file, minConfidence),
-          backendAttempted: true,
-          backendGapNotice: `Backend inference unavailable (${message}). Running client-side demonstration test runner.`
-        };
-      }
+    if (this.isUsingDemoMode()) {
+      return {
+        result: await this.runSimulatedImageDetection(file, minConfidence),
+        backendAttempted: false,
+        backendGapNotice: 'Demo mode is enabled. Results are simulated, not produced by the backend model.'
+      };
     }
 
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const url = new URL(`${this.baseUrl}/api/detect/image`);
+    url.searchParams.set('confidence', minConfidence.toString());
+
+    let response: Response;
+
+    try {
+      response = await fetch(url.toString(), {
+        method: 'POST',
+        body: formData
+      });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Network request failed';
+      throw new Error(`Could not reach the detection backend: ${message}`);
+    }
+
+    if (!response.ok) {
+      let detail = `HTTP ${response.status}`;
+      try {
+        const errorData = await response.json();
+        if (typeof errorData.detail === 'string') {
+          detail = errorData.detail;
+        } else if (
+          errorData.detail &&
+          typeof errorData.detail === 'object' &&
+          typeof errorData.detail.message === 'string'
+        ) {
+          detail = errorData.detail.message;
+        }
+      } catch {
+        // Keep the HTTP status message if the response isn't JSON.
+      }
+
+      if (response.status === 503) {
+        throw new Error(`Model unavailable: ${detail}`);
+      }
+
+      throw new Error(`Image detection failed: ${detail}`);
+    }
+
+    const data = await response.json();
+
     return {
-      result: await this.runSimulatedImageDetection(file, minConfidence),
-      backendAttempted: false
+      result: {
+        image_url: URL.createObjectURL(file),
+        image_width: data.image_width,
+        image_height: data.image_height,
+        processing_time_ms: data.inference_time_ms,
+        detections: (data.detections ?? []).map((d: {
+          class_name?: string;
+          confidence: number;
+          bbox: number[];
+          frame_id?: string | null;
+          capture_timestamp?: string | null;
+        }) => ({
+          class: d.class_name ?? 'pothole',
+          confidence: d.confidence,
+          bbox: d.bbox,
+          frame_id: d.frame_id ?? data.image_id,
+          capture_timestamp: d.capture_timestamp ?? new Date().toISOString()
+        })),
+        model_info: {
+          model_name: data.model_name,
+          is_active: true,
+          weights_loaded: true
+        },
+        is_demo_data: false
+      },
+      backendAttempted: true
     };
   }
 

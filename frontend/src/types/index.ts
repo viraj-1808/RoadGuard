@@ -10,7 +10,7 @@ export type BoundingBox = [number, number, number, number];
 
 // Single frame-level observation produced by detector (docs/EVENT_SCHEMAS.md#1-detection)
 export interface Detection {
-  class: 'pothole';
+  class: 'longitudinal_crack' | 'transverse_crack' | 'alligator_crack' | 'pothole' | string;
   confidence: number; // [0 - 1]
   bbox: BoundingBox; // [x1, y1, x2, y2]
   frame_id: string;
